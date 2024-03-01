@@ -11,6 +11,12 @@ import { AllTemplateBackComponent } from './BackOffice/all-template-back/all-tem
 import { FooterBackComponent } from './BackOffice/footer-back/footer-back.component';
 import { NavbarBackComponent } from './BackOffice/navbar-back/navbar-back.component';
 import { SidebarBackComponent } from './BackOffice/sidebar-back/sidebar-back.component';
+import { AboutFrontComponent } from './FrontOffice/about-front/about-front.component';
+import { ServicesFrontComponent } from './FrontOffice/services-front/services-front.component';
+import { PircingFrontComponent } from './FrontOffice/pircing-front/pircing-front.component';
+import { CarsFrontComponent } from './FrontOffice/cars-front/cars-front.component';
+import { BlogFrontComponent } from './FrontOffice/blog-front/blog-front.component';
+import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +29,12 @@ import { SidebarBackComponent } from './BackOffice/sidebar-back/sidebar-back.com
     FooterBackComponent,
     NavbarBackComponent,
     SidebarBackComponent,
+    AboutFrontComponent,
+    ServicesFrontComponent,
+    PircingFrontComponent,
+    CarsFrontComponent,
+    BlogFrontComponent,
+    ContactFrontComponent,
 
   ],
   imports: [
