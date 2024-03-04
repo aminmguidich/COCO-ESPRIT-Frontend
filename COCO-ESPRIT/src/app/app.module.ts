@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,8 @@ import { AnouncementCarpoolingModule } from './BackOffice/Back-Management/Carpoo
 import { RequirementCarpoolingModule } from './BackOffice/Back-Management/Carpooling/requirement-carpooling/requirement-carpooling.module';
 import { RatingCarpoolingModule } from './BackOffice/Back-Management/Carpooling/rating-carpooling/rating-carpooling.module';
 import { ReactCarpoolingModule } from './BackOffice/Back-Management/Carpooling/react-carpooling/react-carpooling.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,13 @@ import { ReactCarpoolingModule } from './BackOffice/Back-Management/Carpooling/r
     AnouncementCarpoolingModule,
     RequirementCarpoolingModule,
     RatingCarpoolingModule,
-    ReactCarpoolingModule
+    ReactCarpoolingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
