@@ -1,0 +1,16 @@
+.nav-dropdown {
+    list-style: none;
+    padding: 0;
+}
+
+
+
+.nav-link {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+}
+
+.nav-link:hover {
+    background-color: #ccc;
+}
