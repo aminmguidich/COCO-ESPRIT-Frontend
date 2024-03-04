@@ -6,7 +6,7 @@ import { UpdateRequirementComponent } from './update-requirement/update-requirem
 
 const routes: Routes = [
   {
-    path:"listReq",
+    path:"",
     component:ListRequirementComponent
   },
   {

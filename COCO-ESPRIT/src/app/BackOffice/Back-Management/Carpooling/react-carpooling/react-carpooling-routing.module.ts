@@ -4,7 +4,7 @@ import { ListReactComponent } from './list-react/list-react.component';
 
 const routes: Routes = [
   {
-    path:"listReact",
+    path:"",
     component:ListReactComponent
   },
 ];

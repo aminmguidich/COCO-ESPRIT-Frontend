@@ -4,7 +4,7 @@ import { ListRatingComponent } from './list-rating/list-rating.component';
 
 const routes: Routes = [
   {
-    path:"listRating",
+    path:"",
     component:ListRatingComponent
   }
 ];
