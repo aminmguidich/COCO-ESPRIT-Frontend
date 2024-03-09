@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
-import { HomeFrontComponent } from './FrontOffice/home-front/home-front.component';
-import { AboutFrontComponent } from './FrontOffice/about-front/about-front.component';
-import { ServicesFrontComponent } from './FrontOffice/services-front/services-front.component';
-import { PircingFrontComponent } from './FrontOffice/pircing-front/pircing-front.component';
-import { CarsFrontComponent } from './FrontOffice/cars-front/cars-front.component';
-import { BlogFrontComponent } from './FrontOffice/blog-front/blog-front.component';
-import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front.component';
 import { AllTemplateBackComponent } from './BackOffice/all-template-back/all-template-back.component';
+import { AboutFrontComponent } from './FrontOffice/about-front/about-front.component';
+import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
+import { BlogFrontComponent } from './FrontOffice/blog-front/blog-front.component';
+import { CarsFrontComponent } from './FrontOffice/cars-front/cars-front.component';
+import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front.component';
+import { HomeFrontComponent } from './FrontOffice/home-front/home-front.component';
+import { PircingFrontComponent } from './FrontOffice/pircing-front/pircing-front.component';
+import { ServicesFrontComponent } from './FrontOffice/services-front/services-front.component';
 
 const routes: Routes = [
   {
@@ -44,6 +44,10 @@ const routes: Routes = [
         path:"contact",
         component:ContactFrontComponent
       },
+     /* {
+        path: "ListPost",
+        loadChildren: () => import('./FrontOffice/ForumFront/PostFrontModule.module').then(m => m.PostFrontModule),
+    },*/
 
     ]
   },
@@ -71,6 +75,13 @@ const routes: Routes = [
         loadChildren: () => import('./BackOffice/Back-Management/Carpooling/react-carpooling/react-carpooling.module').then(m => m.ReactCarpoolingModule),
 
       },
+     {
+        path: "ListPost",
+        loadChildren: () => import('./BackOffice/Back-Management/ForumManagement/post/post.module').then(m => m.PostModule),
+    },
+    
+    
+    
 
     ]
   }
