@@ -10,8 +10,8 @@ export class CommentPost {
  commentedAt: Date;
  idUser: number;
  reactPostsComment: ReactPost[]; // Relation OneToMany
- postComments: CommentPost[]; // Relation OneToMany (Reflexive)
- postCo: CommentPost; // Relation ManyToOne (Self-Referencing)
+ postCommentsReflexive: CommentPost[]; // Relation OneToMany (Reflexive)
+ postCoReflexive: CommentPost; // Relation ManyToOne (Self-Referencing)
  postComment: Post; // Relation ManyToOne
 
 } 

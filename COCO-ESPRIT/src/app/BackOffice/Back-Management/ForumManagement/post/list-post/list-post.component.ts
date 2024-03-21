@@ -13,8 +13,13 @@ import { CommentService } from 'src/app/BackOffice/Back-Core/Services/ForumS/com
   styleUrls: ['./list-post.component.css']
 })
 export class ListPostComponent {
-  posts!: Observable<Post[]>;
+  posts: Observable<Post[]>;
   commentList: Observable<CommentPost[]>;
+
+  postsPerPage: number = 4;
+  currentPage: number = 1;
+  pageSize: number;
+
 
   idTodelete: number = 0;
   deleteModal: any;
@@ -34,6 +39,16 @@ export class ListPostComponent {
 
   reloadData() {
     this.posts = this.postService.getPostList();
+   const startIndex = (this.currentPage - 1) * this.postsPerPage;
+    // Fetch only the required number of posts based on the starting index and posts per page
+    this.posts = this.postService.getPostList().pipe(
+      map(posts => posts.slice(startIndex, startIndex + this.postsPerPage))
+    );
+
+    // Determine the total number of posts for pagination
+    this.postService.getPostList().subscribe(posts => {
+      this.pageSize = Math.ceil(posts.length / this.postsPerPage);
+    });
   }
   updatePost(idPost: number){
     this.router.navigate(['update', idPost]);
@@ -93,4 +108,10 @@ showComments(post: Post): void {
     }
   });
 }
+
+ // Method to handle page changes
+  changePage(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.reloadData();
+  }
 }

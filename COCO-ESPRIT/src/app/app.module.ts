@@ -22,6 +22,7 @@ import { RatingCarpoolingModule } from './BackOffice/Back-Management/Carpooling/
 import { ReactCarpoolingModule } from './BackOffice/Back-Management/Carpooling/react-carpooling/react-carpooling.module';
 import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
 import { PostModule } from './BackOffice/Back-Management/ForumManagement/post/post.module';
+import { PostFrontModule } from './FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module';
 
 
 @NgModule({
@@ -52,8 +53,7 @@ import { PostModule } from './BackOffice/Back-Management/ForumManagement/post/po
     RatingCarpoolingModule,
     ReactCarpoolingModule,
     PostModule,
-   // ForumModule ,//Post + comment + react
-   // PostFrontModule
+    PostFrontModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

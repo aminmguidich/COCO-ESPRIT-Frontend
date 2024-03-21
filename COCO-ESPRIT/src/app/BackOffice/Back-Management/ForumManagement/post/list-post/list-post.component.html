@@ -21,7 +21,7 @@
   <div class="container">
     <div class="row mt-2">
       <div class="col col-md-4 offset-md-4">
-        <a class="btn btn-primary" routerLink="AddPost"><i class="bi bi-plus-circle-fill"></i>Add</a>
+        <a class="btn btn-primary" [routerLink]="['AddPost']"><i class="bi bi-plus-circle-fill"></i>Add</a>
       </div>
     </div>
       <table class="table">
@@ -45,7 +45,7 @@
                 <td><span>{{i.nb_Signal}}</span></td>
 
                 <td>
-                    <!--<a class="btn btn-primary" [routerLink]="['editPost', i.idPost]">Edit</a>-->
+                   <!-- <a class="btn btn-primary" [routerLink]="['detailsPost', i.idPost]">Details</a>-->
                     <button type="button" (click)="deletePost(i.idPost)" class="btn btn-danger"><i class="bi bi-trash"></i>Delete</button>
                     
                     <button [disabled]="(hasComments(i) | async)" class="btn btn-green" (click)="showComments(i)"><i class="bi bi-chat-left-text-fill"></i>Comments</button>
@@ -66,28 +66,34 @@
         </tbody>
       </table>
     </div>
-    <!-- Modal -->
-  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Are you sure to delete the item?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" (click)="delete()">Confirm Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
+                <!-- Modal -->
+              <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure to delete the item?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger" (click)="delete()">Confirm Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
   <hr>
+  <!-- pagination -->
   
-
+  <div class="row mb-3" *ngIf="(posts | async) as postsArray">
+    <div class="col-md-12 text-center" *ngIf="postsArray.length > 0">
+      <app-pagination [pageSize]="pageSize" (pageChange)="changePage($event)"></app-pagination>
+    </div>
+  </div>
+  
 
 </div>
 </div>
@@ -101,6 +107,9 @@
 </div>
 </div>
 </div>
+
+
+
 </body>
 
 

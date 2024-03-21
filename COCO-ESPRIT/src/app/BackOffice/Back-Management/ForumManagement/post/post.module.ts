@@ -6,12 +6,14 @@ import { AddPostComponent } from './add-post/add-post.component';
 import { ListPostComponent } from './list-post/list-post.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 
 @NgModule({
   declarations: [
     AddPostComponent,
     ListPostComponent,
+    PaginationComponent,
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    
   ]
 })
 export class PostModule { }

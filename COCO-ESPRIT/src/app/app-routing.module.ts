@@ -45,7 +45,7 @@ const routes: Routes = [
         component:ContactFrontComponent
       },
      /* {
-        path: "ListPost",
+        path: "ListPostFront",
         loadChildren: () => import('./FrontOffice/ForumFront/PostFrontModule.module').then(m => m.PostFrontModule),
     },*/
 
