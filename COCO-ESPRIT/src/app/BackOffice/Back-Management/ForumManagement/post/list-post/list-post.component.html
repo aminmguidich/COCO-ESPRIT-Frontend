@@ -45,7 +45,7 @@
                 <td><span>{{i.nb_Signal}}</span></td>
 
                 <td>
-                   <!-- <a class="btn btn-primary" [routerLink]="['detailsPost', i.idPost]">Details</a>-->
+                   <a class="btn btn-primary" [routerLink]="['detailsPost', i.idPost]">Details</a>
                     <button type="button" (click)="deletePost(i.idPost)" class="btn btn-danger"><i class="bi bi-trash"></i>Delete</button>
                     
                     <button [disabled]="(hasComments(i) | async)" class="btn btn-green" (click)="showComments(i)"><i class="bi bi-chat-left-text-fill"></i>Comments</button>

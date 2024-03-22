@@ -53,6 +53,7 @@ export class ListPostComponent {
   updatePost(idPost: number){
     this.router.navigate(['update', idPost]);
   }
+  
   //deletePost(idPost: number) {
    /* this.postService.deletePost(idPost)
       .subscribe(

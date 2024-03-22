@@ -1,0 +1,13 @@
+.btn-green {
+    background-color: #32CD32; 
+}
+.bi-trash {
+    color: black;
+}
+.btn-yellow {
+    background-color: yellow;
+}
+.darker-blue {
+    background-color: #007bff; /* Adjust the shade of blue as needed */
+    color: white; /* Text color */
+}
