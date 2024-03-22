@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { map,Observable } from 'rxjs';
+import { of,map,Observable } from 'rxjs';
 import { CommentPost } from 'src/app/BackOffice/Back-Core/Models/Forum/CommentPost';
 import { Post } from 'src/app/BackOffice/Back-Core/Models/Forum/Post';
 import { PostService } from 'src/app/BackOffice/Back-Core/Services/ForumS/post.service';
@@ -83,11 +83,13 @@ export class ListPostComponent {
   }
 
   // Function to check if there are comments for a post
-  hasComments(post: Post): Observable<boolean> {
-    return this.commentService.getCommentsForPost(post.idPost).pipe(
-      map(comments => !!comments && comments.length > 0)
+  hasComments(postId: number): Observable<boolean> {
+    return this.commentService.getCommentsForPost(postId).pipe(
+        map(comments => !!comments && comments.length > 0)
     );
-  }
+}
+
+
   
   
 
@@ -96,19 +98,24 @@ export class ListPostComponent {
   // Add this property to your component
 currentPostIdWithVisibleComments: number | null = null;
 
-showComments(post: Post): void {
-  // Check if comments are available for the post
-  this.hasComments(post).subscribe(hasComments => {
-    if (hasComments) {
-      // Assign the commentList only if comments are available
-      this.currentPostIdWithVisibleComments = post.idPost;
-      this.commentList = this.commentService.getCommentsForPost(post.idPost);
-    } else {
-      // If no comments available, set currentPostIdWithVisibleComments to null
-      this.currentPostIdWithVisibleComments = null;
-    }
-  });
+commentCounts: { [postId: number]: Observable<number> } = {};
+
+showComments(postId: number): void {
+    this.hasComments(postId).subscribe(hasComments => {
+        if (hasComments) {
+            this.currentPostIdWithVisibleComments = postId;
+            this.commentList = this.commentService.getCommentsForPost(postId);
+            this.commentCounts[postId] = this.commentService.getCommentsForPost(postId).pipe(
+                map(comments => comments.length)
+            );
+        } else {
+            this.currentPostIdWithVisibleComments = null;
+            this.commentCounts[postId] = of(0);
+        }
+    });
 }
+
+
 
  // Method to handle page changes
   changePage(pageNumber: number) {

@@ -1,88 +1,66 @@
 <body>
-    <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-  
-                    <div class="main-body">
-                        <div class="page-wrapper">
-                            <!-- [ Main Content ] start -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5> Posts</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5></h5>
-                                            <hr>
-  <div class="container">
-      <legend>Create Post</legend>
-      <form [formGroup]="myForm"(ngSubmit)="onSubmit()">
-        <table>
-          <tr>
-            <td>Title Post:</td>
-            <td>
-              <input type="text" formControlName="postTitle" style="width: 200px;">
-              <!-- Adjust the width as needed -->
-              <div *ngIf="postTitle.errors && postTitle.touched"> 
-                <div *ngIf="postTitle.errors['required']">Title is mandatory!</div>
-                <div *ngIf="postTitle.errors['minlength']">Minimum
-                  {{postTitle.errors['minlength'].requiredLength}} characters as you typed
-                  {{postTitle.errors['minlength'].actualLength}}
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Body:</td>
-            <td>
-              <textarea formControlName="body" style="width: 300px; height: 100px;"></textarea>
-              <div *ngIf="body.errors && body.touched"> 
-                <div *ngIf="body.errors['required']">Body is mandatory!</div>
-                <div *ngIf="body.errors['minlength']">Minimum
-                  {{body.errors['minlength'].requiredLength}} characters as you typed
-                  {{body.errors['minlength'].actualLength}}
-                </div>
-              </div>
-            </td>
-          </tr>
+  <div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+      <div class="pcoded-content">
+        <div class="pcoded-inner-content">
 
-          <tr>
-            <td>Image:</td>
-            <td>
-              <input type="file" (change)="onFileSelected($event)">
-            </td>
-          </tr>
-          
-          
-          
-          <tr>
-            <td></td>
-            <td>
-              <button type="submit" [disabled]="myForm.invalid">Add Post</button>
-          </td>
-          </tr>
-        </table>
-      </form>
+          <div class="main-body">
+            <div class="page-wrapper">
+              <!-- [ Main Content ] start -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5> Add Announcement</h5>
+                    </div>
+                    <div class="card-body">
+                      <h5></h5>
+                      <hr>
+                      <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="description">Title Post:</label>
+                            <input type="text" formControlName="postTitle" class="form-control">
+                            <div *ngIf="postTitle.errors && postTitle.touched" class="text-danger">
+                              <div *ngIf="postTitle.errors['required']">Title is mandatory!</div>
+                              <div *ngIf="postTitle.errors['minlength']">Minimum
+                                {{postTitle.errors['minlength'].requiredLength}} characters as you typed
+                                {{postTitle.errors['minlength'].actualLength}}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="body">Body:</label>
+                            <textarea formControlName="body" class="form-control" style="height: 100px;"></textarea>
+                            <div *ngIf="body.errors && body.touched" class="text-danger">
+                              <div *ngIf="body.errors['required']">Body is mandatory!</div>
+                              <div *ngIf="body.errors['minlength']">Minimum
+                                {{body.errors['minlength'].requiredLength}} characters as you typed
+                                {{body.errors['minlength'].actualLength}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="image">Image:</label>
+                            <input type="file" (change)="onFileSelected($event)" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <button type="submit" [disabled]="myForm.invalid" class="btn btn-primary">Add Post</button>
+                          <a routerLink="/admin/ListPost" class="btn btn-secondary">Back to List</a>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- [ Main Content ] end -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-      <a routerLink="/admin/ListPost" class="nav-link" routerLinkActive="active">Back to List</a>
   </div>
-  <hr>
-    
-  
-  
-  </div>
-  </div>
-  <!-- Input group -->
-  </div>
-  </div>
-  <!-- [ Main Content ] end -->
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </body>
+</body>

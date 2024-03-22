@@ -33,6 +33,11 @@ export class CommentService {
   getCommentsForPost(postId: number): Observable<CommentPost[]> {
     return this.http.get<CommentPost[]>(`http://localhost:9092/COCO/getCommentsForPost/${postId}`);
   }
+
+  getReplies(commentId: number): Observable<CommentPost[]> {
+    return this.http.get<CommentPost[]>(`http://localhost:9092/COCO/getReplies/${commentId}`);
+  }
+
   
 
 }
