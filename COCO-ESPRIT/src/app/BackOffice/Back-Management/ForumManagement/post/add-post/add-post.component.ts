@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Post } from 'src/app/BackOffice/Back-Core/Models/Forum/Post';
+import { PhotosService } from 'src/app/BackOffice/Back-Core/Services/ForumS/photos.service';
 import { PostService } from 'src/app/BackOffice/Back-Core/Services/ForumS/post.service';
+
 @Component({
   selector: 'app-add-post',
   templateUrl: './add-post.component.html',
@@ -11,11 +13,15 @@ import { PostService } from 'src/app/BackOffice/Back-Core/Services/ForumS/post.s
 export class AddPostComponent {
   myForm!: FormGroup;
   posts: Post = new Post(); 
-  selectedFile: File | undefined;
+  imgUrl: string | ArrayBuffer = 'assets/upload.png';
+  file: File | null = null;
 
 
-
-  constructor(private f: FormBuilder,private s: PostService,private router: Router) { 
+  constructor(
+    private f: FormBuilder,
+    private s: PostService,
+    private photoService :PhotosService,
+    private router: Router) { 
     
   }
 
@@ -36,31 +42,70 @@ export class AddPostComponent {
   get body(){
     return this.myForm.get('body')
   }
-  onFileSelected(event: any) {
-    if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
-    }
-  }
+
+
   //path ou l'image : http://localhost:90/COCO/Post/logo.png
 onSubmit() {
   let p = new Post();
 p.postTitle=this.postTitle.value;
 p.body=this.body.value;
 p.createdAt = new Date(); // Set current system date
-//p.nb_Signal = 0;
-//p.nb_etoil = 0;
-//p.image = null;
-if (this.selectedFile) {
-  p.image = this.selectedFile;
+p.image = this.file; // Assign the image file to the 'image' attribute
+const title = this.myForm.get('postTitle')?.value;
+if (this.file) {
+  this.savePhoto(this.file, p);
+} else {
+  this.addPost(p);
 }
-console.log(this.myForm.value); // Log the entire post object
+/*console.log(this.myForm.value); // Log the entire post object
 console.log(this.posts);
 this.s.addPost(p).subscribe(()=>this.myForm.reset()); //pour supprimer le continue apres l'ajjout
 
-this.gotoList();
+this.gotoList();*/
 }
+addPost(post: Post): void {
+console.log(post);
+  this.s.addPost(post).subscribe(() => {
+    this.myForm.reset(); // Reset the form after adding the post
+    this.gotoList();
+  });
+}
+
 gotoList() {
 this.router.navigate(['/admin/ListPost']);
 }
+
+onFileInput(files: FileList | null): void {
+  if (files) {
+    this.file = files.item(0);
+    if (this.file) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(this.file);
+      fileReader.onload = (event) => {
+        if (fileReader.result) {
+          this.imgUrl = fileReader.result;
+        }
+      };
+    }
+  }
+}
+savePhoto(file: File, post: Post): void {
+  const title = this.myForm.get('postTitle')?.value;
+  if (title) {
+    this.photoService.uploadImage(file, title)
+      .subscribe({
+        next: (res: string) => { 
+          post.image = res;
+          this.addPost(post);
+          console.log('Image uploaded successfully:', res);
+        },
+        error: (error: any) => {
+          console.error('Error uploading image:', error);
+        }
+      });
+  }
+}
+
+
 
 }

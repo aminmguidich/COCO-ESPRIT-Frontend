@@ -43,7 +43,7 @@
                           <!-- Column for Post Content -->
                           <div class="col-md-8">
                             <h4>{{ post.postTitle }}</h4>
-                            <img src="assets/logo.png" width="100px" height="100px">
+                            <img [src]="post.image" width="100px" height="100px">
                             <p><span style="font-weight: bold; color: black;">Description :</span> {{ post.body }}</p>
                             <p style="color: #8c8c8c; font-size: 12px; margin-top: 10px;">{{ post.createdAt | date:'MMM d, y h:mm a' }}</p>
 
@@ -81,7 +81,10 @@
                                                     {{ reply.commentedAt | date:'MMM d, y h:mm a' }}</span>
                                               </p>
                                               <p> {{ reply.commentBody }}</p>
+                                              <button class="btn btn-link btn-sm me-2"><i class="bi bi-heart"></i> Like</button>
+
                                             </div>
+
                                       </ul>
                                     </div>
                                   </div>
