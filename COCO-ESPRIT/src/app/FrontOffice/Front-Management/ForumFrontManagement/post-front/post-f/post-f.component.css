@@ -4,10 +4,24 @@
   }
   
   .example-full-width {
-    width: 80%; /* Vous pouvez ajuster la largeur selon vos besoins */
+    width: 50%; /* Vous pouvez ajuster la largeur selon vos besoins */
   }
   
   .example-textarea {
     font-size: 14px; /* Définissez la taille de la police pour la zone de texte */
+  }
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  .custom-toolbar {
+    background-color: #c8838b; /* Couleur rose Instagram */
+    /* Autres styles personnalisés */
+  }
+  .button-clor {
+    background-color: #b63f4d;
+    color: white;
+  }
+  .custom-toolbar .toolbar-text {
+    color: white; /* Couleur du texte en blanc */
   }
   

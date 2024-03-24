@@ -5,6 +5,9 @@ import { CommentPost } from 'src/app/BackOffice/Back-Core/Models/Forum/CommentPo
 import { Post } from 'src/app/BackOffice/Back-Core/Models/Forum/Post';
 import { CommentService } from 'src/app/BackOffice/Back-Core/Services/ForumS/comment.service';
 import { PostService } from 'src/app/BackOffice/Back-Core/Services/ForumS/post.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddPostFComponent } from '../add-post-f/add-post-f.component';
+
 @Component({
   selector: 'app-post-f',
   templateUrl: './post-f.component.html',
@@ -25,22 +28,55 @@ export class PostFComponent implements OnInit {
     commentReplayCounts: { [commentId: number]: Observable<number> } = {};
 
 
-  constructor(private route: ActivatedRoute, private postService: PostService,private commentService:CommentService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private postService: PostService,
+    private commentService:CommentService,
+    private _dialog: MatDialog
+    ) { }
   ngOnInit(): void {
     this.reloadData();
   }
   reloadData() {
-    this.posts = this.postService.getPostList();
-    const startIndex = (this.currentPage - 1) * this.postsPerPage;
-  this.posts = this.postService.getPostList().pipe(
-    map(posts => posts.slice(startIndex, startIndex + this.postsPerPage))
-  );
-
-  this.postService.getPostList().subscribe(posts => {
-    this.pageSize = Math.ceil(posts.length / this.postsPerPage);
-  });
+    // Récupérer la liste des posts
+    this.postService.getPostList().subscribe(posts => {
+      // Trier les posts dans l'ordre décroissant en fonction de leur date de création
+      posts.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
+  
+      // Calculer la taille de la page en fonction du nombre total de posts
+      this.pageSize = Math.ceil(posts.length / this.postsPerPage);
+  
+      // Calculer l'index de début pour la pagination
+      const startIndex = (this.currentPage - 1) * this.postsPerPage;
+  
+      // Sélectionner les posts pour la page actuelle
+      this.posts = of(posts.slice(startIndex, startIndex + this.postsPerPage));
+    });
   }
+  
 
+//pagination front
+pageSize: number; 
+postsPerPage: number = 3;
+currentPage: number = 1;
+pageChange: EventEmitter<number> = new EventEmitter<number>();
+
+
+goToPage(pageNumber: number) {
+  this.currentPage = pageNumber;
+  this.reloadData();
+}
+
+//add post
+openAddEditEmpForm() {
+  const dialogRef = this._dialog.open(AddPostFComponent);
+}
+
+get pageSizeArray(): number[] {
+  return Array.from({ length: this.pageSize }, (_, i) => i + 1);
+}
 
 // Function to check if there are comments for a post
 hasComments(postId: number): Observable<boolean> {
@@ -88,23 +124,6 @@ this.commentReplayCounts[commentId] = this.commentService.getReplies(commentId).
       this.commentReplayCounts[commentId] = of(0);
     }
   })
-}
-
-//pagination front
-pageSize: number; 
-postsPerPage: number = 3;
-currentPage: number = 1;
-pageChange: EventEmitter<number> = new EventEmitter<number>();
-
-
-goToPage(pageNumber: number) {
-  this.currentPage = pageNumber;
-  this.reloadData();
-}
-
-
-get pageSizeArray(): number[] {
-  return Array.from({ length: this.pageSize }, (_, i) => i + 1);
 }
 
 }

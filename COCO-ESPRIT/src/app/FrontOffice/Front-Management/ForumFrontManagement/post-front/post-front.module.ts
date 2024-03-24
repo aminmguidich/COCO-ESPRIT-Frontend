@@ -7,6 +7,8 @@ import { AddPostFComponent } from './add-post-f/add-post-f.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,9 @@ import { MatInputModule } from '@angular/material/input';
     HttpClientModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatToolbarModule,
+    MatDialogModule,
+
   ]
 })
 export class PostFrontModule { }
