@@ -1,1 +1,76 @@
-<p>post-f works!</p>
+<section class="hero-wrap hero-wrap-2 js-fullheight"
+    style="background-image: url('/assets/post.png');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start"
+            style="height: 490px;">
+            <div class="col-md-9 ftco-animate pb-5 fadeInUp ftco-animated">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
+                                class="ion-ios-arrow-forward"></i></a></span> <span>Post <i
+                            class="ion-ios-arrow-forward"></i></span></p>
+                <h1 class="mb-3 bread">Our Post</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+
+            <div *ngFor="let post of posts | async" class="row">
+                <div class="col-md-12 text-center d-flex ftco-animate fadeInUp ftco-animated">
+                    <div class="blog-entry justify-content-end mb-md-5">
+                        <div *ngIf="post.image">
+                            <img class="block-20 img" [style.backgroundImage]="'url(' + post.image + ')'">
+                        </div>
+                        <div class="text px-md-5 pt-4">
+                            <div class="meta mb-3">
+                                <div><a >{{ post.createdAt | date }}</a></div>
+                                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                            </div>
+                            <h3 class="heading mt-2"><a>{{ post.postTitle }}</a></h3>
+                            <p>{{ post.body }}</p>
+
+                                  <form class="example-form">
+                                    <mat-form-field class="example-full-width">
+                                      <mat-label class="mat-hide-placeholder">Leave a comment</mat-label>
+                                        <br>
+                                      <textarea matInput class="example-textarea" placeholder=""></textarea>
+                                    </mat-form-field>
+                                  </form>
+                              
+                              
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            
+          
+
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <div class="block-27">
+                    <ul>
+                        
+                        <ng-container *ngFor="let page of pageSizeArray">
+                            
+                            <li [class.active]="currentPage === page">
+                                <a routerLink="/ListPostFront" (click)="goToPage(page)">
+                                    {{ page }}
+                                </a>
+                            </li>
+                        </ng-container>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</section>

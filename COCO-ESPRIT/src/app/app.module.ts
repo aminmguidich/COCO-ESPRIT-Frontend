@@ -23,6 +23,7 @@ import { ReactCarpoolingModule } from './BackOffice/Back-Management/Carpooling/r
 import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
 import { PostModule } from './BackOffice/Back-Management/ForumManagement/post/post.module';
 import { PostFrontModule } from './FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { PostFrontModule } from './FrontOffice/Front-Management/ForumFrontManage
     ReactCarpoolingModule,
     PostModule,
     PostFrontModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -36,18 +36,18 @@ const routes: Routes = [
         path:"cars",
         component:CarsFrontComponent
       },
-      {
+     /* {
         path:"blog",
         component:BlogFrontComponent
-      },
+      },*/
       {
         path:"contact",
         component:ContactFrontComponent
       },
-     /* {
+      {
         path: "ListPostFront",
-        loadChildren: () => import('./FrontOffice/ForumFront/PostFrontModule.module').then(m => m.PostFrontModule),
-    },*/
+        loadChildren: () => import('./FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module').then(m => m.PostFrontModule),
+    }
 
     ]
   },
