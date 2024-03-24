@@ -37,14 +37,7 @@
                             </div>
                             <h3 class="heading mt-2"><a>{{ post.postTitle }}</a></h3>
                             <p>{{ post.body }}</p>
-
-                                  <form class="example-form">
-                                    <mat-form-field class="example-full-width">
-                                      <mat-label class="mat-hide-placeholder">Leave a comment</mat-label>
-                                        <br>
-                                      <textarea matInput class="example-textarea" placeholder=""></textarea>
-                                    </mat-form-field>
-                                  </form>
+                            <app-addcommentf [idPost]="post.idPost"></app-addcommentf>
                               
                               
                         </div>

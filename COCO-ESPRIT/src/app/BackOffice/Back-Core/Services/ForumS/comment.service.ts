@@ -13,8 +13,8 @@ export class CommentService {
    constructor(private http: HttpClient) { }
   /******** Comments **********/
 
-  addComment(post: CommentPost) : Observable<any>{
-    return this.http.post("http://localhost:9092/COCO/addCommentPost", post);
+  addComment(id: number,post: CommentPost) : Observable<any>{
+    return this.http.post(`http://localhost:9092/COCO/addCommenttoPost/${id}`, post);
   
   }
   getCommentList(): Observable<CommentPost[]> {

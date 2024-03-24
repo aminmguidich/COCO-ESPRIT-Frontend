@@ -9,11 +9,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AddcommentfComponent } from './addcommentf/addcommentf.component';
 
 @NgModule({
   declarations: [
     PostFComponent,
-    AddPostFComponent
+    AddPostFComponent,
+    AddcommentfComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -26,5 +29,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule,
 
   ]
+  
 })
+
+
 export class PostFrontModule { }

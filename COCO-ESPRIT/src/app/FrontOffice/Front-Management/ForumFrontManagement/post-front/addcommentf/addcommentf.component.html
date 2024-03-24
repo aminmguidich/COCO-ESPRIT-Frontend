@@ -1,0 +1,12 @@
+<form class="example-form" (submit)="onSubmit()" [formGroup]="myForm" style="display: flex; flex-direction: column;">
+  <div style="margin-bottom: 10px;">
+  <mat-form-field class="example-full-width">
+    <mat-label class="mat-hide-placeholder">Leave a comment</mat-label>
+      <br>
+    <textarea matInput class="example-textarea" placeholder="" formControlName="commentBody"></textarea>
+    <p><button class="btn btn-primary" type="submit">Submit <span class="icon-long-arrow-right"></span></button></p>
+
+  </mat-form-field>
+</div>
+
+</form>
