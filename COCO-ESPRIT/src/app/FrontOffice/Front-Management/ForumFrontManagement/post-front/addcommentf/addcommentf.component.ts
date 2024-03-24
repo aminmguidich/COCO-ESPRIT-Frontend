@@ -34,7 +34,7 @@ export class AddcommentfComponent implements OnInit {
   c.commentedAt = new Date();
  
     this.addComment(this.idPost,c);
-    this.myForm.reset(); // Reset the form after adding the post
+        this.myForm.reset(); // Reset the form after adding the post
 
   }
 

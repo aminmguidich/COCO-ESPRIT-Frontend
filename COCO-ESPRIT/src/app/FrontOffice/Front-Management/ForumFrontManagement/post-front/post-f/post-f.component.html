@@ -1,4 +1,6 @@
-<section class="hero-wrap hero-wrap-2 js-fullheight"
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <section class="hero-wrap hero-wrap-2 js-fullheight"
     style="background-image: url('/assets/post.png');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
@@ -16,7 +18,7 @@
 <mat-toolbar class="custom-toolbar">
     <span class="toolbar-text">Welcome to Our Community</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button class=" btn button-clor"  (click)="openAddEditEmpForm()">Add Post</button>
+    <button mat-raised-button class=" btn button-clor"  (click)="openAddPostForm()">Add Post</button>
 
 </mat-toolbar>
 <section class="ftco-section">
@@ -33,11 +35,22 @@
                         <div class="text px-md-5 pt-4">
                             <div class="meta mb-3">
                                 <div><a >{{ post.createdAt | date }}</a></div>
-                                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+
+                                        <div>
+                                            <button  mat-raised-button [disabled]="!(hasComments(post.idPost))" class="btn btn-link btn-lg" (click)="showComments(post.idPost)">
+                                            <i class="bi bi-chat-left-text-fill"></i>
+                                            <span  *ngIf="(commentCounts[post.idPost] | async) > 0">
+                                            {{ (commentCounts[post.idPost] | async) }}
+                                            </span>
+                                        </button>
+                                        </div>
+
+
                             </div>
                             <h3 class="heading mt-2"><a>{{ post.postTitle }}</a></h3>
                             <p>{{ post.body }}</p>
                             <app-addcommentf [idPost]="post.idPost"></app-addcommentf>
+                            
                               
                               
                         </div>

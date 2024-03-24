@@ -7,6 +7,8 @@ import { CommentService } from 'src/app/BackOffice/Back-Core/Services/ForumS/com
 import { PostService } from 'src/app/BackOffice/Back-Core/Services/ForumS/post.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPostFComponent } from '../add-post-f/add-post-f.component';
+import { ListCommentComponent } from 'src/app/BackOffice/Back-Management/ForumManagement/comment/list-comment/list-comment.component';
+import { ListcommentfComponent } from '../listcommentf/listcommentf.component';
 
 @Component({
   selector: 'app-post-f',
@@ -44,14 +46,8 @@ export class PostFComponent implements OnInit {
       posts.sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
-  
-      // Calculer la taille de la page en fonction du nombre total de posts
       this.pageSize = Math.ceil(posts.length / this.postsPerPage);
-  
-      // Calculer l'index de début pour la pagination
       const startIndex = (this.currentPage - 1) * this.postsPerPage;
-  
-      // Sélectionner les posts pour la page actuelle
       this.posts = of(posts.slice(startIndex, startIndex + this.postsPerPage));
     });
   }
@@ -70,9 +66,11 @@ goToPage(pageNumber: number) {
 }
 
 //add post
-openAddEditEmpForm() {
+openAddPostForm() {
   const dialogRef = this._dialog.open(AddPostFComponent);
 }
+
+
 
 get pageSizeArray(): number[] {
   return Array.from({ length: this.pageSize }, (_, i) => i + 1);
@@ -90,40 +88,25 @@ hasComments(postId: number): Observable<boolean> {
 
 showComments(postId: number): void {
   this.hasComments(postId).subscribe(hasComments => {
-      if (hasComments) {
-          this.currentPostIdWithVisibleComments = postId;
-          this.commentList = this.commentService.getCommentsForPost(postId);
-          this.commentCounts[postId] = this.commentService.getCommentsForPost(postId).pipe(
-              map(comments => comments.length)
-          );
-      } else {
-          this.currentPostIdWithVisibleComments = null;
-          this.commentCounts[postId] = of(0);
-      }
+    if (hasComments) {
+      this.currentPostIdWithVisibleComments = postId;
+      this.commentList = this.commentService.getCommentsForPost(postId);
+      this.commentCounts[postId] = this.commentService.getCommentsForPost(postId).pipe(
+        map(comments => comments.length)
+      );
+
+      // Ouvrir le dialogue en passant l'ID du post
+      const dialogRef = this._dialog.open(ListcommentfComponent, {
+        data: { postId: postId }
+      });
+    } else {
+      this.currentPostIdWithVisibleComments = null;
+      this.commentCounts[postId] = of(0);
+    }
   });
 }
 
-hasReplies(commentId: number): Observable<boolean> {
-  return this.commentService.getReplies(commentId).pipe(
-      map(comments => !!comments && comments.length > 0)
-  );
-}
 
 
-// Méthode pour basculer l'état d'affichage des réponses pour un commentaire donné
-showReplies(commentId: number): void {
-  this.hasReplies(commentId).subscribe(hasReplies =>{
-    if(hasReplies){
-this.currentCommentIdWithVisibleComments = commentId;
-this.commentReplies[commentId] = this.commentService.getReplies(commentId);
-this.commentReplayCounts[commentId] = this.commentService.getReplies(commentId).pipe(
-  map(comments => comments.length)
-);
-    }else{
-      this.currentCommentIdWithVisibleComments = null;
-      this.commentReplayCounts[commentId] = of(0);
-    }
-  })
-}
 
 }

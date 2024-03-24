@@ -1,0 +1,33 @@
+<div class="card-body custom-background">
+    <h5 class="display-6 text">Comments</h5> <!-- Utilisez la classe display-6 pour un titre plus grand -->
+    <div *ngIf="hasComments(idPost)">
+        <hr>
+        <div *ngFor="let comment of commentList" class="comment-container card mb-3 ">
+            <div class="d-flex align-items-start">
+                <div class="flex-grow-1">
+                    <p class="comment-meta">{{ comment.commentedAt | date:'MMM d, y h:mm a' }}</p>
+                    <p>{{ comment.commentBody }}</p>
+                    <div class="comment-actions">
+                        <button class="btn btn-link btn-sm"><i class="bi bi-heart"></i> Like</button>
+                        <button [disabled]="!(hasReplies(comment.idCommentPost))" class="btn btn-link btn-sm" (click)="showReplies(comment.idCommentPost)">
+                            <i class="bi bi-chat"></i> View Replies
+                            <span class="badge bg-secondary" *ngIf="(commentReplayCounts[comment.idCommentPost] | async) > 0">
+                                {{ (commentReplayCounts[comment.idCommentPost] | async) }}
+                            </span>
+                        </button>
+                    </div>
+                    <div *ngIf="hasReplies(comment.idCommentPost)" class="reply-list">
+                        <div *ngFor="let reply of commentReplies[comment.idCommentPost] | async" class="reply-container card mb-3">
+                            <p class="comment-meta">{{ reply.commentedAt | date:'MMM d, y h:mm a' }}</p>
+                            <p>{{ reply.commentBody }}</p>
+                            <button class="btn btn-link btn-sm"><i class="bi bi-heart"></i> Like</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a mat-raised-button [mat-dialog-close]="false" class="bi bi-x-circle-fill">Cancel</a>
+
+
+</div>

@@ -10,12 +10,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddcommentfComponent } from './addcommentf/addcommentf.component';
+import { ListcommentfComponent } from './listcommentf/listcommentf.component';
 
 @NgModule({
   declarations: [
     PostFComponent,
     AddPostFComponent,
     AddcommentfComponent,
+    ListcommentfComponent,
     
   ],
   imports: [

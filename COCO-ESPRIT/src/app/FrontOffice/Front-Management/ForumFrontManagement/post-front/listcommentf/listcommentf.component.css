@@ -1,0 +1,48 @@
+/* Style des commentaires */
+.comment-container {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+
+  }
+  
+  .comment-container p {
+    margin: 0;
+  }
+  
+  .comment-meta {
+    color: #8c8c8c;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  
+  .comment-actions {
+    margin-top: 10px;
+  }
+  
+  .comment-actions button {
+    margin-right: 10px;
+  }
+  
+  .reply-list {
+    margin-top: 10px;
+  }
+  
+  /* Style des réponses */
+  .reply-container {
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+    padding: 5px;
+    border-radius: 3px;
+  }
+  
+  .custom-background {
+    background-color: rgb(240, 192, 199); /* Changez cette couleur selon vos préférences */
+}
+.text {
+    color: rgb(157, 157, 157); /* Couleur du texte en blanc */
+  }
+  .example-spacer {
+    flex: 1 1 auto;
+  }
