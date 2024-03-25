@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, of } from 'rxjs';
 import { CommentPost } from 'src/app/BackOffice/Back-Core/Models/Forum/CommentPost';
@@ -36,9 +36,36 @@ export class PostFComponent implements OnInit {
     private commentService:CommentService,
     private _dialog: MatDialog
     ) { }
+
   ngOnInit(): void {
     this.reloadData();
-  }
+ 
+}
+handleRating(postId: number, rating: number) {
+  this.postService.updatePostRating(postId, rating).subscribe({
+    next: () => {
+      this.posts.subscribe({
+        next: postsArray => {
+          const postToUpdate = postsArray.find(post => post.idPost === postId);
+          if (postToUpdate) {
+            postToUpdate.nb_etoil = rating;
+            console.log(postToUpdate.nb_etoil);
+            
+          }
+        },
+        error: error => {
+          console.error('Failed to update post rating:', error);
+        }
+      });
+    },
+    error: error => {
+      console.error('Failed to update post rating:', error);
+    }
+  });
+}
+
+
+
   reloadData() {
     // Récupérer la liste des posts
     this.postService.getPostList().subscribe(posts => {

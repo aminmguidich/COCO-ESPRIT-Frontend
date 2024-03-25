@@ -13,7 +13,8 @@ import { AddcommentfComponent } from './addcommentf/addcommentf.component';
 import { ListcommentfComponent } from './listcommentf/listcommentf.component';
 import { AddReplycommentfComponent } from './add-replycommentf/add-replycommentf.component';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatButtonModule} from '@angular/material/button';
+import { RaitingComponent } from './raiting/raiting.component';
 @NgModule({
   declarations: [
     PostFComponent,
@@ -21,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
     AddcommentfComponent,
     ListcommentfComponent,
     AddReplycommentfComponent,
+    RaitingComponent,
     
   ],
   imports: [
@@ -33,6 +35,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatToolbarModule,
     MatDialogModule,
     MatIconModule,
+    MatButtonModule,
 
   ]
   

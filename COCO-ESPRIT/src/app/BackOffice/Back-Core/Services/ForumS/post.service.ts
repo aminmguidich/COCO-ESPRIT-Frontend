@@ -30,6 +30,11 @@ export class PostService {
     return this.http.delete(`http://localhost:9092/COCO/removePost/${idPost}`, { responseType: 'text' });
   }
 
+  updatePostRating(postId: number, nb_etoil: number): Observable<any> {
+    return this.http.put(`http://localhost:9092/COCO/updatePostRating/${postId}/${nb_etoil}`, null);
+
+  }
+
   /******** Reacts **********/
 
   

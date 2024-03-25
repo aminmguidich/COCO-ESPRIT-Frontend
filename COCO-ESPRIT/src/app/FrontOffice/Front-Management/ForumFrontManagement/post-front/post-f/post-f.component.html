@@ -50,7 +50,8 @@
                             <h3 class="heading mt-2"><a>{{ post.postTitle }}</a></h3>
                             <p>{{ post.body }}</p>
                             <app-addcommentf [idPost]="post.idPost"></app-addcommentf>
-                            
+                                <!-- rating -->
+                                <app-raiting (onRaiting)="handleRating(post.idPost, $event)"></app-raiting>
                               
                               
                         </div>
