@@ -17,6 +17,9 @@ export class CommentService {
     return this.http.post(`http://localhost:9092/COCO/addCommenttoPost/${id}`, post);
   
   }
+  addCommentToComment(idComm: number, comment: CommentPost): Observable<any> {
+    return this.http.post(`http://localhost:9092/COCO/addCommentToComment/${idComm}`, comment);
+  }
   getCommentList(): Observable<CommentPost[]> {
     return this.http.get<CommentPost[]>("http://localhost:9092/COCO/retrieveAllCommentPost");
   }

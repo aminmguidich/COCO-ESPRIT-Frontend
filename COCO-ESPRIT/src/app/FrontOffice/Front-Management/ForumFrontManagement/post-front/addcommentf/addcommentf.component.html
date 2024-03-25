@@ -1,9 +1,13 @@
 <form class="example-form" (submit)="onSubmit()" [formGroup]="myForm" style="display: flex; flex-direction: column;">
   <div style="margin-bottom: 10px;">
   <mat-form-field class="example-full-width">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
     <mat-label class="mat-hide-placeholder">Leave a comment</mat-label>
       <br>
-    <textarea matInput class="example-textarea" placeholder="" formControlName="commentBody"></textarea>
+            <textarea matInput class="example-textarea" placeholder="" formControlName="commentBody"></textarea>
+            <div *ngIf="commentBody.errors && commentBody.touched" class="text-danger">
+              <div *ngIf="commentBody.errors['required']">The comment field is empty. Please enter a comment before submitting!</div>
+            </div>
     <p><button class="btn btn-primary" type="submit">Submit <span class="icon-long-arrow-right"></span></button></p>
 
   </mat-form-field>

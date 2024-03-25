@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable ,map,of} from 'rxjs';
 import { CommentPost } from 'src/app/BackOffice/Back-Core/Models/Forum/CommentPost';
@@ -67,4 +67,38 @@ hasComments(postId: number): Observable<boolean> {
     })
   }
 
+
+  //pagination
+      // Propriétés pour la pagination
+      currentPage: number = 1;
+      itemsPerPage: number = 2;
+  
+      // Méthode pour paginer la liste de commentaires
+      get paginatedCommentList() {
+        if (this.commentList) {
+            const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+            const endIndex = startIndex + this.itemsPerPage;
+            return this.commentList.slice(startIndex, endIndex);
+        } else {
+            return [];
+        }
+    }
+    
+  
+      // Méthode pour générer les numéros de page
+      getPageNumbers() {
+        if (this.commentList) {
+            const totalPages = Math.ceil(this.commentList.length / this.itemsPerPage);
+            return Array(totalPages).fill(0).map((x, i) => i + 1);
+        } else {
+            return [];
+        }
+    }
+    
+      // Méthode pour définir la page actuelle
+      setCurrentPage(pageNumber: number) {
+          this.currentPage = pageNumber;
+      }
+
+    
 }

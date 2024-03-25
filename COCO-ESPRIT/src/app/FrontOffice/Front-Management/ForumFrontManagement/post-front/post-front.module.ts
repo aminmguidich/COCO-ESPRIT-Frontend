@@ -11,6 +11,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddcommentfComponent } from './addcommentf/addcommentf.component';
 import { ListcommentfComponent } from './listcommentf/listcommentf.component';
+import { AddReplycommentfComponent } from './add-replycommentf/add-replycommentf.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { ListcommentfComponent } from './listcommentf/listcommentf.component';
     AddPostFComponent,
     AddcommentfComponent,
     ListcommentfComponent,
+    AddReplycommentfComponent,
     
   ],
   imports: [
@@ -29,6 +32,7 @@ import { ListcommentfComponent } from './listcommentf/listcommentf.component';
     MatInputModule,
     MatToolbarModule,
     MatDialogModule,
+    MatIconModule,
 
   ]
   

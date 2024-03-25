@@ -3,15 +3,14 @@ import { Router } from '@angular/router';
 import { CommentPost } from 'src/app/BackOffice/Back-Core/Models/Forum/CommentPost';
 import { CommentService } from 'src/app/BackOffice/Back-Core/Services/ForumS/comment.service';
 import {  FormControl, FormGroup, Validators } from '@angular/forms';
-
 @Component({
-  selector: 'app-addcommentf',
-  templateUrl: './addcommentf.component.html',
-  styleUrls: ['./addcommentf.component.css']
+  selector: 'app-add-replycommentf',
+  templateUrl: './add-replycommentf.component.html',
+  styleUrls: ['./add-replycommentf.component.css']
 })
-export class AddcommentfComponent implements OnInit {
+export class AddReplycommentfComponent implements OnInit {
   myForm!: FormGroup;
-  @Input() idPost:number;
+  @Input() idComm:number;
 
   constructor(
     private service: CommentService,
@@ -30,30 +29,29 @@ export class AddcommentfComponent implements OnInit {
 
   onSubmit() {
     if (this.myForm.valid) { // Vérifier si le formulaire est valide
-
-    let c = new CommentPost();
-  c.commentBody=this.commentBody.value;
-  c.commentedAt = new Date();
- 
-    this.addComment(this.idPost,c);
-        this.myForm.reset(); // Reset the form after adding the post
-        alert('Commentaire ajouté avec succès!');
-
-      } else {
-        
-        console.log("Le champ de commentaire est vide. Veuillez saisir un commentaire avant de soumettre.");
-      }
+      let c = new CommentPost();
+      c.commentBody = this.commentBody.value;
+      c.commentedAt = new Date();
+    
+      this.addCommentToComment(this.idComm, c);
+      this.myForm.reset(); // Réinitialiser le formulaire après l'ajout du commentaire
+    } else {
+      // Gérer le cas où le formulaire n'est pas valide (champ vide)
+      // Par exemple, vous pouvez afficher un message d'erreur à l'utilisateur
+      console.log("Le champ de commentaire est vide. Veuillez saisir un commentaire avant de soumettre.");
+    }
   }
+  
 
-  addComment(id :number,comment: CommentPost): void {
+  addCommentToComment(idComm :number,comment: CommentPost): void {
 
     console.log(comment);
-      this.service.addComment(id,comment).subscribe(() => {
+      this.service.addCommentToComment(idComm,comment).subscribe(() => {
         this.gotoList();
       });
     }
     gotoList() {
       this.router.navigate(['/ListPostFront']);
       }
-      
+
 }

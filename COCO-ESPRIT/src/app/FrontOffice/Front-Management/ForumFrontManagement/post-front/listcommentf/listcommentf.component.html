@@ -1,8 +1,10 @@
 <div class="card-body custom-background">
-    <h5 class="display-6 text">Comments</h5> <!-- Utilisez la classe display-6 pour un titre plus grand -->
+    <h5 class="display-6 text">Comments</h5>
+    <!-- Utilisez la classe display-6 pour un titre plus grand -->
     <div *ngIf="hasComments(idPost)">
         <hr>
-        <div *ngFor="let comment of commentList" class="comment-container card mb-3 ">
+        <!-- Paginer la liste de commentaires -->
+        <div *ngFor="let comment of paginatedCommentList" class="comment-container card mb-3 ">
             <div class="d-flex align-items-start">
                 <div class="flex-grow-1">
                     <p class="comment-meta">{{ comment.commentedAt | date:'MMM d, y h:mm a' }}</p>
@@ -23,11 +25,18 @@
                             <button class="btn btn-link btn-sm"><i class="bi bi-heart"></i> Like</button>
                         </div>
                     </div>
+                    <app-add-replycommentf [idComm]="comment.idCommentPost"></app-add-replycommentf>
                 </div>
             </div>
         </div>
+        <!-- Ajouter des boutons de pagination -->
+        <nav aria-label="Comment Pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" *ngFor="let pageNumber of getPageNumbers()" [class.active]="pageNumber === currentPage">
+                    <a class="page-link" (click)="setCurrentPage(pageNumber)">{{ pageNumber }}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <a mat-raised-button [mat-dialog-close]="false" class="bi bi-x-circle-fill">Cancel</a>
-
-
 </div>
