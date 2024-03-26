@@ -5,6 +5,7 @@ import { CommentPost } from 'src/app/BackOffice/Back-Core/Models/Forum/CommentPo
 import { Post } from 'src/app/BackOffice/Back-Core/Models/Forum/Post';
 import { CommentService } from 'src/app/BackOffice/Back-Core/Services/ForumS/comment.service';
 import { PostService } from 'src/app/BackOffice/Back-Core/Services/ForumS/post.service';
+import { ReactService } from 'src/app/BackOffice/Back-Core/Services/ForumS/react.service';
 
 @Component({
   selector: 'app-postdetails',
@@ -24,21 +25,44 @@ commentCounts: { [postId: number]: Observable<number> } = {};
 //replay comment
 currentCommentIdWithVisibleComments: number | null = null;
 commentReplayCounts: { [commentId: number]: Observable<number> } = {};
+// New properties to store reaction counts
+reactionCounts: { [postId: number]: { LIKE: number; DISLIKE: number; LOVE: number; ANGRY: number; } } = {};
 
 
-  constructor(private route: ActivatedRoute, private postService: PostService,private commentService:CommentService) { }
+  constructor(
+    private route: ActivatedRoute,
+     private postService: PostService,
+     private commentService:CommentService,
+     private reactService:ReactService,
+
+     ) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.postId = +params['idPost']; // Get the postId parameter from the route
       this.getPostDetails();
+
+       
     });
   }
 
   getPostDetails(): void {
     this.postService.getPost(this.postId).subscribe(post => {
       this.post = post;
+      // Fetch reactions for each post and count occurrences
+      this.reactService.getReactsForPost(this.postId).subscribe(reactions => {
+        const counts = { LIKE: 0, DISLIKE: 0, LOVE: 0, ANGRY: 0 };
+        reactions.forEach(reaction => {
+          counts[reaction.typeReact]++;
+        });
+        this.reactionCounts[this.postId] = counts;
+      });
+      // Obtenir le nombre de commentaires pour chaque publication
+      this.commentService.getCommentsForPost(post.idPost).subscribe(comments => {
+        this.commentCounts[post.idPost] = of(comments.length);
+      });
     });
   }
+  
 // Function to check if there are comments for a post
 hasComments(postId: number): Observable<boolean> {
   return this.commentService.getCommentsForPost(postId).pipe(

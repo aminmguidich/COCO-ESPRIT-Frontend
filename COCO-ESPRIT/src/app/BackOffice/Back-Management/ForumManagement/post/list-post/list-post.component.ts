@@ -122,4 +122,18 @@ showComments(postId: number): void {
     this.currentPage = pageNumber;
     this.reloadData();
   }
+
+  truncateText(text: string): string {
+    if (!text || text.length === 0) {
+      return ''; 
+    }  
+    const words = text.split(' ');  
+    const firstThreeWords = words.slice(0, 3).join(' ');  
+    if (words.length > 3) {
+      return firstThreeWords + '...';
+    }
+  
+    return firstThreeWords; 
+  }
+  
 }

@@ -44,7 +44,7 @@
                                   <tr *ngFor="let i of posts | async">
                                     <td>{{ i.idPost }}</td>
                                     <td>{{i.postTitle}}</td>
-                                    <td>{{i.body}}</td>
+                                    <td>{{ truncateText(i.body) }}</td>
                                     <td>{{i.createdAt}}</td>
                                     <td>{{i.nb_etoil}}</td>
                                     <td>{{i.nb_Signal}}</td>
