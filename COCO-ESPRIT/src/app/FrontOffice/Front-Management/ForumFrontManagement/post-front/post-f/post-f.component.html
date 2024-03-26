@@ -47,30 +47,34 @@
                                         </button>
                                         
                                         
-                                        <button class="btn btn-link btn-sm me-2">
+                                        <button class="btn btn-link btn-sm me-2" (click)="addTypeReaction(post.idPost, 0)">
                                             <i class="bi bi-emoji-kiss"></i> 
                                             <span *ngIf="reactionCounts[post.idPost]?.LIKE !== undefined">
                                                 {{ reactionCounts[post.idPost]?.LIKE }}
                                             </span>
                                         </button>
-                                        <button class="btn btn-link btn-sm me-2">
+                                        
+                                        <button class="btn btn-link btn-sm me-2" (click)="addTypeReaction(post.idPost, 1)">
                                             <i class="bi bi-emoji-frown"></i>
                                             <span *ngIf="reactionCounts[post.idPost]?.DISLIKE !== undefined">
                                                 {{ reactionCounts[post.idPost]?.DISLIKE }}
                                             </span>
                                         </button>
-                                        <button class="btn btn-link btn-sm me-2">
+                                        
+                                        <button class="btn btn-link btn-sm me-2" (click)="addTypeReaction(post.idPost, 2)">
                                             <i class="bi bi-heart"></i>
                                             <span *ngIf="reactionCounts[post.idPost]?.LOVE !== undefined">
                                                 {{ reactionCounts[post.idPost]?.LOVE }}
                                             </span>
                                         </button>
-                                        <button class="btn btn-link btn-sm me-2">
+                                        
+                                        <button class="btn btn-link btn-sm me-2" (click)="addTypeReaction(post.idPost, 3)">
                                             <i class="bi bi-emoji-angry"></i>
                                             <span *ngIf="reactionCounts[post.idPost]?.ANGRY !== undefined">
                                                 {{ reactionCounts[post.idPost]?.ANGRY }}
                                             </span>
                                         </button>
+                                        
                                         
                                         
 

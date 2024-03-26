@@ -10,6 +10,7 @@ import { AddPostFComponent } from '../add-post-f/add-post-f.component';
 import { ListcommentfComponent } from '../listcommentf/listcommentf.component';
 import { ReactService } from 'src/app/BackOffice/Back-Core/Services/ForumS/react.service';
 import { TypeReact } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeReact';
+import { ReactPost } from 'src/app/BackOffice/Back-Core/Models/Forum/ReactPost';
 
 @Component({
   selector: 'app-post-f',
@@ -152,6 +153,27 @@ showComments(postId: number): void {
   });
 }
 
+
+
+
+  // Méthode pour gérer l'ajout de type de réaction au post
+  addTypeReaction(postId: number, type: TypeReact): void {
+    this.reactService.addTypeReacttoPost(postId, type).subscribe(() => {
+      // Mettre à jour les compteurs de réaction
+      this.updateReactionCounts(postId);
+    });
+  }
+
+// Méthode pour mettre à jour le nombre de réactions après l'ajout de la réaction
+updateReactionCounts(postId: number): void {
+  this.reactService.getReactsForPost(postId).subscribe(reactions => {
+    const counts = { LIKE: 0, DISLIKE: 0, LOVE: 0, ANGRY: 0 };
+    reactions.forEach(reaction => {
+      counts[reaction.typeReact]++;
+    });
+    this.reactionCounts[postId] = counts;
+  });
+}
 
 
 
