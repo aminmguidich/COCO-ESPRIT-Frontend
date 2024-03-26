@@ -15,6 +15,8 @@ import { AddReplycommentfComponent } from './add-replycommentf/add-replycommentf
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
 import { RaitingComponent } from './raiting/raiting.component';
+import { AddReactFrontComponent } from './add-react-front/add-react-front.component';
+
 @NgModule({
   declarations: [
     PostFComponent,
@@ -23,6 +25,7 @@ import { RaitingComponent } from './raiting/raiting.component';
     ListcommentfComponent,
     AddReplycommentfComponent,
     RaitingComponent,
+    AddReactFrontComponent,
     
   ],
   imports: [

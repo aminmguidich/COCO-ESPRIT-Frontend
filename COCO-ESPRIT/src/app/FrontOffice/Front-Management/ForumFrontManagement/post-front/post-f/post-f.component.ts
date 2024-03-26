@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, of } from 'rxjs';
 import { CommentPost } from 'src/app/BackOffice/Back-Core/Models/Forum/CommentPost';
@@ -7,8 +7,9 @@ import { CommentService } from 'src/app/BackOffice/Back-Core/Services/ForumS/com
 import { PostService } from 'src/app/BackOffice/Back-Core/Services/ForumS/post.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPostFComponent } from '../add-post-f/add-post-f.component';
-import { ListCommentComponent } from 'src/app/BackOffice/Back-Management/ForumManagement/comment/list-comment/list-comment.component';
 import { ListcommentfComponent } from '../listcommentf/listcommentf.component';
+import { ReactService } from 'src/app/BackOffice/Back-Core/Services/ForumS/react.service';
+import { TypeReact } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeReact';
 
 @Component({
   selector: 'app-post-f',
@@ -29,11 +30,14 @@ export class PostFComponent implements OnInit {
     currentCommentIdWithVisibleComments: number | null = null;
     commentReplayCounts: { [commentId: number]: Observable<number> } = {};
 
+// New properties to store reaction counts
+reactionCounts: { [postId: number]: { LIKE: number; DISLIKE: number; LOVE: number; ANGRY: number; } } = {};
 
   constructor(
     private route: ActivatedRoute, 
     private postService: PostService,
     private commentService:CommentService,
+    private reactService:ReactService,
     private _dialog: MatDialog
     ) { }
 
@@ -42,42 +46,57 @@ export class PostFComponent implements OnInit {
  
 }
 handleRating(postId: number, rating: number) {
-  this.postService.updatePostRating(postId, rating).subscribe({
-    next: () => {
-      this.posts.subscribe({
-        next: postsArray => {
-          const postToUpdate = postsArray.find(post => post.idPost === postId);
-          if (postToUpdate) {
-            postToUpdate.nb_etoil = rating;
+  this.postService.getPost(postId).subscribe({
+    next: (postToUpdate) => {
+      if (postToUpdate) {
+        const newRating = postToUpdate.nb_etoil + rating;
+        
+        this.postService.updatePostRating(postId, newRating).subscribe({
+          next: () => {
             console.log(postToUpdate.nb_etoil);
-            
+            console.log(rating);
           }
-        },
-        error: error => {
-          console.error('Failed to update post rating:', error);
-        }
-      });
-    },
-    error: error => {
-      console.error('Failed to update post rating:', error);
+        });
+      } 
     }
   });
 }
 
 
 
-  reloadData() {
-    // Récupérer la liste des posts
-    this.postService.getPostList().subscribe(posts => {
-      // Trier les posts dans l'ordre décroissant en fonction de leur date de création
-      posts.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      });
-      this.pageSize = Math.ceil(posts.length / this.postsPerPage);
-      const startIndex = (this.currentPage - 1) * this.postsPerPage;
-      this.posts = of(posts.slice(startIndex, startIndex + this.postsPerPage));
+
+reloadData() {
+  // Récupérer la liste des publications
+  this.postService.getPostList().subscribe(posts => {
+    // Trier les publications dans l'ordre décroissant en fonction de leur date de création
+    posts.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
-  }
+    this.pageSize = Math.ceil(posts.length / this.postsPerPage);
+    const startIndex = (this.currentPage - 1) * this.postsPerPage;
+    this.posts = of(posts.slice(startIndex, startIndex + this.postsPerPage));
+  
+    // Réinitialiser les compteurs de commentaires
+    this.commentCounts = {};
+
+    // Fetch reactions for each post and count occurrences
+    posts.forEach(post => {
+      this.reactService.getReactsForPost(post.idPost).subscribe(reactions => {
+        const counts = { LIKE: 0, DISLIKE: 0, LOVE: 0, ANGRY: 0 };
+        reactions.forEach(reaction => {
+          counts[reaction.typeReact]++;
+        });
+        this.reactionCounts[post.idPost] = counts;
+
+        // Obtenir le nombre de commentaires pour chaque publication
+        this.commentService.getCommentsForPost(post.idPost).subscribe(comments => {
+          this.commentCounts[post.idPost] = of(comments.length);
+        });
+      });
+    });
+  });
+}
+
   
 
 //pagination front
