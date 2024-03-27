@@ -58,13 +58,26 @@ if (this.file) {
 
 }
 addPost(post: Post): void {
-console.log(post);
-  this.s.addPost(post).subscribe(() => {
-    this.myForm.reset(); 
-    this._dialogRef.close(true);
-    //this.gotoList();
+  console.log(post);
+  this.s.AddWithoutBadWord(post).subscribe({
+    next: (response: string) => {
+      if (response === 'This post contain bad word') {
+        alert('The post contains bad words. Please remove them and try again.');
+      } else if (response === 'add successfuly') {
+        // Reset the form and close the dialog if the post is added successfully
+        this.myForm.reset(); 
+        this._dialogRef.close(true);
+        // Optionally, navigate to the post list or perform any other action
+      }
+    },
+    error: (error: any) => {
+      console.error('Error adding post:', error);
+      // Handle error gracefully, if needed
+    }
   });
 }
+
+
 
 gotoList() {
 this.router.navigate(['/ListPostFront']);

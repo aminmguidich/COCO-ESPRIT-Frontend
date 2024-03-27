@@ -35,7 +35,9 @@ export class PostService {
 
   }
 
-  /******** Reacts **********/
-
+  AddWithoutBadWord(post: Post) : Observable<any>{
+    return this.http.post("http://localhost:9092/COCO/AddWithoutBadWord", post,{ responseType: 'text' });
+  
+  }
   
 }

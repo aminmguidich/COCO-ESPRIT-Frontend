@@ -13,10 +13,7 @@ import { TypeReact } from '../../Models/Forum/TypeReact';
      constructor(private http: HttpClient) { }
 
 
-     addReacttoPost(id: number,react: ReactPost) : Observable<any>{
-        return this.http.post(`http://localhost:9092/COCO/addReacttoPost/${id}`, react);
-      
-      }
+   
       retrieveAllReactPost(): Observable<ReactPost[]> {
         return this.http.get<ReactPost[]>(`http://localhost:9092/COCO/retrieveAllReactPost`);
       }
@@ -29,5 +26,17 @@ import { TypeReact } from '../../Models/Forum/TypeReact';
         return this.http.post(`http://localhost:9092/COCO/addTypeReacttoPost/${IdPost}`, typereact);
       
       }
+
+
+      getReactsForComment(idComment: number): Observable<ReactPost[]> {
+        return this.http.get<ReactPost[]>(`http://localhost:9092/COCO/getReactsForComment/${idComment}`);
+      }
+
+
+     
+      addReactToComment(idcomment: number, typereact: TypeReact): Observable<any> {
+        return this.http.post(`http://localhost:9092/COCO/addReactToComment/${idcomment}`, typereact);
+      }
       
+
   }

@@ -5,6 +5,8 @@ import { CommentPost } from 'src/app/BackOffice/Back-Core/Models/Forum/CommentPo
 import { Post } from 'src/app/BackOffice/Back-Core/Models/Forum/Post';
 import { CommentService } from 'src/app/BackOffice/Back-Core/Services/ForumS/comment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ReactService } from 'src/app/BackOffice/Back-Core/Services/ForumS/react.service';
+import { TypeReact } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeReact';
 
 @Component({
   selector: 'app-listcommentf',
@@ -22,10 +24,13 @@ export class ListcommentfComponent  implements OnInit {
     //replay comment
     currentCommentIdWithVisibleComments: number | null = null;
     commentReplayCounts: { [commentId: number]: Observable<number> } = {};
+// New properties to store reaction counts
+reactionCounts: { [postId: number]: { LIKE: number; DISLIKE: number; LOVE: number; ANGRY: number; } } = {};
 
   constructor(
     private route: ActivatedRoute, 
     private commentService:CommentService,
+    private reactService:ReactService,
     @Inject(MAT_DIALOG_DATA) public data: { postId: number }
     ) { }
 
@@ -34,8 +39,25 @@ export class ListcommentfComponent  implements OnInit {
       // Retrieve comments for the post and assign them to commentList
       this.commentService.getCommentsForPost(this.idPost).subscribe(comments => {
         this.commentList = comments;
+
+        // Réinitialiser les compteurs de commentaires
+    this.commentReplayCounts = {};
+        comments.forEach(comment => {
+          this.reactService.getReactsForComment(comment.idCommentPost).subscribe(reactions => {
+            const counts = { LIKE: 0, DISLIKE: 0, LOVE: 0, ANGRY: 0 };
+            reactions.forEach(reaction => {
+              counts[reaction.typeReact]++;
+            });
+            this.reactionCounts[comment.idCommentPost] = counts;  
+             // Obtenir le nombre de replies pour chaque commentaire
+        this.commentService.getReplies(comment.idCommentPost).subscribe(comments => {
+          this.commentReplayCounts[comment.idCommentPost] = of(comments.length);
+        });   
+          });
+        }); // Close the forEach loop here
       });
     }
+    
 
   
   hasReplies(commentId: number): Observable<boolean> {
@@ -100,5 +122,23 @@ hasComments(postId: number): Observable<boolean> {
           this.currentPage = pageNumber;
       }
 
-    
+      addTypeReaction(commentId: number, type: TypeReact): void {
+        if (commentId) {
+          this.reactService.addReactToComment(commentId, type).subscribe(() => {
+            // Update the reaction counts after adding the reaction
+            this.updateReactionCounts(commentId);
+          });
+        } 
+      }
+      
+      
+updateReactionCounts(commentId: number): void {
+  this.reactService.getReactsForComment(commentId).subscribe(reactions => {
+    const counts = { LIKE: 0, DISLIKE: 0, LOVE: 0, ANGRY: 0 };
+    reactions.forEach(reaction => {
+      counts[reaction.typeReact]++;
+    });
+    this.reactionCounts[commentId] = counts;
+  });
+}
 }
