@@ -15,6 +15,7 @@ import { AddReplycommentfComponent } from './add-replycommentf/add-replycommentf
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
 import { RaitingComponent } from './raiting/raiting.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RaitingComponent } from './raiting/raiting.component';
     ListcommentfComponent,
     AddReplycommentfComponent,
     RaitingComponent,
+    ChatComponent,
     
   ],
   imports: [

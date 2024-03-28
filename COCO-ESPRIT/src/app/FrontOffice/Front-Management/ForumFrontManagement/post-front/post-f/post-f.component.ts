@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, of } from 'rxjs';
 import { CommentPost } from 'src/app/BackOffice/Back-Core/Models/Forum/CommentPost';
 import { Post } from 'src/app/BackOffice/Back-Core/Models/Forum/Post';
@@ -11,6 +11,7 @@ import { ListcommentfComponent } from '../listcommentf/listcommentf.component';
 import { ReactService } from 'src/app/BackOffice/Back-Core/Services/ForumS/react.service';
 import { TypeReact } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeReact';
 import { ReactPost } from 'src/app/BackOffice/Back-Core/Models/Forum/ReactPost';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-post-f',
@@ -39,7 +40,8 @@ reactionCounts: { [postId: number]: { LIKE: number; DISLIKE: number; LOVE: numbe
     private postService: PostService,
     private commentService:CommentService,
     private reactService:ReactService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -117,7 +119,9 @@ openAddPostForm() {
   const dialogRef = this._dialog.open(AddPostFComponent);
 }
 
-
+openChat() {
+  this.router.navigate(['/chat/1']);
+}
 
 get pageSizeArray(): number[] {
   return Array.from({ length: this.pageSize }, (_, i) => i + 1);
