@@ -44,9 +44,9 @@ export class ListAnnoucementComponent implements OnInit{
 
   
 
-  goAdd(): void {
-    this.router.navigate(['carpooling/announcement/listAnn/addAnn']); // Navigate to the Add route
-  }
+ 
+
+  
 
 
 }

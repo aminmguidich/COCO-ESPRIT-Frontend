@@ -35,9 +35,13 @@ export class AddAnnoucementComponent implements OnInit {
           console.error(error);
         }
       );
+      
     }
   }
   
+  /*goList(): void {
+    this.router.navigate(['admin/carpooling/announcement/']); // Navigate to the List route
+  }*/
   
   
 

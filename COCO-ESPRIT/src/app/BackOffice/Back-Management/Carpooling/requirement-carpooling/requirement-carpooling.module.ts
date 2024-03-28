@@ -5,6 +5,7 @@ import { RequirementCarpoolingRoutingModule } from './requirement-carpooling-rou
 import { AddRequirementComponent } from './add-requirement/add-requirement.component';
 import { ListRequirementComponent } from './list-requirement/list-requirement.component';
 import { UpdateRequirementComponent } from './update-requirement/update-requirement.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { UpdateRequirementComponent } from './update-requirement/update-requirem
   ],
   imports: [
     CommonModule,
-    RequirementCarpoolingRoutingModule
+    RequirementCarpoolingRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class RequirementCarpoolingModule { }

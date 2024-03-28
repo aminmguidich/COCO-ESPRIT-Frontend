@@ -1,1 +1,51 @@
-<p>list-react works!RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</p>
+<body>
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5> Ratings</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5></h5>
+                                            <hr>
+                                            <table class="table">
+                                                <thead>
+                                                  <tr>
+                                                    <th scope="col">Id</th>
+                                                    <th scope="col">Reacts</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr *ngFor="let item of data; let i = index">
+                                                    <th scope="row">{{item.idReactCarpooling}}</th>
+                                                    <td>{{item.typeReact}}</td>
+                                                 </tr>
+                                                  
+                                                </tbody>
+                                              </table>
+                                              <hr>
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <!-- Input group -->
+                                </div>
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

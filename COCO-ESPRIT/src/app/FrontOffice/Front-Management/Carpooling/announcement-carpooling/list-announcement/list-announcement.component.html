@@ -1,0 +1,83 @@
+<div class="hero-wrap ftco-degree-bg" style="background-image: url('/assets/FrontOffice/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
+        <div class="col-lg-8 ftco-animate">
+            <div class="text w-100 text-center mb-md-5 pb-md-5">
+              <h1 class="mb-4">Fast &amp; Easy Way To Rent A Car</h1>
+              <p style="font-size: 18px;">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts</p>
+              <a href="https://vimeo.com/45830194" class="icon-wrap popup-vimeo d-flex align-items-center mt-4 justify-content-center">
+                  <div class="icon d-flex align-items-center justify-content-center">
+                      <span class="ion-ios-play"></span>
+                  </div>
+                  <div class="heading-title ml-5">
+                      <span>Easy steps for renting a car</span>
+                  </div>
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="ftco-section ftco-no-pt bg-light" >
+
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                  Add Announcement  </button>
+                                                    
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                      <app-add-announcement></app-add-announcement>
+                                                    </div>
+
+    <div class="container" >
+      <div   class="row" #s>
+        <div class="col mb-5" *ngFor="let item of availableData; let i = index">
+          <div *ngIf="item != null" class="card h-100 border-0">
+            
+            <!-- Product image -->
+            <img class="card-img-top" src="/assets/FrontOffice/images/car-4.jpg" alt="Card image cap">
+  
+            <!-- Product details -->
+            <div class="card-body p-4">
+              <h5 class="card-title mb-3">{{item.userAnnCarpooling.lastname}}</h5>
+              <hr>
+              <p>{{item.dateCarpoolingAnnouncement}}</p>
+              <hr>
+              <p class="card-text">{{item.description}}</p>
+              <hr>
+              <p>Score: {{item.userAnnCarpooling.score}}</p>
+              <p>Adress: {{item.userAnnCarpooling.adressUser.streetName}}</p>
+  
+              <!-- Rating or Ranking -->
+              <div class="rating">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+              </div>
+            </div>
+  
+            <!-- Product actions -->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                <!-- Learn More Button -->
+                <button type="button" class="btn btn-success">Details</button>
+                &nbsp;
+                <button type="button" class="btn btn-primary">Require</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <app-paginator [length]="data.length" (paginatorOutput)="onPageChange($event)"></app-paginator>
+      </div>
+
+    </div>
+
+  </section>
+
+                                                    
+
+  

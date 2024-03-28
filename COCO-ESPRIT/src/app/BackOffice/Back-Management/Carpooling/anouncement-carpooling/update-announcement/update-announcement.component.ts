@@ -52,7 +52,7 @@ export class UpdateAnnouncementComponent implements OnInit{
 
     this.annCarpoolingService.updateAnnCarpooling(this.annCarpooling).subscribe(
       (response) => {
-        alert('User Updated Successfully!');
+        alert('Announcement Updated Successfully!');
         //console.log(this.user)
         this.router.navigate(['admin/carpooling/announcement/']);
 

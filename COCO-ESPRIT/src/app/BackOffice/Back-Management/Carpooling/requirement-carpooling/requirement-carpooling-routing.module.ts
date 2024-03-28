@@ -14,7 +14,7 @@ const routes: Routes = [
     component:AddRequirementComponent
   },
   {
-    path:"updateReq",
+    path:"updateReq/:id",
     component:UpdateRequirementComponent
   }
 ];

@@ -24,6 +24,12 @@ import { RatingCarpoolingModule } from './BackOffice/Back-Management/Carpooling/
 import { ReactCarpoolingModule } from './BackOffice/Back-Management/Carpooling/react-carpooling/react-carpooling.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AnnouncementCarpoolingModule } from './FrontOffice/Front-Management/Carpooling/announcement-carpooling/announcement-carpooling.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatNativeDateModule} from '@angular/material/core';
+import { ListDragAndDropComponent } from './FrontOffice/list-drag-and-drop/list-drag-and-drop.component';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +48,7 @@ import { CommonModule } from '@angular/common';
     FooterBackComponent,
     NavbarBackComponent,
     SidebarBackComponent,
+    ListDragAndDropComponent,
     
 
   ],
@@ -56,6 +63,10 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    AnnouncementCarpoolingModule,
+    BrowserAnimationsModule,
+    
+    
 
     
   ],

@@ -1,56 +1,40 @@
-<body>
-    <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-
-                    <div class="main-body">
-                        <div class="page-wrapper">
-                            <!-- [ Main Content ] start -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5> Add Announcement</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5></h5>
-                                            <hr>
-                                            <form #addForm='ngForm' (ngSubmit)="add(addForm)" >
-                                                <div class="form-group">
-                                                    <label for="date">Date:</label>
-                                                    <input type="date" class="form-control" id="date" name="date"
-                                                    ngModel #fn="ngModel" required
-                                                    placeholder="Tapez la date">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="description">Description:</label>
-                                                    <input type="text" class="form-control" id="description" name="description"
-                                                    ngModel #fn="ngModel" required
-                                                    placeholder="Tapez la description">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="score">Score:</label>
-                                                    <input type="number" class="form-control" id="score" name="score"
-                                                    ngModel #fn="ngModel" required
-                                                    placeholder="Tapez le score">
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </form>
-                                            
-                                        </div>
-                                    </div>
-                                    <!-- Input group -->
-                                </div>
-                            </div>
-                            <!-- [ Main Content ] end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="modal-dialog">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Announcement</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+          <form #addForm='ngForm' (ngSubmit)="add(addForm)" >
+          <div class="form-group">
+             <label for="date">Date:</label>
+             <input type="date" class="form-control" id="date" name="date"
+                ngModel #fn="ngModel" required
+                placeholder="Tapez la date">
+          </div>
+          <div class="form-group">
+             <label for="description">Description:</label>
+             <input type="text" class="form-control" id="description" name="description"
+                ngModel #fn="ngModel" required
+                placeholder="Tapez la description">
+          </div>
+          <div class="form-group">
+             <label for="score">Score:</label>
+             <input type="number" class="form-control" id="score" name="score"
+                ngModel #fn="ngModel" required
+                placeholder="Tapez le score">
+          </div>
+          <hr>
+          <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+          </form>
+         
+         
+       </div>
     </div>
+</div>
 
-
-
-</body>
+<!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<button type="button" class="btn btn-primary">Save </button>-->
