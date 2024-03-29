@@ -188,5 +188,16 @@ handlePostAdded() {
   // Appelez reloadData() pour mettre à jour la liste des publications
   this.reloadData();
 }
+reportPost(postId: number): void {
+  this.postService.UpdatereportPost(postId).subscribe({
+    next: () => {
+      alert('Le post a été signalé avec succès.');
+      this.reloadData();
+    },
+    error: error => {
+      console.error('Une erreur s\'est produite lors du signalement du post :', error);
+    }
+  });
+}
 
 }

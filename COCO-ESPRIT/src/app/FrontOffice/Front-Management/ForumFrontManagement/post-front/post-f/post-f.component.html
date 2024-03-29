@@ -82,6 +82,13 @@
                                                 {{ reactionCounts[post.idPost]?.ANGRY }}
                                             </span>
                                         </button>
+
+                                        <span class="report-container">
+                                            <button style="color: red; border: none; background: none; padding: 0; font: inherit; cursor: pointer;" (click)="reportPost(post.idPost)">Report Post</button>
+                                            <span style="color: red;" *ngIf="post.nb_Signal > 0">  :{{ post.nb_Signal }}</span>
+                                        </span>
+                                        
+                                        
                                         
                                         
                                         
@@ -95,6 +102,7 @@
                             <app-addcommentf [idPost]="post.idPost"></app-addcommentf>
                                 <!-- rating -->
                                 <app-raiting (onRaiting)="handleRating(post.idPost, $event)"></app-raiting>
+
                               
                               
                         </div>

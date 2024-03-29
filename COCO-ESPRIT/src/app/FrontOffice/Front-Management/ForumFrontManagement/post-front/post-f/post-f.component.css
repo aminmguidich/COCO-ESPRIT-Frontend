@@ -37,4 +37,10 @@
     margin-right: 10px; /* Pour ajouter un espace entre les boutons */
 }
 
+.report-container {
+   
+     flex: 2;
+    margin-right: 10px;
+}
+
 

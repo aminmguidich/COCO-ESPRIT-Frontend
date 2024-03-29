@@ -41,6 +41,10 @@ export class PostService {
   }
   getMeilleurPost(): Observable<Post> {
     return this.http.get<Post>(`http://localhost:9092/COCO/MeilleurPost`);
+  
+  }
+  UpdatereportPost(idPost: number): Observable<any> {
+    return this.http.put<void>(`http://localhost:9092/COCO/UpdatereportPost/${idPost}`, {});
   }
   
 }
