@@ -16,6 +16,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
 import { RaitingComponent } from './raiting/raiting.component';
 import { ChatComponent } from './chat/chat.component';
+import { PostFacebookComponent } from './post-facebook/post-facebook.component';
+import { MatCardModule } from '@angular/material/card';
+import { MeilleurPostComponent } from './meilleur-post/meilleur-post.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,8 @@ import { ChatComponent } from './chat/chat.component';
     AddReplycommentfComponent,
     RaitingComponent,
     ChatComponent,
+    PostFacebookComponent,
+    MeilleurPostComponent,
     
   ],
   imports: [
@@ -39,6 +44,7 @@ import { ChatComponent } from './chat/chat.component';
     MatDialogModule,
     MatIconModule,
     MatButtonModule,
+    MatCardModule,
 
   ]
   

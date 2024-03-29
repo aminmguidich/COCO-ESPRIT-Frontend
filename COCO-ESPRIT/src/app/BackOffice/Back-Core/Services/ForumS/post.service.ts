@@ -39,5 +39,8 @@ export class PostService {
     return this.http.post("http://localhost:9092/COCO/AddWithoutBadWord", post,{ responseType: 'text' });
   
   }
+  getMeilleurPost(): Observable<Post> {
+    return this.http.get<Post>(`http://localhost:9092/COCO/MeilleurPost`);
+  }
   
 }

@@ -12,6 +12,7 @@ import { ReactService } from 'src/app/BackOffice/Back-Core/Services/ForumS/react
 import { TypeReact } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeReact';
 import { ReactPost } from 'src/app/BackOffice/Back-Core/Models/Forum/ReactPost';
 import { ChatComponent } from '../chat/chat.component';
+import { MeilleurPostComponent } from '../meilleur-post/meilleur-post.component';
 
 @Component({
   selector: 'app-post-f',
@@ -118,6 +119,10 @@ goToPage(pageNumber: number) {
 openAddPostForm() {
   const dialogRef = this._dialog.open(AddPostFComponent);
 }
+//best post
+openBestPostForm() {
+  const dialogRef = this._dialog.open(MeilleurPostComponent);
+}
 
 openChat() {
   this.router.navigate(['/chat/1']);
@@ -179,6 +184,9 @@ updateReactionCounts(postId: number): void {
   });
 }
 
-
+handlePostAdded() {
+  // Appelez reloadData() pour mettre à jour la liste des publications
+  this.reloadData();
+}
 
 }

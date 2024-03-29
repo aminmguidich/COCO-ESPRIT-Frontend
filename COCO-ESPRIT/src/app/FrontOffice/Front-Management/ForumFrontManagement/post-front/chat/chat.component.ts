@@ -8,7 +8,7 @@ import { Chat } from 'src/app/BackOffice/Back-Core/Models/Forum/Chat';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.css']
 })
 export class ChatComponent  implements OnInit {
 
