@@ -10,6 +10,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ListDragAndDropComponent } from 'src/app/FrontOffice/list-drag-and-drop/list-drag-and-drop.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -17,7 +19,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AddAnnouncementComponent,
     ListAnnouncementComponent,
     UpdateAnnouncementComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    ListDragAndDropComponent
+
+    
   ],
   imports: [
     CommonModule,
@@ -27,6 +32,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NgxPaginationModule,
     MatPaginatorModule,
     MatNativeDateModule,
+    DragDropModule
+  
+    
   ]
 })
 export class AnnouncementCarpoolingModule { }

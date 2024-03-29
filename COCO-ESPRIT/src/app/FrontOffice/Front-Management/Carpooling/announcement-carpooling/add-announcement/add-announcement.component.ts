@@ -15,6 +15,9 @@ export class AddAnnouncementComponent implements OnInit{
   
   ngOnInit() {
   }
+  OnAddAdress(){
+    console.log("hahahah")
+  }
   add(form: NgForm) {
     if (form.valid) {
       // Convert the string to a Date object

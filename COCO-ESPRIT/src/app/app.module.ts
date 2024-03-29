@@ -29,6 +29,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatNativeDateModule} from '@angular/material/core';
 import { ListDragAndDropComponent } from './FrontOffice/list-drag-and-drop/list-drag-and-drop.component';
+import { MapComponent } from './FrontOffice/map/map.component';
+import { MapContainerComponent } from './FrontOffice/map-container/map-container.component';
+import { MapPositionComponent } from './FrontOffice/map-position/map-position.component';
 
 
 @NgModule({
@@ -48,7 +51,9 @@ import { ListDragAndDropComponent } from './FrontOffice/list-drag-and-drop/list-
     FooterBackComponent,
     NavbarBackComponent,
     SidebarBackComponent,
-    ListDragAndDropComponent,
+    MapComponent,
+    MapContainerComponent,
+    MapPositionComponent,
     
 
   ],
@@ -64,8 +69,7 @@ import { ListDragAndDropComponent } from './FrontOffice/list-drag-and-drop/list-
     ReactiveFormsModule,
     CommonModule,
     AnnouncementCarpoolingModule,
-    BrowserAnimationsModule,
-    
+    BrowserAnimationsModule
     
 
     

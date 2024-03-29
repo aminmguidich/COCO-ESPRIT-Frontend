@@ -1,0 +1,9 @@
+<app-map [zoom]="zoom"
+[lat]="lat"
+[lng]="lng"
+(notify)="handleMapChange($event)"
+></app-map>
+
+<app-map-position      (notify)="handleInputChange($event)"
+> 
+</app-map-position>

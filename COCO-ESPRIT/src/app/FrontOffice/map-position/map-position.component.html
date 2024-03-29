@@ -1,0 +1,28 @@
+<div>
+    Zoom:
+    <input
+      (change)="notify.emit($event)"
+      name="zoom"
+      type="number"
+      [value]="zoom"
+    />
+  </div>
+  <div>
+    Latitude:
+    <input
+      (change)="notify.emit($event)"
+      name="lat"
+      type="number"
+      [value]="lat"
+    />
+  </div>
+  <div>
+    Longitude:
+    <input
+      (change)="notify.emit($event)"
+      name="lng"
+      type="number"
+      [value]="lng"
+    />
+  </div>
+  
