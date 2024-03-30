@@ -3,12 +3,12 @@ import { MessageType } from 'src/app/BackOffice/Back-Core/Models/Forum/MessageTy
 import { ChatService } from 'src/app/BackOffice/Back-Core/Services/ForumS/chat.service';
 import * as SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Chat } from 'src/app/BackOffice/Back-Core/Models/Forum/Chat';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent  implements OnInit {
 
@@ -17,7 +17,8 @@ export class ChatComponent  implements OnInit {
   messageList: any[] = [];
 
   constructor(private chatService: ChatService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router:Router
     ){
 
   }
@@ -75,5 +76,7 @@ export class ChatComponent  implements OnInit {
     this.messageList.push(leaveMessage);
   }
 
-  
+  gotoList() {
+    this.router.navigate(['/ListPostFront']);
+    }
 }

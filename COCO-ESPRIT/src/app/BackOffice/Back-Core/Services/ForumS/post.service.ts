@@ -44,7 +44,7 @@ export class PostService {
   
   }
   UpdatereportPost(idPost: number): Observable<any> {
-    return this.http.put<void>(`http://localhost:9092/COCO/UpdatereportPost/${idPost}`, {});
+    return this.http.put<void>(`http://localhost:9092/COCO/reportPost/${idPost}`, {});
   }
   
 }
