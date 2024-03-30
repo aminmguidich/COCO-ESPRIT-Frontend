@@ -49,6 +49,9 @@ export class ListPostComponent {
     this.postService.getPostList().subscribe(posts => {
       this.pageSize = Math.ceil(posts.length / this.postsPerPage);
     });
+
+    //recherch
+    this.filterPosts();
   }
   updatePost(idPost: number){
     this.router.navigate(['update', idPost]);
@@ -135,5 +138,45 @@ showComments(postId: number): void {
   
     return firstThreeWords; 
   }
+
+  //post expired
+  deleteExpiredPosts(): void {
+    this.postService.deleteExpiredPosts().subscribe({
+      next: () => {
+        alert('Publication expired deleted');
+      },
+      error: (error) => {
+        console.error('Error deleting post :', error);
+      }
+    });
+  }
+
+  //recherche ajax
+  searchText: string = ''; // Holds the search input text
+  filteredPosts: Observable<Post[]>; // Holds the filtered posts
+
+  filterPosts() {
+    this.filteredPosts = this.posts.pipe(
+      map(posts => {
+        if (!this.searchText.trim()) {
+          return posts; // If search text is empty, return all posts
+        }
+        const searchTerm = this.searchText.trim().toLowerCase();
+        return posts.filter(post => {
+          // Convert numeric values to string and then check for inclusion
+          const numericFields = [post.idPost, post.nb_etoil, post.nb_Signal];
+          const numericFieldsAsString = numericFields.map(value => value.toString());
+          const includesNumeric = numericFieldsAsString.some(value => value.includes(searchTerm));
+  
+          // Check if the post title or body contains the search term
+          const includesString = post.postTitle.toLowerCase().includes(searchTerm) ||
+                                 post.body.toLowerCase().includes(searchTerm);
+  
+          return includesNumeric || includesString;
+        });
+      })
+    );
+  }
+  
   
 }

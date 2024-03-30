@@ -16,13 +16,23 @@
                       <h5> Posts</h5>
                     </div>
                     <div class="card-body">
-                      <h5></h5>
-                      <hr>
+                        <div class="row mt-2">
+                          <div class="col-md-8">
+                            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" (input)="filterPosts()">
+                          </div>
+                          <div class="col-md-4 text-end">
+                            <a class="btn btn-primary me-2" [routerLink]="['AddPost']"><i class="bi bi-plus-circle-fill"></i>Add Post</a>
+                            <a class="btn btn-danger" (click)="deleteExpiredPosts()"><i class="fas fa-trash-alt"></i>&nbsp;Post expired</a>
+                          </div>
+                        </div>
+                        
+                       <hr>
 
                       <div class="container">
                         <div class="row mt-2">
                           <div class="col-md-4 offset-md-4">
-                            <a class="btn btn-primary" [routerLink]="['AddPost']"><i class="bi bi-plus-circle-fill"></i>Add</a>
+                           
+
                           </div>
                         </div>
                         <div class="row mt-2">
@@ -41,7 +51,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr *ngFor="let i of posts | async">
+                                  <tr *ngFor="let i of filteredPosts | async">
                                     <td>{{ i.idPost }}</td>
                                     <td>{{i.postTitle}}</td>
                                     <td>{{ truncateText(i.body) }}</td>

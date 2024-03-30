@@ -46,5 +46,8 @@ export class PostService {
   UpdatereportPost(idPost: number): Observable<any> {
     return this.http.put<void>(`http://localhost:9092/COCO/reportPost/${idPost}`, {});
   }
+  deleteExpiredPosts(): Observable<void> {
+    return this.http.delete<void>('http://localhost:9092/COCO/deletePostByTime', {});
+  }
   
 }
