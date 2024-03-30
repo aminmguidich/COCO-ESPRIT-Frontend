@@ -11,12 +11,33 @@ import { AnnouncementCarpoolingService } from 'src/app/FrontOffice/Front-Core/Se
   styleUrls: ['./add-announcement.component.css']
 })
 export class AddAnnouncementComponent implements OnInit{
+onRemoveItem($event: number) {
+  let newArr=this.adresses.slice(0,this.adresses.length-1).filter((value,index,array)=>
+     index!=$event)
+    newArr.push("Esprit")
+  this.adresses=newArr
+  
+  let newMarkersArr=this.markers.filter((value,index,array)=>
+  index!=$event)
+  this.markers=newMarkersArr;
+}
+
+  markers:Array<H.map.Marker>=[];
+  adresses:Array<string>=["Esprit"]
+onAddMarker($event:H.map.Marker) {
+  let newArr=this.adresses.slice(0,this.adresses.length-1)
+  newArr.push($event.getData())
+  newArr.push("Esprit")
+  this.markers.push($event)
+  this.adresses=newArr
+}
+  isMapVisible: Boolean=false;
   constructor(private annCarpoolingService:AnnouncementCarpoolingService , private router: Router) { }
   
   ngOnInit() {
   }
   OnAddAdress(){
-    console.log("hahahah")
+    this.isMapVisible=true
   }
   add(form: NgForm) {
     if (form.valid) {

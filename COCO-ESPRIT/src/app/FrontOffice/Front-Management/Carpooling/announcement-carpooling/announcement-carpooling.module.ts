@@ -11,8 +11,16 @@ import { PaginatorComponent } from '../paginator/paginator.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ListDragAndDropComponent } from 'src/app/FrontOffice/list-drag-and-drop/list-drag-and-drop.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import {CDK_DRAG_CONFIG, DragDropModule} from '@angular/cdk/drag-drop';
+import { MapContainerComponent } from 'src/app/FrontOffice/map-container/map-container.component';
+import { MapPositionComponent } from 'src/app/FrontOffice/map-position/map-position.component';
+import { MapComponent } from 'src/app/FrontOffice/map/map.component';
 
+const DragConfig = {
+  dragStartThreshold: 0,
+  pointerDirectionChangeThreshold: 5,
+  zIndex: 10000
+};
 
 @NgModule({
   declarations: [
@@ -20,7 +28,11 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     ListAnnouncementComponent,
     UpdateAnnouncementComponent,
     PaginatorComponent,
-    ListDragAndDropComponent
+    ListDragAndDropComponent,
+    MapContainerComponent,
+    MapComponent,
+    MapPositionComponent,
+
 
     
   ],
@@ -32,9 +44,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     NgxPaginationModule,
     MatPaginatorModule,
     MatNativeDateModule,
-    DragDropModule
-  
-    
-  ]
+    DragDropModule 
+  ],
+  providers: [{ provide: CDK_DRAG_CONFIG, useValue: DragConfig }]
+
 })
 export class AnnouncementCarpoolingModule { }

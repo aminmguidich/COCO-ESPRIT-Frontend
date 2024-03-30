@@ -1,17 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-map-container',
   templateUrl: './map-container.component.html',
   styleUrls: ['./map-container.component.css']
 })
-export class MapContainerComponent {
+export class MapContainerComponent implements OnChanges {
+
+  @Input()  markers:Array<H.map.Marker>=[];
+  @Output() OnAddMarker= new EventEmitter<H.map.Marker>();
+handleAddMarker($event: H.map.Marker) {
+  this.OnAddMarker.emit($event)
+}
   title = 'jsapi-angular';
 
   constructor() {
     this.zoom = 2;
     this.lat = 0;
     this.lng = 0;
+  }
+  ngOnChanges(changes: SimpleChanges): void {
   }
 
   zoom: number;

@@ -10,7 +10,5 @@ export class MapPositionComponent {
   @Input() public zoom = 2;
   @Input() public lat = 0;
   @Input() public lng = 0;
-
-
-
+  
 }
