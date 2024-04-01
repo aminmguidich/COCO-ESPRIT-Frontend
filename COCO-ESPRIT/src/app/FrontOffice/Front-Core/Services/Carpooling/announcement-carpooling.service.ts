@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AnnouncementCarpooling } from '../../Models/Carpooling/announcement-carpooling';
 import { catchError, throwError } from 'rxjs';
+import { Adress } from '../../Models/Carpooling/adress';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class AnnouncementCarpoolingService {
   }
   AddAnnCarpooling( annCarpooling: AnnouncementCarpooling) {
     return this.http.post<AnnouncementCarpooling>(this.URL+"/addAnnCarpooling", annCarpooling,this.httpOtions)
-
-
   }
+
+
 }

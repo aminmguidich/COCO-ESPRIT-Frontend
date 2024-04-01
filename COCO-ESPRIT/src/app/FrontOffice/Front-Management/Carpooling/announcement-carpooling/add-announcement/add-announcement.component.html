@@ -2,7 +2,7 @@
     <div class="modal-content">
        <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add Announcement</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button (click)="onClose()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
        </div>
        <div class="modal-body">
           <form #addForm='ngForm' (ngSubmit)="add(addForm)" >
@@ -19,10 +19,6 @@
                 placeholder="Tapez la description">
           </div>
           <div class="form-group">
-             <label for="score">Score:</label>
-             <input type="number" class="form-control" id="score" name="score"
-                ngModel #fn="ngModel" required
-                placeholder="Tapez le score">
                </div>
                <hr>
                <app-list-drag-and-drop (removeItemNotify)="onRemoveItem($event)" [adresses]="adresses"/>                
@@ -31,11 +27,11 @@
                    <button (click)="OnAddAdress()" type="button" class="btn btn-primary" >Add Stop</button>
                </div>
               <div *ngIf="isMapVisible">
-               <app-map-container [markers]="markers" (OnAddMarker)="onAddMarker($event)"></app-map-container>
+               <app-map-container id="map" [markers]="markers" (OnAddMarker)="onAddMarker($event)"></app-map-container>
             </div>
           <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="onClose()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
           </form>
          
