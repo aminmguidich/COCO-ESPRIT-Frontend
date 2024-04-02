@@ -21,6 +21,14 @@ import { AnouncementCarpoolingModule } from './BackOffice/Back-Management/Carpoo
 import { RequirementCarpoolingModule } from './BackOffice/Back-Management/Carpooling/requirement-carpooling/requirement-carpooling.module';
 import { RatingCarpoolingModule } from './BackOffice/Back-Management/Carpooling/rating-carpooling/rating-carpooling.module';
 import { ReactCarpoolingModule } from './BackOffice/Back-Management/Carpooling/react-carpooling/react-carpooling.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {  HttpClientModule } from '@angular/common/http';
+import { UserModuleModule } from './BackOffice/Back-Management/User/User-module/user-module.module';
+import { httpInterceptorProviders } from './helpers/http.interceptor';
+import { RegisterComponent } from './BackOffice/Back-Management/User/User-module/register/register.component';
+import { ResetPasswordComponent } from './BackOffice/Back-Management/User/User-module/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './BackOffice/Back-Management/User/User-module/forgot-password/forgot-password.component';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +47,12 @@ import { ReactCarpoolingModule } from './BackOffice/Back-Management/Carpooling/r
     FooterBackComponent,
     NavbarBackComponent,
     SidebarBackComponent,
+    RegisterComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
+
+   
+    
     
 
   ],
@@ -48,9 +62,13 @@ import { ReactCarpoolingModule } from './BackOffice/Back-Management/Carpooling/r
     AnouncementCarpoolingModule,
     RequirementCarpoolingModule,
     RatingCarpoolingModule,
-    ReactCarpoolingModule
+    ReactCarpoolingModule,
+    FormsModule,
+    HttpClientModule,
+    UserModuleModule
+
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

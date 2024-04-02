@@ -10,9 +10,24 @@ import { BlogFrontComponent } from './FrontOffice/blog-front/blog-front.componen
 import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front.component';
 import { AllTemplateBackComponent } from './BackOffice/all-template-back/all-template-back.component';
 
+import { LoginComponent } from './BackOffice/Back-Management/User/User-module/login/login.component';
+import { RegisterComponent } from './BackOffice/Back-Management/User/User-module/register/register.component';
+import { Role } from './helpers/role';
+import { AuthGuard } from './helpers/auth-guard.service';
+import { ForgotPasswordComponent } from './BackOffice/Back-Management/User/User-module/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './BackOffice/Back-Management/User/User-module/reset-password/reset-password.component';
+
+
+
+
 const routes: Routes = [
+
+  {path:"register",component:RegisterComponent},
+  {path:"login",component:LoginComponent},
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  
   {
-    
     path :"",
     component :AllTemplateFrontComponent,
     children:[
@@ -49,7 +64,8 @@ const routes: Routes = [
   },
   {
     path:"admin",
-    component:AllTemplateBackComponent,children:
+    component:AllTemplateBackComponent,
+    children:
     [
       { 
         path:"carpooling/announcement",
@@ -71,10 +87,11 @@ const routes: Routes = [
         loadChildren: () => import('./BackOffice/Back-Management/Carpooling/react-carpooling/react-carpooling.module').then(m => m.ReactCarpoolingModule),
 
       },
+      
 
     ]
-  }
-
+  },
+  
 
  
 ];

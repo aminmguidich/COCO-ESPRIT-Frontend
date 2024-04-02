@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../Back-Core/Services/User/_services/auth.service';
+import { StorageService } from '../Back-Core/Services/User/_services/storage.service';
 
 @Component({
   selector: 'app-sidebar-back',
@@ -6,9 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar-back.component.css']
 })
 export class SidebarBackComponent    {
-  constructor() { }
+  constructor(private storageService: StorageService, private authService: AuthService) { }
   managementDropdownVisible: boolean = false;
   carpoolingDropdownVisible: boolean = false;
+  userDropdownVisible: boolean = false;
+
 
   toggleManagementDropdown(event: MouseEvent) {
     this.managementDropdownVisible = !this.managementDropdownVisible;
@@ -23,7 +27,21 @@ export class SidebarBackComponent    {
 
   }
 
-
-  
+  toggleUserDropdown(event: MouseEvent) {
+    this.userDropdownVisible = !this.userDropdownVisible;
+    event.stopPropagation(); // Prevent event from propagating to parent elements
+  }
+  logout(): void {
+    this.authService.logout().subscribe({
+      next: res => {
+        console.log(res);
+        this.storageService.clean();
+        window.location.reload();
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
 
 }
