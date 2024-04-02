@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import H from '@here/maps-api-for-javascript';
 import onResize from 'simple-element-resize-detector';
+import { Adress } from '../Front-Core/Models/Carpooling/adress';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -14,6 +15,7 @@ private  esprit_location:H.geo.Point=new H.geo.Point( 36.90007,  10.18798);
 @Input() public lng = 0;
 
 private timeoutHandle: any;
+@Input() adresses:Array<Adress>=[]
 @Input()  markers:Array<H.map.Marker>=[];
 @Output() notify = new EventEmitter();
 @Output() OnAddMarker= new EventEmitter<H.map.Marker>();
@@ -38,8 +40,10 @@ ngOnChanges(changes: any) {
     }
   }
     this.timeoutHandle = setTimeout(() => {
-      if (this.map) {
+      if (this.map && this.adresses.length==0) {
+        
         if (changes['zoom'] !== undefined) {
+          
           this.map.setZoom(changes['zoom'].currentValue);
         }
         if (changes['lat'] !== undefined) {
@@ -100,7 +104,8 @@ ngOnChanges(changes: any) {
     if(this.map){
       
       new H.mapevents.Behavior(new H.mapevents.MapEvents(this.map));
-      this.map.addEventListener("contextmenu", (e:H.mapevents.ContextMenuEvent) =>{
+      if(this.adresses.length==0){
+        this.map.addEventListener("contextmenu", (e:H.mapevents.ContextMenuEvent) =>{
         if (e.target !== this.map) {
           return;
         }
@@ -118,8 +123,19 @@ ngOnChanges(changes: any) {
           this.map.addObject(marker);
           
         }
-      })
+      })}
       
+      if(this.platform &&this.adresses.length>0){
+        let markers=this.adresses.map((value,index,array)=>{
+          const marker = new H.map.Marker({lat:value.latitude,lng:value.longitude});
+          marker.setData(value.streetName);
+          this.map?.addObject(marker);
+          return marker
+        })
+        console.log(markers)
+        this.routing(this.platform,markers)
+        this.map.setZoom(9)
+      }
     }
     
 
@@ -134,7 +150,7 @@ ngOnChanges(changes: any) {
       let point:any=value.getGeometry()
       return {lat:point.lat,lng:point.lng}
     })
-    let origin:any=this.markers[0].getGeometry()
+    let origin:any=markers[0].getGeometry()
     //const origin = { lat: 56.97, lng: 24.09 };
     const destination = this.esprit_location
 
@@ -152,7 +168,6 @@ ngOnChanges(changes: any) {
         waypoints.map(wp => `${wp.lat},${wp.lng}`)
       )
     };
-
     // Define a callback function to process the routing response:
     const onResult = (result: any) => {
       // Ensure that at least one route was found
@@ -185,9 +200,14 @@ ngOnChanges(changes: any) {
         this.map?.addObject(group);
 
         // Set the map viewport to make the entire route visible:
-        this.map?.getViewModel().setLookAtData({
+       if(this.adresses.length==0)this.map?.getViewModel().setLookAtData({
           bounds: group.getBoundingBox().resizeToCenter(this.esprit_location)
         });
+        else{
+          this.map?.setCenter(this.esprit_location)
+          this.map?.setZoom(15)
+        }
+        
   
       };
     };

@@ -41,14 +41,14 @@
   
             <!-- Product details -->
             <div class="card-body p-4">
-              <h5 class="card-title mb-3">{{item.userAnnCarpooling.lastname}}</h5>
+              <h5 class="card-title mb-3">{{item.userAnnCarpooling.name+' '+item.userAnnCarpooling.lastname}}</h5>
               <hr>
               <p>{{item.dateCarpoolingAnnouncement}}</p>
               <hr>
               <p class="card-text">{{item.description}}</p>
               <hr>
               <p>Score: {{item.userAnnCarpooling.score}}</p>
-              <p>Adress: {{item.userAnnCarpooling.adressUser.streetName}}</p>
+              <p>Adress: {{item.routeAnnCarpooling.adressesRoute[0].streetName}}</p>
   
               <!-- Rating or Ranking -->
               <div class="rating">
@@ -64,10 +64,38 @@
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
               <div class="text-center">
                 <!-- Learn More Button -->
-                <button type="button" class="btn btn-success">Details</button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detailmodal">Details</button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="detailmodal" tabindex="-1" aria-labelledby="detailmodalLabel" aria-hidden="true">
+                    <app-deteails-announcement [adresses]="availableData[i]?.routeAnnCarpooling?.adressesRoute"></app-deteails-announcement>
+                  </div>
+
                 &nbsp;
-                <button type="button" class="btn btn-primary">Require</button>
+                <button  (click)="Require(item.idCarpoolingAnnouncement)" type="button" class="btn btn-primary">Require</button>
               </div>
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <span class="material-icons">
+                    thumb_up
+                    </span>                </button>
+                <button mat-menu-item >
+                  <span class="material-icons">
+                    favorite
+                    </span>                </button>
+                <button mat-menu-item>
+                  <span class="material-icons">
+                    thumb_down
+                    </span>                </button>
+                    <button mat-menu-item >
+                      <span class="material-icons">
+                        sentiment_dissatisfied
+                        </span>              </button>
+              </mat-menu>
+              
+              
             </div>
           </div>
         </div>

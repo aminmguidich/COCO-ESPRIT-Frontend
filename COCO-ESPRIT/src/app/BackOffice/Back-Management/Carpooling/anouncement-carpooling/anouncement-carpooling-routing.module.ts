@@ -14,7 +14,7 @@ const routes: Routes = [
   component:AddAnnoucementComponent
 },
 {
-  path:"updateAnn/:id",
+  path:"updateAnn",
   component:UpdateAnnouncementComponent
 }
 ];

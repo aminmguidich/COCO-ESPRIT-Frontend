@@ -18,14 +18,14 @@ this.removeItemNotify.emit(index)
   ngOnInit() {
   }
   @Input() adresses:Array<string> = [];
-
-  
+  @Output() onMoveItem=new EventEmitter<{previousIndex:number,currentIndex:number}>
   dropEvent:Event|undefined;
   drop(event: CdkDragDrop<string[]>) {
     if(event.currentIndex==this.adresses.length-1){
       return
     }
     moveItemInArray(this.adresses, event.previousIndex, event.currentIndex);
+    this.onMoveItem.emit({previousIndex: event?.previousIndex,currentIndex: event.currentIndex})
   }
 
 }

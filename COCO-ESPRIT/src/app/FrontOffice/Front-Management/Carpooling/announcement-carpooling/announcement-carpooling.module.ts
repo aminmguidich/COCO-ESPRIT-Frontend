@@ -15,6 +15,13 @@ import {CDK_DRAG_CONFIG, DragDropModule} from '@angular/cdk/drag-drop';
 import { MapContainerComponent } from 'src/app/FrontOffice/map-container/map-container.component';
 import { MapPositionComponent } from 'src/app/FrontOffice/map-position/map-position.component';
 import { MapComponent } from 'src/app/FrontOffice/map/map.component';
+import { DeteailsAnnouncementComponent } from './deteails-announcement/deteails-announcement.component';
+import {MatListModule} from '@angular/material/list';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+
+
+
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -32,6 +39,7 @@ const DragConfig = {
     MapContainerComponent,
     MapComponent,
     MapPositionComponent,
+    DeteailsAnnouncementComponent,
 
 
     
@@ -44,7 +52,10 @@ const DragConfig = {
     NgxPaginationModule,
     MatPaginatorModule,
     MatNativeDateModule,
-    DragDropModule 
+    DragDropModule ,
+    MatListModule,
+    MatMenuModule,
+    MatIconModule
   ],
   providers: [{ provide: CDK_DRAG_CONFIG, useValue: DragConfig }]
 

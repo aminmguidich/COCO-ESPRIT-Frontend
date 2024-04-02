@@ -21,7 +21,7 @@
           <div class="form-group">
                </div>
                <hr>
-               <app-list-drag-and-drop (removeItemNotify)="onRemoveItem($event)" [adresses]="adresses"/>                
+               <app-list-drag-and-drop (onMoveItem)="onMoveItem($event)" (removeItemNotify)="onRemoveItem($event)" [adresses]="adresses"/>                
                &nbsp;
                <div *ngIf="!isMapVisible">              
                    <button (click)="OnAddAdress()" type="button" class="btn btn-primary" >Add Stop</button>
