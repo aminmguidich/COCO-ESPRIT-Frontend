@@ -34,7 +34,7 @@
                                                     <td>{{item.score}}</td>
                                                     <td>
                                                       <li class="list-inline-item">
-                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModalupdate"
+                                                        <button type="button" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModalupdate'+i"
                                                                 class="btn btn-success btn-sm rounded-0"
                                                                 data-toggle="tooltip" data-placement="top"
                                                                 title="Edit"
@@ -42,7 +42,7 @@
                                                             <i class="fa fa-edit"></i> 
                                                         </button>
                                                           <!-- Modal -->
-  <div class="modal fade" id="exampleModalupdate" tabindex="-1" aria-labelledby="exampleModalupdate" aria-hidden="true">
+  <div class="modal fade" [id]="'exampleModalupdate'+i" role='dialog' tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <app-update-announcement [Id]="item.idCarpoolingAnnouncement"></app-update-announcement>
 </div>
                                                     </li>

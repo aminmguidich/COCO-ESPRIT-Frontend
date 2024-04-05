@@ -22,6 +22,9 @@ export class UpdateAnnouncementComponent implements OnInit{
   ) { }
 
   ngOnInit() {
+    if(this.Id==null){
+      return 
+    }
       this.annCarpoolingService.getAnnCarpoolingById(this.Id).subscribe(
         (data: AnnouncementCarpooling) => {
           console.log(data);
