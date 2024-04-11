@@ -42,5 +42,11 @@
      flex: 2;
     margin-right: 10px;
 }
+app-chat-boot {
+  position: fixed;
+  bottom: 20px; /* Ajustez la valeur selon votre préférence */
+  right: 20px; /* Ajustez la valeur selon votre préférence */
+ /* z-index: 1000; /* Assurez-vous que l'élément app-chat-boot est au-dessus des autres éléments */
+}
 
 

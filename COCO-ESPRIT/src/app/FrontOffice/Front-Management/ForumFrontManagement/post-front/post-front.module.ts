@@ -19,6 +19,7 @@ import { ChatComponent } from './chat/chat.component';
 import { PostFacebookComponent } from './post-facebook/post-facebook.component';
 import { MatCardModule } from '@angular/material/card';
 import { MeilleurPostComponent } from './meilleur-post/meilleur-post.component';
+import { ChatBootComponent } from './chat-boot/chat-boot.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MeilleurPostComponent } from './meilleur-post/meilleur-post.component';
     ChatComponent,
     PostFacebookComponent,
     MeilleurPostComponent,
+    ChatBootComponent,
     
   ],
   imports: [

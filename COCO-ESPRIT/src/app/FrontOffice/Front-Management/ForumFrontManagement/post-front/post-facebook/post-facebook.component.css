@@ -34,4 +34,11 @@
     border-radius: 20px;
     width: 100%;
   }
+
+  .custom-card {
+    max-width: 800px; /* Ajustez cette valeur en fonction de la largeur désirée */
+    width: 100%; /* Assurez-vous que la carte occupe toute la largeur disponible */
+    margin: 0 auto; /* Pour centrer la carte horizontalement */
+}
+
   

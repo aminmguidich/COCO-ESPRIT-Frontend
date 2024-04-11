@@ -1,6 +1,8 @@
+<div class="card-body">
 <div class="container"> 
 <div class="d-flex justify-content-center align-items-center ">
-    <mat-card class="post-message">
+  <mat-card class="post-message custom-card">
+
       <mat-card-header class="post-message-header" style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">
         <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="row">
           <input class="on-your-mind" name="message" placeholder="Post Title" type="text" formControlName="postTitle">
@@ -48,4 +50,4 @@
     </mat-card>
   </div>
 </div>
- 
+</div>
