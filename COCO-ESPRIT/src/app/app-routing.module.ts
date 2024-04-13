@@ -47,7 +47,11 @@ const routes: Routes = [
       {
         path: "ListPostFront",
         loadChildren: () => import('./FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module').then(m => m.PostFrontModule),
-    }
+    },
+    {
+      path: "ListCarsFront",
+      loadChildren: () => import('./FrontOffice/Front-Management/health-management/health-management.module').then(m => m.HealthManagementModule),
+  }
 
     ]
   },

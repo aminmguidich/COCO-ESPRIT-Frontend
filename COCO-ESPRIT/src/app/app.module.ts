@@ -24,6 +24,7 @@ import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-
 import { PostModule } from './BackOffice/Back-Management/ForumManagement/post/post.module';
 import { PostFrontModule } from './FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HealthManagementModule } from './FrontOffice/Front-Management/health-management/health-management.module';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PostModule,
     PostFrontModule,
     BrowserAnimationsModule,
+    HealthManagementModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
