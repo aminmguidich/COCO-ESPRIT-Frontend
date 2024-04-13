@@ -9,19 +9,26 @@ import { CarsFrontComponent } from './FrontOffice/cars-front/cars-front.componen
 import { BlogFrontComponent } from './FrontOffice/blog-front/blog-front.component';
 import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front.component';
 import { AllTemplateBackComponent } from './BackOffice/all-template-back/all-template-back.component';
-
 import { LoginComponent } from './BackOffice/Back-Management/User/User-module/login/login.component';
 import { RegisterComponent } from './BackOffice/Back-Management/User/User-module/register/register.component';
-import { Role } from './helpers/role';
-import { AuthGuard } from './helpers/auth-guard.service';
 import { ForgotPasswordComponent } from './BackOffice/Back-Management/User/User-module/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './BackOffice/Back-Management/User/User-module/reset-password/reset-password.component';
+import { NotAutorizedComponent } from './BackOffice/Back-Management/User/User-module/not-autorized/not-autorized.component';
+import { RoleAuthGuard } from './helpers/auth.guard';
+
+
+
+
+
+import { Role } from './helpers/role';
+import { AuthGuard } from './helpers/auth-guard.service';
 
 
 
 
 const routes: Routes = [
 
+  {path:"not-autorized",component:NotAutorizedComponent},
   {path:"register",component:RegisterComponent},
   {path:"login",component:LoginComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent },
@@ -30,6 +37,7 @@ const routes: Routes = [
   {
     path :"",
     component :AllTemplateFrontComponent,
+    canActivate: [RoleAuthGuard], data: { expectedRoles: ['ROLE_USER'] } ,
     children:[
       {
         path:"home",
@@ -65,6 +73,8 @@ const routes: Routes = [
   {
     path:"admin",
     component:AllTemplateBackComponent,
+    canActivate: [RoleAuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] },
+    
     children:
     [
       { 

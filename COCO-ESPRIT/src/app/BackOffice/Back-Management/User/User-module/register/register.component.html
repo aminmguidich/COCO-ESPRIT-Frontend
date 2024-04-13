@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-block">Sign Up</button>
+        <button class="button-65 mx-auto d-block">Sign Up</button>
       </div>
 
       <div class="alert alert-warning mt-4" *ngIf="f.submitted && isSignUpFailed">
@@ -86,6 +86,9 @@
 
     <div class="alert alert-success mt-4" *ngIf="isSuccessful">
       Your registration is successful!
+    </div>
+    <div  *ngIf="isSuccessful">
+      <button routerLink="/login" class="button-55 mx-auto d-block">Sign In</button>
     </div>
   </div>
 </div>

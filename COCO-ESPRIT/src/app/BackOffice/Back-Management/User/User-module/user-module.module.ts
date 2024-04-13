@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
+import { NotAutorizedComponent } from './not-autorized/not-autorized.component';
 
 
 
@@ -23,6 +24,7 @@ import { BoardModeratorComponent } from './board-moderator/board-moderator.compo
        ProfileComponent,
        BoardUserComponent,
        BoardModeratorComponent,
+       NotAutorizedComponent,
        
   ],
   imports: [

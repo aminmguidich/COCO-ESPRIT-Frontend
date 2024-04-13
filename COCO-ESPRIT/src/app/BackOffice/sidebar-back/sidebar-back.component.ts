@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../Back-Core/Services/User/_services/auth.service';
 import { StorageService } from '../Back-Core/Services/User/_services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar-back',
@@ -8,7 +9,7 @@ import { StorageService } from '../Back-Core/Services/User/_services/storage.ser
   styleUrls: ['./sidebar-back.component.css']
 })
 export class SidebarBackComponent    {
-  constructor(private storageService: StorageService, private authService: AuthService) { }
+  constructor(private storageService: StorageService, private authService: AuthService,  private router: Router) { }
   managementDropdownVisible: boolean = false;
   carpoolingDropdownVisible: boolean = false;
   userDropdownVisible: boolean = false;
@@ -32,16 +33,17 @@ export class SidebarBackComponent    {
     event.stopPropagation(); // Prevent event from propagating to parent elements
   }
   logout(): void {
-    this.authService.logout().subscribe({
-      next: res => {
-        console.log(res);
-        this.storageService.clean();
-        window.location.reload();
+    this.storageService.clearUser(); // Clear user data from storage
+  
+    this.authService.logout().subscribe(
+      response => {
+        console.log(response); // Handle response from the backend
+        this.router.navigate(['/login']); // Navigate to login page or any other desired page
       },
-      error: err => {
-        console.log(err);
+      error => {
+        console.log(error); // Handle error if any
       }
-    });
+    );
   }
 
 }
