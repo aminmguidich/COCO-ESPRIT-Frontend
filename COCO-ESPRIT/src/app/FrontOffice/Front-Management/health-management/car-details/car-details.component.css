@@ -1,0 +1,42 @@
+.card-body {
+    margin-top: 20px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .car-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .car-details {
+    font-size: 16px;
+  }
+  
+  .car-details h5 {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .car-details p {
+    margin-bottom: 5px;
+  }
+  
+  .text-end {
+    text-align: right;
+    margin-top: 20px;
+  }
+  
+  .btn-close {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .btn-close:hover {
+    background-color: #c82333;
+  }
+  

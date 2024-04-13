@@ -1,1 +1,23 @@
-<p>car-details works!</p>
+<div class="card-body">
+    <div class="container">
+      <div *ngIf="car" class="row">
+        <div class="col-md-6">
+          <img [src]="car.image" class="car-image">
+          <h5 class="mb-3">Model: {{ car.model }}</h5>
+        </div>
+        <div class="col-md-6 car-details">
+          <p><strong>Registration Number:</strong> {{ car.registrationNumber }}</p>
+          <p><strong>Smoking Allowed:</strong> {{ car.smoking ? 'Yes' : 'No' }}</p>
+          <p><strong>Air Conditioned:</strong> {{ car.airConditioned ? 'Yes' : 'No' }}</p>
+          <p><strong>Number of Places:</strong> {{ car.places }}</p>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-12 text-end">
+          <!-- Back to List Link -->
+          <button mat-raised-button [mat-dialog-close]="false" class="btn-close"><i class="bi bi-x-circle-fill"></i> Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

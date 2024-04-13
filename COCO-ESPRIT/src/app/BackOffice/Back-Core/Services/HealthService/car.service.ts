@@ -19,4 +19,8 @@ import { Car } from '../../Models/Health/Car';
         return this.http.get<Car[]>("http://localhost:9092/COCO/retrieveAllCar");
       }
       
+      retrieveCar(id: number): Observable<any> {
+        return this.http.get(`http://localhost:9092/COCO/retrieveCar/${id}`);
+      }
+
   }
