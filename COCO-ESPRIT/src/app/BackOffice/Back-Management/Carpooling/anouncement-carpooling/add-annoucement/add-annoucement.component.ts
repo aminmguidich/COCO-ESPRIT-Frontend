@@ -23,7 +23,9 @@ export class AddAnnoucementComponent implements OnInit {
         idCarpoolingAnnouncement: 0,
         description: form.value.description,
         score: Number(form.value.score),
-        dateCarpoolingAnnouncement: date
+        dateCarpoolingAnnouncement: date,
+        ridePrice: 0,
+        places: 0
       };
   
       this.annCarpoolingService.AddAnnCarpooling(annCarpooling).subscribe(

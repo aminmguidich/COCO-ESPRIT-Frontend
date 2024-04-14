@@ -9,7 +9,6 @@ import { Adress } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/adress'
 export class DeteailsAnnouncementComponent implements OnInit {
   ngOnInit(): void {
     this.markers=this.adresses?.map((adress,index,array)=> new H.map.Marker({lat:adress.latitude,lng:adress.longitude})    )
-    console.log(this.markers)
 
   }
 

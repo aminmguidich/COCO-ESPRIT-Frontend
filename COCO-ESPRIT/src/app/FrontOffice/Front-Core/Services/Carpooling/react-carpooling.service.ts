@@ -6,6 +6,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ReactCarpoolingService {
+  deleteReactCarpooling(id:number,announcementId:number) {
+    return this.http.delete(this.URL+"/deleteReactCarpooling/"+id+"&"+announcementId)
+
+  }
 
 
   URL = "http://localhost:9092/CarpoolingReact"
@@ -15,6 +19,6 @@ export class ReactCarpoolingService {
       'Content-type': 'application/json'
     })
   }
-  addReactCarpooling( reactCarpooling: ReactCarpooling) {
-    return this.http.post<ReactCarpooling>(this.URL+"/addReactCarpooling", reactCarpooling,this.httpOtions)
+  addReactCarpooling( reactCarpooling: ReactCarpooling,announcementId:number) {
+    return this.http.post<ReactCarpooling>(this.URL+"/addReactCarpooling/"+announcementId, reactCarpooling,this.httpOtions)
   }}

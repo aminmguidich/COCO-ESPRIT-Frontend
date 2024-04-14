@@ -4,5 +4,8 @@ export class AnnouncementCarpooling {
     dateCarpoolingAnnouncement!:Date;
     description!:string;
     score!:number;
+    ridePrice!:number;
+    places!:number;
+
 
 }

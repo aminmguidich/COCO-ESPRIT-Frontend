@@ -10,4 +10,7 @@ export class AnnouncementCarpooling {
     score!:number;
     userAnnCarpooling!:User;
     routeAnnCarpooling!:Route;
+    ridePrice!:number;
+    places!:number;
+    reactCarpoolingsAnnCarpooling!:Array<ReactCarpooling>
 }

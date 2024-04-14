@@ -24,7 +24,6 @@ export class AddRequirementComponent implements OnInit {
       const annCarpooling: RequirementCarpooling = {
         idCarRequirement: 0,
         description: form.value.description,
-        budgetPart: Number(form.value.budgetpart),
         dateCarpoolingRequirement: date
       };
   

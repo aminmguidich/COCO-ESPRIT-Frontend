@@ -30,7 +30,6 @@ export class UpdateRequirementComponent implements OnInit {
           this.updateForm = this.formB.group({
             dateReqCarpooling: [data.dateCarpoolingRequirement],
             descriptionReqCarpooling: [data.description],
-            budgetpartReqCarpooling: [data.budgetPart]
 
 
           });
@@ -49,7 +48,6 @@ export class UpdateRequirementComponent implements OnInit {
     this.reqCarpooling.idCarRequirement = this.id;
     this.reqCarpooling.dateCarpoolingRequirement = this.updateForm.value.dateReqCarpooling;
     this.reqCarpooling.description = this.updateForm.value.descriptionReqCarpooling;
-    this.reqCarpooling.budgetPart = this.updateForm.value.budgetpartReqCarpooling;
 
     this.reqCarpoolingService.updateReqCarpooling(this.reqCarpooling).subscribe(
       (response) => {

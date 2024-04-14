@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { PaginatorData } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/paginator-data';
 
@@ -8,11 +8,12 @@ import { PaginatorData } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.css']
 })
-export class PaginatorComponent {
+export class PaginatorComponent implements OnInit {
+  ngOnInit(): void {
+  }
  //input
   pageSizeOptions = [3,5, 10, 25];
   @Input()length=50
-
   hidePageSize = true;
   showPageSizeOptions = false;
   showFirstLastButtons = true;

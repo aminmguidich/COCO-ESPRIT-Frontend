@@ -123,7 +123,10 @@ onAddMarker($event:H.map.Marker) {
       score: Number(form.value.score),
       dateCarpoolingAnnouncement: date,
       userAnnCarpooling: user,
-      routeAnnCarpooling:newRoute
+      routeAnnCarpooling: newRoute,
+      ridePrice: form.value.price,
+      places: form.value.places,
+      reactCarpoolingsAnnCarpooling: []
     };
 
     this.annCarpoolingService.AddAnnCarpooling(annCarpooling).subscribe(

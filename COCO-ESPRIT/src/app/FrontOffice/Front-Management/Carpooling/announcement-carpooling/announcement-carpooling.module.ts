@@ -19,6 +19,8 @@ import { DeteailsAnnouncementComponent } from './deteails-announcement/deteails-
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
+import {MatBadgeModule} from '@angular/material/badge';
+
 
 
 
@@ -42,6 +44,7 @@ const DragConfig = {
     DeteailsAnnouncementComponent,
 
 
+
     
   ],
   imports: [
@@ -55,7 +58,8 @@ const DragConfig = {
     DragDropModule ,
     MatListModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatBadgeModule
   ],
   providers: [{ provide: CDK_DRAG_CONFIG, useValue: DragConfig }]
 

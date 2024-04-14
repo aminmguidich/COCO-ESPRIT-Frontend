@@ -17,8 +17,8 @@ export class AnnouncementCarpoolingService {
     })
   }
 
-  getall(){
-    return this.http.get<AnnouncementCarpooling[]>(this.URL+"/getAllAnnouncementCarpooling");
+  getallPlaces(){
+    return this.http.get<AnnouncementCarpooling[]>(this.URL+"/getAllAnnouncementCarpoolingPlaces");
   }
 
   getAnnCarpoolingById(id:number){

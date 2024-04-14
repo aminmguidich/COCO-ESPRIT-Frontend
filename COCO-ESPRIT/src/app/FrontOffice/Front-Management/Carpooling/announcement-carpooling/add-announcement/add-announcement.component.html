@@ -19,6 +19,18 @@
                 placeholder="Tapez la description">
           </div>
           <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" class="form-control" id="price" name="price"
+               ngModel #fn="ngModel" required
+               placeholder="Tapez le prix">
+         </div>
+         <div class="form-group">
+            <label for="places">Places:</label>
+            <input type="number" max="4" min="1" class="form-control" id="places" name="places"
+               ngModel #fn="ngModel" required
+               placeholder="Tapez le nombre de places ">
+         </div>
+          <div class="form-group">
                </div>
                <hr>
                <app-list-drag-and-drop (onMoveItem)="onMoveItem($event)" (removeItemNotify)="onRemoveItem($event)" [adresses]="adresses"/>                

@@ -12,13 +12,16 @@ import { UpdateAnnouncementComponent } from './update-announcement/update-announ
   declarations: [
     AddAnnoucementComponent,
     ListAnnoucementComponent,
-    UpdateAnnouncementComponent
+    UpdateAnnouncementComponent,
+
   ],
   imports: [
     CommonModule,
     AnouncementCarpoolingRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+
+    
   ]
 })
 export class AnouncementCarpoolingModule { }
