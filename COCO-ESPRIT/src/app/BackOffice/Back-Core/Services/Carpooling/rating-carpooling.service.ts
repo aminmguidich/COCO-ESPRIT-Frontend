@@ -7,7 +7,7 @@ import { RatingCarpooling } from '../../Models/Carpooling/rating-carpooling';
 })
 export class RatingCarpoolingService {
 
-  URL = "http://localhost:9092/CarpoolingRating"
+  URL = "http://localhost:9092/api/CarpoolingRating"
   constructor(private http:HttpClient) { }
   httpOtions = {
     headers: new HttpHeaders({

@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class RequirementCarpoolingService {
 
-  URL = "http://localhost:9092/CarpoolingRequirement"
+  URL = "http://localhost:9092/api/CarpoolingRequirement"
   constructor(private http:HttpClient) { }
   httpOtions = {
     headers: new HttpHeaders({

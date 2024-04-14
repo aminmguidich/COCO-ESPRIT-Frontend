@@ -12,7 +12,7 @@ export class ReactCarpoolingService {
   }
 
 
-  URL = "http://localhost:9092/CarpoolingReact"
+  URL = "http://localhost:9092/api/CarpoolingReact"
   constructor(private http:HttpClient) { }
   httpOtions = {
     headers: new HttpHeaders({

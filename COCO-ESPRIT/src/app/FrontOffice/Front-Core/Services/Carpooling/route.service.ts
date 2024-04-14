@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class RouteService {
 
-  URL = "http://localhost:9092/Route"
+  URL = "http://localhost:9092/api/Route"
   constructor(private http:HttpClient) { }
   httpOtions = {
     headers: new HttpHeaders({

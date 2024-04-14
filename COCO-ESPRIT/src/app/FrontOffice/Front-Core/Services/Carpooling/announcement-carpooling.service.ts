@@ -9,7 +9,7 @@ import { Adress } from '../../Models/Carpooling/adress';
 })
 export class AnnouncementCarpoolingService {
 
-  URL = "http://localhost:9092/CarpoolingAnnouncement"
+  URL = "http://localhost:9092/api/CarpoolingAnnouncement"
   constructor(private http:HttpClient) { }
   httpOtions = {
     headers: new HttpHeaders({

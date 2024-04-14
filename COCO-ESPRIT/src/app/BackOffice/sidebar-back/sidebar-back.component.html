@@ -28,7 +28,53 @@
                         <span><i class="bi bi-house-heart"></i>Managemnt</span>
                     </a>
                     <ul class="nav-dropdown" [style.display]="managementDropdownVisible ? 'block' : 'none'" style="width: 250px;">
-                        <!-- Your existing dropdown menu items -->
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="mainFoyer/addFoyer">
+                                <span>User</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" (click)="toggleCarpoolingDropdown($event)">
+                            <a class="nav-link dropdown-toggle">
+                                <span><i class="bi bi-house-heart"></i>Carpooling</span>
+                            </a>
+                            <ul class="nav-dropdown" [style.display]="carpoolingDropdownVisible ? 'block' : 'none'" style="width: 250px;">
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="carpooling/requirement">
+                                        <span  >Requirement</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="carpooling/announcement">
+                                        <span>Announcement</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="carpooling/rating">
+                                        <span>Rating</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="carpooling/react">
+                                        <span>React</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="mainFoyer/listFoyer">
+                                <span>Collocation</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="mainFoyer/listFoyer">
+                                <span>Post</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="mainFoyer/listFoyer">
+                                <span>MarketPlace</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

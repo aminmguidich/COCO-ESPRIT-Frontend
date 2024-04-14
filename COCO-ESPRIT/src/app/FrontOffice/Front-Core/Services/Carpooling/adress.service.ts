@@ -7,7 +7,7 @@ import { AnnouncementCarpooling } from '../../Models/Carpooling/announcement-car
   providedIn: 'root'
 })
 export class AdressService {
-  URL = "http://localhost:9092/Adress"
+  URL = "http://localhost:9092/api/Adress"
   constructor(private http:HttpClient) { }
   httpOtions = {
     headers: new HttpHeaders({

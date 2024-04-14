@@ -1,3 +1,4 @@
+import { StorageService } from 'src/app/BackOffice/Back-Core/Services/User/_services/storage.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,10 +25,13 @@ throw new Error('Method not implemented.');
 }
 user:User={
   id: 1,
-  name: '',
-  lastname: '',
+  fullname: '',
   score: 0,
-  adressUser: new Adress
+  adressUser: new Adress,
+  username: '',
+  password: '',
+  email: '',
+  roles: []
 }
 Require(id:number) {
   const date = new Date();
@@ -97,6 +101,7 @@ onLike(reacts:Array<ReactCarpooling>,announcementId:number){
   if(alreadyReacted){
     return
   }
+  console.log(this.user.id)
   this.reactCarpoolingService.addReactCarpooling(
     {
       idReactCarpooling: 0,
@@ -132,9 +137,12 @@ onPageChange($event: PaginatorData) {
     private router: Router,
     private formB: FormBuilder,
     private annCarpoolingService: AnnouncementCarpoolingService,private reqCarpoolingService:RequirementCarpoolingService,
-  private reactCarpoolingService :ReactCarpoolingService) { }
+  private reactCarpoolingService :ReactCarpoolingService,private storageService:StorageService) { }
  
   ngOnInit() {
+
+    //this.user.id=this.storageService.getUser()['id']
+
     this.annCarpoolingService.getallPlaces().subscribe(
       (data: AnnouncementCarpooling[]) => {
         this.data = data;

@@ -112,10 +112,13 @@ onAddMarker($event:H.map.Marker) {
     const date = new Date(form.value.date);
     const user:User={
       id: 2,
-      name: '',
-      lastname: '',
+      fullname: '',
       score: 0,
-      adressUser: new Adress
+      adressUser: new Adress,
+      username: '',
+      password: '',
+      email: '',
+      roles: []
     }
     const annCarpooling: AnnouncementCarpooling = {
       idCarpoolingAnnouncement: 0,
