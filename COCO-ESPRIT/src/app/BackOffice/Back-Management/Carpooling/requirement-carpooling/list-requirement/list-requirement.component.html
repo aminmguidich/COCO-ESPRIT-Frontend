@@ -1,1 +1,77 @@
-<p>list-requirement works!hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+<body>
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5> Requirements</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5></h5>
+                                            <hr>
+                                            <table class="table">
+                                                <thead>
+                                                  <tr>
+                                                    <th scope="col">Id</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Actions</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr *ngFor="let item of data; let i = index">
+                                                    <th scope="row">{{item.idCarRequirement}}</th>
+                                                    <td>{{item.dateCarpoolingRequirement}}</td>
+                                                    <td>{{item.description}}</td>
+                                                    <td>
+                                                      <li class="list-inline-item">
+                                                        <button type="button"
+                                                                class="btn btn-success btn-sm rounded-0"
+                                                                data-toggle="tooltip" data-placement="top"
+                                                                title="Edit"
+                                                                [routerLink]="['updateReq', item.idCarRequirement]"
+                                                                >
+                                                            <i class="fa fa-edit"></i> 
+                                                        </button>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                      <button type="button"
+                                                      class="btn btn-danger btn-sm rounded-0"
+                                                      data-toggle="tooltip" data-placement="top"
+                                                      title="Delete"
+                                                      (click)="deleteReqCarpooling(item.idCarRequirement)">
+                                                  <i class="fas fa-trash"></i> 
+                                              </button>
+                                                    </li>
+                                                    </td>
+
+                                                  </tr>
+                                                  
+                                                </tbody>
+                                              </table>
+                                              <hr>
+                                              <button id="addButton" type="button" class="btn btn-primary" title="" data-toggle="tooltip" data-original-title="btn btn-primary" routerLink="addReq">Add</button>
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <!-- Input group -->
+                                </div>
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

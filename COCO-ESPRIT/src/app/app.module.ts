@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,13 +22,21 @@ import { AnouncementCarpoolingModule } from './BackOffice/Back-Management/Carpoo
 import { RequirementCarpoolingModule } from './BackOffice/Back-Management/Carpooling/requirement-carpooling/requirement-carpooling.module';
 import { RatingCarpoolingModule } from './BackOffice/Back-Management/Carpooling/rating-carpooling/rating-carpooling.module';
 import { ReactCarpoolingModule } from './BackOffice/Back-Management/Carpooling/react-carpooling/react-carpooling.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {  HttpClientModule } from '@angular/common/http';
 import { UserModuleModule } from './BackOffice/Back-Management/User/User-module/user-module.module';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { RegisterComponent } from './BackOffice/Back-Management/User/User-module/register/register.component';
 import { ResetPasswordComponent } from './BackOffice/Back-Management/User/User-module/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './BackOffice/Back-Management/User/User-module/forgot-password/forgot-password.component';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AnnouncementCarpoolingModule } from './FrontOffice/Front-Management/Carpooling/announcement-carpooling/announcement-carpooling.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatNativeDateModule} from '@angular/material/core';
+import { ListDragAndDropComponent } from './FrontOffice/list-drag-and-drop/list-drag-and-drop.component';
+import { MapComponent } from './FrontOffice/map/map.component';
+import { MapPositionComponent } from './FrontOffice/map-position/map-position.component';
 
 
 @NgModule({
@@ -55,6 +64,8 @@ import { ForgotPasswordComponent } from './BackOffice/Back-Management/User/User-
     
     
 
+    
+
   ],
   imports: [
     BrowserModule,
@@ -64,9 +75,15 @@ import { ForgotPasswordComponent } from './BackOffice/Back-Management/User/User-
     RatingCarpoolingModule,
     ReactCarpoolingModule,
     FormsModule,
+    UserModuleModule,
     HttpClientModule,
-    UserModuleModule
+    ReactiveFormsModule,
+    CommonModule,
+    AnnouncementCarpoolingModule,
+    BrowserAnimationsModule
+    
 
+    
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

@@ -67,6 +67,10 @@ const routes: Routes = [
         path:"contact",
         component:ContactFrontComponent
       },
+      {
+        path:"Frontcarpooling/announcement",
+        loadChildren:() => import('./FrontOffice/Front-Management/Carpooling/announcement-carpooling/announcement-carpooling.module').then(m => m.AnnouncementCarpoolingModule),
+      }
 
     ]
   },

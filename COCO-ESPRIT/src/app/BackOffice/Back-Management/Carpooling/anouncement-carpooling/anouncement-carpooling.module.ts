@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,11 +12,16 @@ import { UpdateAnnouncementComponent } from './update-announcement/update-announ
   declarations: [
     AddAnnoucementComponent,
     ListAnnoucementComponent,
-    UpdateAnnouncementComponent
+    UpdateAnnouncementComponent,
+
   ],
   imports: [
     CommonModule,
-    AnouncementCarpoolingRoutingModule
+    AnouncementCarpoolingRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+    
   ]
 })
 export class AnouncementCarpoolingModule { }
