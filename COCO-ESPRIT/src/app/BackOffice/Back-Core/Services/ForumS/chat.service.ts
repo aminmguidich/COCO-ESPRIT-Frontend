@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Stomp } from '@stomp/stompjs';
 import { Observable, Subject } from 'rxjs';
-import * as SockJS from 'sockjs-client';
+import SockJS from 'sockjs-client';
 import { BehaviorSubject } from 'rxjs';
 import { MessageType } from '../../Models/Forum/MessageType';
 import { Chat } from '../../Models/Forum/Chat';
