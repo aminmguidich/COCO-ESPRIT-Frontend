@@ -16,6 +16,7 @@ export class AddPostFComponent {
   posts: Post = new Post(); 
   imgUrl: string | ArrayBuffer = 'assets/upload.png';
   file: File | null = null;
+  //idUser: number =2;
 
 
   constructor(
@@ -49,6 +50,7 @@ p.postTitle=this.postTitle.value;
 p.body=this.body.value;
 p.createdAt = new Date(); // Set current system date
 p.image = this.file; // Assign the image file to the 'image' attribute
+//p.idUser=this.idUser;
 const title = this.myForm.get('postTitle')?.value;
 if (this.file) {
   this.savePhoto(this.file, p);

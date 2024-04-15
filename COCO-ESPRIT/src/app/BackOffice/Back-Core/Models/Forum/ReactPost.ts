@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommentPost } from './CommentPost';
 import { Post } from './Post';
-import { TypeReact } from './TypeReact';
+import { TypeReactPost } from './TypeReact';
 
 
 export class ReactPost { 
 
 idReactPost!: number;
-typeReact:TypeReact;
+typeReact:TypeReactPost;
 idUser!: number;
 post:Post;
 commntReact:CommentPost;

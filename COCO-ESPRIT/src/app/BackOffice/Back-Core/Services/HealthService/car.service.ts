@@ -12,15 +12,15 @@ import { Car } from '../../Models/Health/Car';
      constructor(private http: HttpClient) { }
 
      addCar(car: Car) : Observable<any>{
-        return this.http.post("http://localhost:9092/COCO/addCar", car);
+        return this.http.post("http://localhost:9092/api/Health/addCar", car);
       }
      
       retrieveAllCar(): Observable<Car[]> {
-        return this.http.get<Car[]>("http://localhost:9092/COCO/retrieveAllCar");
+        return this.http.get<Car[]>("http://localhost:9092/api/Health/retrieveAllCar");
       }
       
       retrieveCar(id: number): Observable<any> {
-        return this.http.get(`http://localhost:9092/COCO/retrieveCar/${id}`);
+        return this.http.get(`http://localhost:9092/api/Health/retrieveCar/${id}`);
       }
 
   }

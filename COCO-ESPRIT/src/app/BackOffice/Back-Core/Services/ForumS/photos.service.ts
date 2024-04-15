@@ -13,7 +13,7 @@ export class PhotosService {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('title', title);
-    return this.http.post('http://localhost:9092/COCO/savePhoto', formData, { responseType: 'text' });
+    return this.http.post('http://localhost:9092/api/Flickr/savePhoto', formData, { responseType: 'text' });
   }
   
   

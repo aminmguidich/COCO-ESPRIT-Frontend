@@ -1,5 +1,5 @@
 
-export enum TypeReact {
+export enum TypeReactPost {
     LIKE,
     DISLIKE,
     LOVE,

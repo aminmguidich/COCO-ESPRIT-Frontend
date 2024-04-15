@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddPostFComponent } from '../add-post-f/add-post-f.component';
 import { ListcommentfComponent } from '../listcommentf/listcommentf.component';
 import { ReactService } from 'src/app/BackOffice/Back-Core/Services/ForumS/react.service';
-import { TypeReact } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeReact';
+import { TypeReactPost } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeReact';
 import { ReactPost } from 'src/app/BackOffice/Back-Core/Models/Forum/ReactPost';
 import { ChatComponent } from '../chat/chat.component';
 import { MeilleurPostComponent } from '../meilleur-post/meilleur-post.component';
@@ -166,7 +166,7 @@ showComments(postId: number): void {
 
 
   // Méthode pour gérer l'ajout de type de réaction au post
-  addTypeReaction(postId: number, type: TypeReact): void {
+  addTypeReaction(postId: number, type: TypeReactPost): void {
     this.reactService.addTypeReacttoPost(postId, type).subscribe(() => {
       // Mettre à jour les compteurs de réaction
       this.updateReactionCounts(postId);

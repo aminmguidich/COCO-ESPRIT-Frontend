@@ -6,7 +6,7 @@ import { Post } from 'src/app/BackOffice/Back-Core/Models/Forum/Post';
 import { CommentService } from 'src/app/BackOffice/Back-Core/Services/ForumS/comment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReactService } from 'src/app/BackOffice/Back-Core/Services/ForumS/react.service';
-import { TypeReact } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeReact';
+import { TypeReactPost } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeReact';
 
 @Component({
   selector: 'app-listcommentf',
@@ -122,7 +122,7 @@ hasComments(postId: number): Observable<boolean> {
           this.currentPage = pageNumber;
       }
 
-      addTypeReaction(commentId: number, type: TypeReact): void {
+      addTypeReaction(commentId: number, type: TypeReactPost): void {
         if (commentId) {
           this.reactService.addReactToComment(commentId, type).subscribe(() => {
             // Update the reaction counts after adding the reaction
