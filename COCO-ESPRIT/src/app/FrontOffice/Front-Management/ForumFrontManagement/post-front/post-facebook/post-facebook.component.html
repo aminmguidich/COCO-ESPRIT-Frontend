@@ -1,0 +1,53 @@
+<div class="card-body">
+<div class="container"> 
+<div class="d-flex justify-content-center align-items-center ">
+  <mat-card class="post-message custom-card">
+
+      <mat-card-header class="post-message-header" style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="row">
+          <input class="on-your-mind" name="message" placeholder="Post Title" type="text" formControlName="postTitle">
+          <div *ngIf="postTitle.errors && postTitle.touched" class="text-danger">
+            <div *ngIf="postTitle.errors['required']">Title is mandatory!</div>
+            <div *ngIf="postTitle.errors['minlength']">Minimum
+              {{postTitle.errors['minlength'].requiredLength}} characters as you typed
+              {{postTitle.errors['minlength'].actualLength}}
+            </div>
+          </div>
+  
+          <input class="on-your-mind" name="message" placeholder="What's on your mind?" type="text" formControlName="body">
+          <div *ngIf="body.errors && body.touched" class="text-danger">
+            <div *ngIf="body.errors['required']">Body is mandatory!</div>
+            <div *ngIf="body.errors['minlength']">Minimum
+              {{body.errors['minlength'].requiredLength}} characters as you typed
+              {{body.errors['minlength'].actualLength}}
+            </div>
+          </div>
+          <div (click)="fileInput.click()">
+            <mat-icon color="primary">photo_album</mat-icon>
+            <span>Photo/Video</span>
+            <input type="file" #fileInput (change)="onFileInput(fileInput.files)" style="display:none;">
+          </div>
+          
+          <button style="display: none;" type="submit"></button>
+
+        </form>
+      </mat-card-header>
+      <mat-card-content class="card-body">
+        <div>
+          <mat-icon color="accent">videocam</mat-icon>
+          <span>Live Video</span>
+        </div>
+  
+       
+  
+        <div>
+          <mat-icon color="warn">mood</mat-icon>
+          <span>Feeling/Activity</span>
+        </div>
+       <!-- <button [disabled]="myForm.invalid" class="btn btn-primary" type="submit">Post</button>-->
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+</div>

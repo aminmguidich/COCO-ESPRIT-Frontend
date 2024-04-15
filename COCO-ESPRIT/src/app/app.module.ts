@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
+import { AllTemplateBackComponent } from './BackOffice/all-template-back/all-template-back.component';
 import { FooterFrontComponent } from './FrontOffice/footer-front/footer-front.component';
 import { HeaderFrontComponent } from './FrontOffice/header-front/header-front.component';
 import { HomeFrontComponent } from './FrontOffice/home-front/home-front.component';
@@ -14,7 +14,6 @@ import { PircingFrontComponent } from './FrontOffice/pircing-front/pircing-front
 import { CarsFrontComponent } from './FrontOffice/cars-front/cars-front.component';
 import { BlogFrontComponent } from './FrontOffice/blog-front/blog-front.component';
 import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front.component';
-import { AllTemplateBackComponent } from './BackOffice/all-template-back/all-template-back.component';
 import { FooterBackComponent } from './BackOffice/footer-back/footer-back.component';
 import { NavbarBackComponent } from './BackOffice/navbar-back/navbar-back.component';
 import { SidebarBackComponent } from './BackOffice/sidebar-back/sidebar-back.component';
@@ -37,6 +36,10 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { ListDragAndDropComponent } from './FrontOffice/list-drag-and-drop/list-drag-and-drop.component';
 import { MapComponent } from './FrontOffice/map/map.component';
 import { MapPositionComponent } from './FrontOffice/map-position/map-position.component';
+import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
+import { PostModule } from './BackOffice/Back-Management/ForumManagement/post/post.module';
+import { PostFrontModule } from './FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module';
+import { HealthManagementModule } from './FrontOffice/Front-Management/health-management/health-management.module';
 
 
 @NgModule({
@@ -80,10 +83,11 @@ import { MapPositionComponent } from './FrontOffice/map-position/map-position.co
     ReactiveFormsModule,
     CommonModule,
     AnnouncementCarpoolingModule,
-    BrowserAnimationsModule
-    
-
-    
+    BrowserAnimationsModule,
+    PostModule,
+    PostFrontModule,
+    BrowserAnimationsModule,
+    HealthManagementModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

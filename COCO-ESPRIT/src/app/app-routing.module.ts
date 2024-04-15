@@ -1,13 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
-import { HomeFrontComponent } from './FrontOffice/home-front/home-front.component';
-import { AboutFrontComponent } from './FrontOffice/about-front/about-front.component';
-import { ServicesFrontComponent } from './FrontOffice/services-front/services-front.component';
-import { PircingFrontComponent } from './FrontOffice/pircing-front/pircing-front.component';
-import { CarsFrontComponent } from './FrontOffice/cars-front/cars-front.component';
-import { BlogFrontComponent } from './FrontOffice/blog-front/blog-front.component';
-import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front.component';
 import { AllTemplateBackComponent } from './BackOffice/all-template-back/all-template-back.component';
 import { LoginComponent } from './BackOffice/Back-Management/User/User-module/login/login.component';
 import { RegisterComponent } from './BackOffice/Back-Management/User/User-module/register/register.component';
@@ -25,6 +17,14 @@ import { AuthGuard } from './helpers/auth-guard.service';
 
 
 
+import { AboutFrontComponent } from './FrontOffice/about-front/about-front.component';
+import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
+import { BlogFrontComponent } from './FrontOffice/blog-front/blog-front.component';
+import { CarsFrontComponent } from './FrontOffice/cars-front/cars-front.component';
+import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front.component';
+import { HomeFrontComponent } from './FrontOffice/home-front/home-front.component';
+import { PircingFrontComponent } from './FrontOffice/pircing-front/pircing-front.component';
+import { ServicesFrontComponent } from './FrontOffice/services-front/services-front.component';
 
 const routes: Routes = [
 
@@ -59,10 +59,10 @@ const routes: Routes = [
         path:"cars",
         component:CarsFrontComponent
       },
-      {
+     /* {
         path:"blog",
         component:BlogFrontComponent
-      },
+      },*/
       {
         path:"contact",
         component:ContactFrontComponent
@@ -70,7 +70,17 @@ const routes: Routes = [
       {
         path:"Frontcarpooling/announcement",
         loadChildren:() => import('./FrontOffice/Front-Management/Carpooling/announcement-carpooling/announcement-carpooling.module').then(m => m.AnnouncementCarpoolingModule),
+      },
+      {
+        path: "ListPostFront",
+        loadChildren: () => import('./FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module').then(m => m.PostFrontModule),
       }
+
+    ,
+    {
+      path: "ListCarsFront",
+      loadChildren: () => import('./FrontOffice/Front-Management/health-management/health-management.module').then(m => m.HealthManagementModule),
+  }
 
     ]
   },
@@ -102,6 +112,13 @@ const routes: Routes = [
 
       },
       
+     {
+        path: "ListPost",
+        loadChildren: () => import('./BackOffice/Back-Management/ForumManagement/post/post.module').then(m => m.PostModule),
+    },
+    
+    
+    
 
     ]
   },

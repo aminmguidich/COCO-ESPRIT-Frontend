@@ -1,0 +1,44 @@
+.post-message__center {
+    padding: 0 10px;
+    min-height: 20px;
+    width: 100%;
+    align-self: center;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .mat-card.post-message {
+    border-radius: 0px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .post-message-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .post-message-header form {
+    flex: 1;
+  }
+  
+  .post-message-header form > input.on-your-mind {
+    background-color: #F0F2F5;
+    display: inline-block;
+    outline: none;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    width: 100%;
+  }
+
+  .custom-card {
+    max-width: 800px; /* Ajustez cette valeur en fonction de la largeur désirée */
+    width: 100%; /* Assurez-vous que la carte occupe toute la largeur disponible */
+    margin: 0 auto; /* Pour centrer la carte horizontalement */
+}
+
+  
