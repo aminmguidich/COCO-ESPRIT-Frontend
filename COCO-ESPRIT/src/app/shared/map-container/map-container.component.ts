@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Adress } from '../Front-Core/Models/Carpooling/adress';
+import { Adress } from '../../FrontOffice/Front-Core/Models/Carpooling/adress';
 
 @Component({
   selector: 'app-map-container',
@@ -8,6 +8,7 @@ import { Adress } from '../Front-Core/Models/Carpooling/adress';
 })
 export class MapContainerComponent implements OnChanges {
   @Input()  adresses:Array<Adress>=[];
+  @Input() readonly:boolean=true;
 
   @Input()  markers:Array<H.map.Marker>=[];
   @Output() OnAddMarker= new EventEmitter<H.map.Marker>();

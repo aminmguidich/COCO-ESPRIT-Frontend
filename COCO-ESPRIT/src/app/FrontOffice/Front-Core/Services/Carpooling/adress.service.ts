@@ -18,4 +18,8 @@ export class AdressService {
     return this.http.post<Adress>(this.URL+"/AddAdress", adress,this.httpOtions)
   }
 
+  deleteAdress(id: number) {
+    return this.http.delete<Adress>(this.URL+"/deleteAdress/"+id,this.httpOtions)
+  }
+
 }

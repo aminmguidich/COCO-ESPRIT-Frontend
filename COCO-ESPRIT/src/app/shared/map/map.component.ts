@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import H from '@here/maps-api-for-javascript';
 import onResize from 'simple-element-resize-detector';
-import { Adress } from '../Front-Core/Models/Carpooling/adress';
+import { Adress } from '../../FrontOffice/Front-Core/Models/Carpooling/adress';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -15,6 +15,7 @@ private  esprit_location:H.geo.Point=new H.geo.Point( 36.90007,  10.18798);
 @Input() public lng = 0;
 
 private timeoutHandle: any;
+@Input() readonly:boolean=true;
 @Input() adresses:Array<Adress>=[]
 @Input()  markers:Array<H.map.Marker>=[];
 @Output() notify = new EventEmitter();
@@ -104,7 +105,7 @@ ngOnChanges(changes: any) {
     if(this.map){
       
       new H.mapevents.Behavior(new H.mapevents.MapEvents(this.map));
-      if(this.adresses.length==0){
+      if(this.adresses.length==0 || !this.readonly){
         this.map.addEventListener("contextmenu", (e:H.mapevents.ContextMenuEvent) =>{
         if (e.target !== this.map) {
           return;

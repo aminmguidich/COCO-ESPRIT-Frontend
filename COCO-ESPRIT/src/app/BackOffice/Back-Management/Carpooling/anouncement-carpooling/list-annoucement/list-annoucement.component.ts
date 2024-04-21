@@ -10,6 +10,7 @@ import { AnnouncementCarpoolingService } from 'src/app/BackOffice/Back-Core/Serv
   styleUrls: ['./list-annoucement.component.css']
 })
 export class ListAnnoucementComponent implements OnInit{
+
   data: AnnouncementCarpooling[] = [];
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -21,13 +22,13 @@ export class ListAnnoucementComponent implements OnInit{
       (data: AnnouncementCarpooling[]) => {
         console.log(data);
         this.data = data;
+        this.totalAnnouncements = data.length;
+
       }),
       (error: any) => {
         console.error('Error fetching user by ID:', error);
       }
-    this.annCarpoolingService.getall().subscribe((data) => {
-      this.totalAnnouncements = data.length;
-    });
+    ;
   }
   deleteAnnCarpooling(id: number) {
     this.annCarpoolingService.deleteAnnCarpooling(id).subscribe(

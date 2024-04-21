@@ -14,7 +14,7 @@ import { RouteService } from 'src/app/FrontOffice/Front-Core/Services/Carpooling
   templateUrl: './add-announcement.component.html',
   styleUrls: ['./add-announcement.component.css']
 })
-export class AddAnnouncementComponent implements OnInit{
+export class AddAnnouncementComponent implements OnInit {
 onMoveItem($event: { previousIndex: number; currentIndex: number; }) {
   console.log($event)
   /*

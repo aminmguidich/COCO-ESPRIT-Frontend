@@ -29,7 +29,7 @@
                                                 <tbody>
                                                   <tr *ngFor="let item of data; let i = index">
                                                     <th scope="row">{{item.idCarpoolingAnnouncement}}</th>
-                                                    <td>{{item.dateCarpoolingAnnouncement}}</td>
+                                                    <td>{{item.dateCarpoolingAnnouncement.toString().replaceAll(",","/")}}</td>
                                                     <td>{{item.description}}</td>
                                                     <td>{{item.score}}</td>
                                                     <td>
@@ -43,7 +43,7 @@
                                                         </button>
                                                           <!-- Modal -->
   <div class="modal fade" [id]="'exampleModalupdate'+i" role='dialog' tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <app-update-announcement [Id]="item.idCarpoolingAnnouncement"></app-update-announcement>
+    <app-update-announcement  [adresses]="this.data[i]?.routeAnnCarpooling?.adressesRoute" [announcement]="item"></app-update-announcement>
 </div>
                                                     </li>
                                                     <li class="list-inline-item">

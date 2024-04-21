@@ -6,6 +6,7 @@ import { AnouncementCarpoolingRoutingModule } from './anouncement-carpooling-rou
 import { AddAnnoucementComponent } from './add-annoucement/add-annoucement.component';
 import { ListAnnoucementComponent } from './list-annoucement/list-annoucement.component';
 import { UpdateAnnouncementComponent } from './update-announcement/update-announcement.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { UpdateAnnouncementComponent } from './update-announcement/update-announ
     AnouncementCarpoolingRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule
 
     
   ]
