@@ -22,7 +22,6 @@
                                                     <th scope="col">Id</th>
                                                     <th scope="col">Date</th>
                                                     <th scope="col">Description</th>
-                                                    <th scope="col">score</th>
                                                     <th scope="col">Actions</th>
                                                   </tr>
                                                 </thead>
@@ -31,7 +30,6 @@
                                                     <th scope="row">{{item.idCarpoolingAnnouncement}}</th>
                                                     <td>{{item.dateCarpoolingAnnouncement.toString().replaceAll(",","/")}}</td>
                                                     <td>{{item.description}}</td>
-                                                    <td>{{item.score}}</td>
                                                     <td>
                                                       <li class="list-inline-item">
                                                         <button type="button" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModalupdate'+i"
@@ -62,15 +60,16 @@
                                                 </tbody>
                                               </table>
                                               <hr>
-                                              <button id="addButton" type="button" class="btn btn-primary" title="" data-toggle="tooltip" data-original-title="btn btn-primary" routerLink="addAnn">Add</button>
+                                              <!--<button id="addButton" type="button" class="btn btn-primary" title="" data-toggle="tooltip" data-original-title="btn btn-primary" routerLink="addAnn">Add</button>-->
                                                 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 Add Announcement  </button>
   
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <app-add-annoucement></app-add-annoucement>
+          <app-add-annoucement ></app-add-annoucement>
   </div>
+  
                                               
 
 

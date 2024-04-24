@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AnnouncementCarpooling } from '../../Models/Carpooling/announcement-carpooling';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { User } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/user';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,14 @@ export class AnnouncementCarpoolingService {
   deleteAnnCarpooling(id: number) {
     let URL2 = this.URL + "/deleteAnnCarpooling/" + id;
     return this.http.delete<AnnouncementCarpooling>(URL2,this.httpOtions)
+  }
+  getAllUsers(){
+    return this.http.get<User[]>(this.URL+"/getAllUsers");
+  }
+  AddAnnCarpoolingAdmin( annCarpooling: AnnouncementCarpooling) {
+    return this.http.post<AnnouncementCarpooling>(this.URL+"/addAnnCarpoolingAdmin", annCarpooling,this.httpOtions)
+
+
   }
   
 }

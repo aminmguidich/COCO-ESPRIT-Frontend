@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -97,7 +98,8 @@ console.log(this.announcement.routeAnnCarpooling.adressesRoute)
     private formB: FormBuilder,
     private annCarpoolingService: AnnouncementCarpoolingService,
     private adressService:AdressService,
-    private routeService:RouteService
+    private routeService:RouteService,
+    public datepipe: DatePipe
 
 
   ) { }
@@ -110,15 +112,21 @@ console.log(this.announcement.routeAnnCarpooling.adressesRoute)
       return value.streetName
     })
     this.adressesAsStrings.push("Esprit")
-    
+    console.log(this.announcement)
     let data=this.announcement;
     let date=new Date()
+    let latest_date
+    if(date){
+      latest_date=this.datepipe.transform(date, 'yyyy-MM-dd');
+
+    }
+    /*
     date.setFullYear(data.dateCarpoolingAnnouncement[0])
     date.setMonth(data.dateCarpoolingAnnouncement[1])
-    date.setDate(data.dateCarpoolingAnnouncement[2])
+    date.setDate(data.dateCarpoolingAnnouncement[2])*/
 
     this.updateForm = this.formB.group({
-      dateAnnCarpooling: [date],
+      dateAnnCarpooling: [latest_date],
       descriptionAnnCarpooling: [data.description],
       priceAnnCarpooling:[data.ridePrice],
       placesAnnCarpooling:[data.places]
@@ -136,8 +144,8 @@ console.log(this.announcement.routeAnnCarpooling.adressesRoute)
   async updateAnnouncementCarpooling() {
       this.announcement.dateCarpoolingAnnouncement = this.updateForm.value.dateAnnCarpooling;
       this.announcement.description = this.updateForm.value.descriptionAnnCarpooling;
-      this.announcement.places=this.updateForm.value.places;
-      this.announcement.ridePrice=this.updateForm.value.price;
+      this.announcement.places=this.updateForm.value.placesAnnCarpooling;
+      this.announcement.ridePrice=this.updateForm.value.priceAnnCarpooling;
 
   
     for (let index = 0; index < this.announcement.routeAnnCarpooling.adressesRoute.length; index++) {

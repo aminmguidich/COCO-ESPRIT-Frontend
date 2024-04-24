@@ -19,12 +19,22 @@ import { ReactCarpooling } from 'src/app/FrontOffice/Front-Core/Models/Carpoolin
   styleUrls: ['./list-announcement.component.css']
 })
 export class ListAnnouncementComponent implements OnInit  {
+deleteAnnCarpooling(id: number) {
+  this.annCarpoolingService.deleteAnnCarpooling(id).subscribe(
+    (response) => {
+      alert(' Announcement deleted Successfully!');
+
+     // this.router.navigate(['admin/carpooling/announcement/addAnn']);
+     this.ngOnInit();
+
+    },
+  )}
 
 AddReact() {
 throw new Error('Method not implemented.');
 }
 user:User={
-  id: 1,
+  id: undefined,
   fullname: '',
   score: 0,
   adressUser: new Adress,
@@ -85,27 +95,26 @@ this.reqCarpoolingService.addReqCarpooling(reqCarpooling).subscribe((next)=>{
 }
 
 onLike(reacts:Array<ReactCarpooling>,announcementId:number){
-  console.log(announcementId)
-  let alreadyReacted=false;
+  let reacted=false;
+  let react:ReactCarpooling
   console.log(reacts)
   reacts.forEach((value,index,array)=>{
-    if(value.userReactCar.id==this.user.id){
-      this.reactCarpoolingService.deleteReactCarpooling(value.idReactCarpooling,announcementId).subscribe((data)=>{
-      })
-      alreadyReacted=true
-      this.ngOnInit()
-
+    if(value.userReact==this.user.id){
+      reacted=true;
+      react=value;
     }
-  })
-  console.log(alreadyReacted)
-  if(alreadyReacted){
+  })  
+  if(reacted){
+    this.reactCarpoolingService.deleteReactCarpooling(react.idReactCarpooling,announcementId).subscribe((data)=>{
+      console.log("react deleted???")
+      this.ngOnInit()
+    })
     return
   }
-  console.log(this.user.id)
   this.reactCarpoolingService.addReactCarpooling(
     {
       idReactCarpooling: 0,
-      userReactCar:this.user
+      userReact:this.user.id
     },announcementId
   ).subscribe((data)=>{
     this.ngOnInit()
@@ -137,36 +146,60 @@ onPageChange($event: PaginatorData) {
     private router: Router,
     private formB: FormBuilder,
     private annCarpoolingService: AnnouncementCarpoolingService,private reqCarpoolingService:RequirementCarpoolingService,
-  private reactCarpoolingService :ReactCarpoolingService,private storageService:StorageService) { }
+  private reactCarpoolingService :ReactCarpoolingService,public storageService:StorageService) { }
  
   ngOnInit() {
 
-    //this.user.id=this.storageService.getUser()['id']
+    this.user.id=this.storageService.getUser()['id']
 
     this.annCarpoolingService.getallPlaces().subscribe(
       (data: AnnouncementCarpooling[]) => {
         this.data = data;
-        let o=this.paginatorData.pageIndex*this.paginatorData.pageSize;
+        this.annCarpoolingService.getAllUsers().subscribe(
+          (users: User[]) => {
+            this.data=data.map((value,index,array)=>{
+              if(value.userAnnCarpooling.id){
+                return value;
+              }
+              for (let index = 0; index < users.length; index++) {
+                const element = users[index];
+                if(element.id.toString()==value.userAnnCarpooling.toString()){
+                  value.userAnnCarpooling=element
+                  break;
+                }
+              }                
+              return value
+            })
+            let o=this.paginatorData.pageIndex*this.paginatorData.pageSize;
 
-        if(o+this.paginatorData.pageSize<this.data.length){
-          this.availableData=this.data.slice(o,o+this.paginatorData.pageSize)
-        }else{
-          this.availableData=this.data.slice(o,this.data.length)
-          let k=this.paginatorData.pageSize-this.availableData.length
-          for(let i=0;i<k;i++){
-            this.availableData.push(null)
-          }        
-        }
+            if(o+this.paginatorData.pageSize<this.data.length){
+              this.availableData=this.data.slice(o,o+this.paginatorData.pageSize)
+            }else{
+              this.availableData=this.data.slice(o,this.data.length)
+              let k=this.paginatorData.pageSize-this.availableData.length
+              for(let i=0;i<k;i++){
+                this.availableData.push(null)
+                
+              }        
+            }   
+            console.log(this.availableData,"j")
+
+          }),
+          (error: any) => {
+            console.error('Error fetching user by ID:', error);
+          }
         
 
+       
+          this.totalAnnouncements = data.length;
+
+
       }),
+      
       (error: any) => {
         console.error('Error fetching user by ID:', error);
       }
-    this.annCarpoolingService.getallPlaces().subscribe((data) => {
-      this.totalAnnouncements = data.length;
-    });
-    console.log(this.availableData)
+  
   }
 
   totalAnnouncements!: number;

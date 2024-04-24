@@ -60,14 +60,10 @@ ngOnChanges(changes: any) {
   @ViewChild('map') mapDiv?: ElementRef; 
   service: H.service.SearchService|undefined;
   ngAfterViewInit(): void {
-
-// This array stores coordinates of some interesting landmarks in Luxembourg City:
-    
-
-
+   
     if (!this.map && this.mapDiv) {
       this.platform = new H.service.Platform({
-        apikey: '-l1Pfp2wENzLMBbe4_LjKlIMprRTzEicFn7jSu2gezk'
+        apikey: '945CgojTxPvxw1dFa6N8VuQE5pC6iCxHhTvJxjcCpcw'
       });
 
       this.service = this.platform.getSearchService();
@@ -78,12 +74,12 @@ ngOnChanges(changes: any) {
         (layers as any).vector.normal.map,
         {
           pixelRatio: window.devicePixelRatio,
-          // In this example, the map centers on
-          // Luxembourg City, with the zoom level of 16:
           zoom: 15,
           center: this.esprit_location
         },
       );
+      
+
       const marker = new H.map.Marker(this.esprit_location);
       marker.setData("Esprit");
       map.addObject(marker);
@@ -103,15 +99,22 @@ ngOnChanges(changes: any) {
       //---------------------
       }
     if(this.map){
-      
+      navigator.geolocation.getCurrentPosition((position)=>{
+       
+      })
       new H.mapevents.Behavior(new H.mapevents.MapEvents(this.map));
       if(this.adresses.length==0 || !this.readonly){
         this.map.addEventListener("contextmenu", (e:H.mapevents.ContextMenuEvent) =>{
         if (e.target !== this.map) {
           return;
         }
+        
         var coord  = this.map.screenToGeo(e.viewportX, e.viewportY);
         if(coord){
+          //------
+          let distance=this.calculateDistance([coord.lat,coord.lng],[this.esprit_location.lat,this.esprit_location.lng])
+          console.log("distance to esprit ",distance)
+          //-----
           const marker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
           this.service?.reverseGeocode({
             at: coord.lat+','+coord.lng
@@ -190,8 +193,26 @@ ngOnChanges(changes: any) {
           },
           data: undefined
         };
-        const routeLine = new H.map.Polyline(multiLineString, options);
+        //--------------
+        let geometries=multiLineString.getGeometries()
+        let array:number[]=new Array()
+         geometries.forEach((value,index,arr)=>{
+          for (let index = 0; index < value.$.length; index++) {
+            const element = value.$[index];
+            array.push(element)
+          }
+        })
 
+        let point: [number, number] = [36.9029, 10.1896]; 
+        let polylineCoordinates = this.decodePolyline(array);
+        let minDistance=this.minimumDistanceBetweenPointAndPolyline(polylineCoordinates,point)
+        console.log(minDistance)
+       
+        //let passesByPoint = this.doesPolylinePassByPoint(polylineCoordinates, point, toleranceRadius);
+        //console.log("Does polyline pass by the point?", passesByPoint);
+        //--------------
+        const routeLine = new H.map.Polyline(multiLineString, options);
+        
 
         // Create a H.map.Group to hold all the map objects and enable us to obtain 
         // the bounding box that contains all its objects within
@@ -224,4 +245,44 @@ ngOnChanges(changes: any) {
         alert(error.message);
       });
   }
+  
+  //----------------------
+  calculateDistance(point1: [number, number], point2: [number, number]): number {
+    const [lat1, lon1] = point1;
+    const [lat2, lon2] = point2;
+
+    const R = 6371e3; // meters
+    const φ1 = (lat1 * Math.PI) / 180;
+    const φ2 = (lat2 * Math.PI) / 180;
+    const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const d = R * c;
+
+    return d;
+}
+
+minimumDistanceBetweenPointAndPolyline(polylineCoordinates: [number, number][], point: [number, number]): number {
+
+  let distances=[]
+  for (let i = 0; i < polylineCoordinates.length; i++) {
+      const point1 = polylineCoordinates[i];
+      const distanceToPoint = this.calculateDistance(point, point1);
+      distances.push(distanceToPoint)
+    
+  }
+  return Math.min(...distances);
+}
+  decodePolyline(polylineData) {
+      var polylineCoordinates = [];
+      for (var i = 0; i < polylineData.length; i += 3) {
+          polylineCoordinates.push([polylineData[i], polylineData[i + 1]]);
+      }
+      return polylineCoordinates;
+  }
+  //----------------------
 }

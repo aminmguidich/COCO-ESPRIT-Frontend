@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnnouncementCarpooling } from 'src/app/BackOffice/Back-Core/Models/Carpooling/announcement-carpooling';
@@ -15,6 +15,11 @@ import { RouteService } from 'src/app/FrontOffice/Front-Core/Services/Carpooling
   styleUrls: ['./add-annoucement.component.css']
 })
 export class AddAnnoucementComponent implements OnInit {
+
+  users:  User[]=[];
+  selectedUser: number | undefined;
+
+
   onMoveItem($event: { previousIndex: number; currentIndex: number; }) {
     console.log($event)
     /*
@@ -77,6 +82,19 @@ export class AddAnnoucementComponent implements OnInit {
     constructor(private annCarpoolingService:AnnouncementCarpoolingService , private router: Router,private adressService:AdressService,private routeService:RouteService) { }
    
     ngOnInit() {
+
+
+              
+      this.annCarpoolingService.getAllUsers().subscribe(
+        (data: User[]) => {
+          console.log(data,);
+          this.users = data;
+  
+        }),
+        (error: any) => {
+          console.error('Error fetching user by ID:', error);
+        }
+      ;
     }
     OnAddAdress(){
       this.isMapVisible=true
@@ -111,7 +129,7 @@ export class AddAnnoucementComponent implements OnInit {
   // Convert the string to a Date object
       const date = new Date(form.value.date);
       const user:User={
-        id: 2,
+        id: this.selectedUser,
         fullname: '',
         score: 0,
         adressUser: new Adress,
@@ -132,7 +150,7 @@ export class AddAnnoucementComponent implements OnInit {
         reactCarpoolingsAnnCarpooling: []
       };
   
-      this.annCarpoolingService.AddAnnCarpooling(annCarpooling).subscribe(
+      this.annCarpoolingService.AddAnnCarpoolingAdmin(annCarpooling).subscribe(
         () => {
           alert('Added Successfully!');
           //this.router.navigate(['admin/carpooling/announcement/']);
@@ -142,11 +160,19 @@ export class AddAnnoucementComponent implements OnInit {
         }
       );
       }
-      
-        
+
       
     }
+
+    selectUser(event: Event): void {
+      const target = event.target as HTMLSelectElement;
+      this.selectedUser =Number.parseInt(target.value);
+      console.log(this.selectedUser)
+    }
+      
     
+
+
   
   }
   

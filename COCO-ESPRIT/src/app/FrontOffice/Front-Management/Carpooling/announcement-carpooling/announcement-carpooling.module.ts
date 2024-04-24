@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { AnnouncementCarpoolingRoutingModule } from './announcement-carpooling-routing.module';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
@@ -55,6 +55,7 @@ import { MatListModule } from '@angular/material/list';
     MatBadgeModule,
     SharedModule
   ],
+  providers:[DatePipe]
 
 })
 export class AnnouncementCarpoolingModule { }
