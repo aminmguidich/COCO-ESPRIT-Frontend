@@ -42,7 +42,7 @@
                <app-map-container id="map" [markers]="markers" (OnAddMarker)="onAddMarker($event)"></app-map-container>
             </div>
           <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="submit" class="btn btn-primary"data-bs-dismiss="modal">Save</button>
           <button (click)="onClose()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
           </form>

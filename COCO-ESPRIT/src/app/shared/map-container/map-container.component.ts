@@ -12,6 +12,8 @@ export class MapContainerComponent implements OnChanges {
 
   @Input()  markers:Array<H.map.Marker>=[];
   @Output() OnAddMarker= new EventEmitter<H.map.Marker>();
+  @Output() OnRouteIsInconvenient = new EventEmitter();
+
 handleAddMarker($event: H.map.Marker) {
   this.OnAddMarker.emit($event)
 }

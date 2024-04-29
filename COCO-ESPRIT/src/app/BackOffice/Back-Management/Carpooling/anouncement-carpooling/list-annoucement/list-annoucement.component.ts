@@ -41,6 +41,7 @@ export class ListAnnoucementComponent implements OnInit{
       },
     )
   }
+
   totalAnnouncements!: number;
 
   

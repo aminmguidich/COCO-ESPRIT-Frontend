@@ -173,6 +173,8 @@ console.log(this.announcement.routeAnnCarpooling.adressesRoute)
           const value = this.removedAddresses[index];
           await this.adressService.deleteAdress(value.idAdress).toPromise()
         }
+        alert('Updated Successfully!');
+
       },
       (error) => {
         console.error('Update failed:', error);

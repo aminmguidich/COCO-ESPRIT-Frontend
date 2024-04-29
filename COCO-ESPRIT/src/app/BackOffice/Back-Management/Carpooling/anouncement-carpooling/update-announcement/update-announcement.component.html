@@ -28,8 +28,10 @@
                                                 &nbsp;
                                                 <app-map-container [readonly]="false" [adresses]="adresses?adresses:[]" [markers]="markers?markers:[]"(OnAddMarker)="onAddMarker($event)"></app-map-container>
 
-                                                <button type="submit"(click)="updateAnnouncementCarpooling()" class="btn btn-primary">Submit</button>
-                                                         <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <div class="modal-footer">
+                                                <button type="submit"(click)="updateAnnouncementCarpooling()" class="btn btn-primary"data-bs-dismiss="modal">Submit</button>
+                                                 <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
 
                                             </form>
                                             

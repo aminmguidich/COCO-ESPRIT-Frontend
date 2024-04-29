@@ -27,10 +27,11 @@
                                                 <app-list-drag-and-drop  (onMoveItem)="onMoveItem($event)" (removeItemNotify)="onRemoveItem($event)" [adresses]="adressesAsStrings"/>                
                                                 &nbsp;
                                                 <app-map-container [readonly]="false" [adresses]="adresses?adresses:[]" [markers]="markers?markers:[]"(OnAddMarker)="onAddMarker($event)"></app-map-container>
+                                                <div class="modal-footer">
 
-                                                <button type="submit"(click)="updateAnnouncementCarpooling()" class="btn btn-primary">Submit</button>
-                                                         <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
+                                                <button type="submit"(click)="updateAnnouncementCarpooling()" class="btn btn-primary"data-bs-dismiss="modal">Submit</button>
+                                                 <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
                                             </form>
                                             
                                         </div>

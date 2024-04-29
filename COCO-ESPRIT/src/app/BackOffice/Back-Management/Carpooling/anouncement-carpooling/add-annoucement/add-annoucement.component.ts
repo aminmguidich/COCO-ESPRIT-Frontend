@@ -15,6 +15,10 @@ import { RouteService } from 'src/app/FrontOffice/Front-Core/Services/Carpooling
   styleUrls: ['./add-annoucement.component.css']
 })
 export class AddAnnoucementComponent implements OnInit {
+refresh() {
+        this.router.navigate(['admin/carpooling/announcement/']);
+
+}
 
   users:  User[]=[];
   selectedUser: number | undefined;
@@ -153,7 +157,6 @@ export class AddAnnoucementComponent implements OnInit {
       this.annCarpoolingService.AddAnnCarpoolingAdmin(annCarpooling).subscribe(
         () => {
           alert('Added Successfully!');
-          //this.router.navigate(['admin/carpooling/announcement/']);
         },
         error => {
           console.error(error);

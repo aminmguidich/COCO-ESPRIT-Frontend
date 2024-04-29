@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Adress } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/adress';
 
 @Component({
@@ -7,6 +7,7 @@ import { Adress } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/adress'
   styleUrls: ['./deteails-announcement.component.css']
 })
 export class DeteailsAnnouncementComponent implements OnInit {
+
   ngOnInit(): void {
     this.markers=this.adresses?.map((adress,index,array)=> new H.map.Marker({lat:adress.latitude,lng:adress.longitude})    )
 
@@ -14,5 +15,4 @@ export class DeteailsAnnouncementComponent implements OnInit {
 
   markers:Array<H.map.Marker>|undefined
   @Input()adresses!:Array<Adress>|undefined
-
 }

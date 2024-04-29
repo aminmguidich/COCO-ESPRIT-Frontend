@@ -4,10 +4,12 @@
 [markers]="markers"
 (notify)="handleMapChange($event)"
 (OnAddMarker)="handleAddMarker($event)"
+(OnRouteIsInconvenient)="OnRouteIsInconvenient.emit()"
 [adresses]="adresses"
 [readonly]="readonly"
-></app-map>
 
-<app-map-position      (notify)="handleInputChange($event)"
-> 
-</app-map-position>
+></app-map>
+<!--
+<app-map-position      (notify)="handleInputChange($event)"/> 
+-->
+

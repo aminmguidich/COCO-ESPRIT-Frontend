@@ -8,8 +8,8 @@ import { Adress } from '../../FrontOffice/Front-Core/Models/Carpooling/adress';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent {
-  private map?: H.Map;
-private  esprit_location:H.geo.Point=new H.geo.Point( 36.90007,  10.18798);
+private map?: H.Map;
+public static  esprit_location:H.geo.Point=new H.geo.Point( 36.90007,  10.18798);
 @Input() public zoom = 2;
 @Input() public lat = 0;
 @Input() public lng = 0;
@@ -24,14 +24,13 @@ private timeoutHandle: any;
 ngOnChanges(changes: any) {
   clearTimeout(this.timeoutHandle);
   if (changes['markers'] !== undefined) {
-    console.log(this.markers)
     let objects=this.map?.getObjects()
     if(objects){
       this.map?.removeObjects(objects)
       this.markers.forEach((value,index,array)=>{
         this.map?.addObject(value)
       })
-      const marker = new H.map.Marker(this.esprit_location);
+      const marker = new H.map.Marker(MapComponent.esprit_location);
       marker.setData("Esprit");
       this.map?.addObject(marker);
       
@@ -63,7 +62,7 @@ ngOnChanges(changes: any) {
    
     if (!this.map && this.mapDiv) {
       this.platform = new H.service.Platform({
-        apikey: '945CgojTxPvxw1dFa6N8VuQE5pC6iCxHhTvJxjcCpcw'
+        apikey: 'HNhs9aUe13svIiECACHKjsyUyj7dx-XM3pi7t114eR0'
       });
 
       this.service = this.platform.getSearchService();
@@ -75,12 +74,12 @@ ngOnChanges(changes: any) {
         {
           pixelRatio: window.devicePixelRatio,
           zoom: 15,
-          center: this.esprit_location
+          center: MapComponent.esprit_location
         },
       );
       
 
-      const marker = new H.map.Marker(this.esprit_location);
+      const marker = new H.map.Marker(MapComponent.esprit_location);
       marker.setData("Esprit");
       map.addObject(marker);
       
@@ -92,16 +91,10 @@ ngOnChanges(changes: any) {
     this.map?.addEventListener('mapviewchange', (ev: H.map.ChangeEvent) => {
       this.notify.emit(ev)
     });
-      //---------------------
-      // Routing
-      //---------------------
-          //
-      //---------------------
+     
       }
     if(this.map){
-      navigator.geolocation.getCurrentPosition((position)=>{
-       
-      })
+  
       new H.mapevents.Behavior(new H.mapevents.MapEvents(this.map));
       if(this.adresses.length==0 || !this.readonly){
         this.map.addEventListener("contextmenu", (e:H.mapevents.ContextMenuEvent) =>{
@@ -112,8 +105,7 @@ ngOnChanges(changes: any) {
         var coord  = this.map.screenToGeo(e.viewportX, e.viewportY);
         if(coord){
           //------
-          let distance=this.calculateDistance([coord.lat,coord.lng],[this.esprit_location.lat,this.esprit_location.lng])
-          console.log("distance to esprit ",distance)
+         
           //-----
           const marker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
           this.service?.reverseGeocode({
@@ -129,14 +121,13 @@ ngOnChanges(changes: any) {
         }
       })}
       
-      if(this.platform &&this.adresses.length>0){
+      if(this.platform &&!this.readonly){
         let markers=this.adresses.map((value,index,array)=>{
           const marker = new H.map.Marker({lat:value.latitude,lng:value.longitude});
           marker.setData(value.streetName);
           this.map?.addObject(marker);
           return marker
         })
-        console.log(markers)
         this.routing(this.platform,markers)
         this.map.setZoom(9)
       }
@@ -156,7 +147,7 @@ ngOnChanges(changes: any) {
     })
     let origin:any=markers[0].getGeometry()
     //const origin = { lat: 56.97, lng: 24.09 };
-    const destination = this.esprit_location
+    const destination = MapComponent.esprit_location
 
     // Create the parameters for the routing request:
     const routingParameters = {
@@ -184,7 +175,6 @@ ngOnChanges(changes: any) {
 
         // Create an instance of H.geo.MultiLineString
         const multiLineString = new H.geo.MultiLineString(lineStrings);
-
         // Create a polyline to display the route:
         let options: H.map.Spatial.Options = {
           style: {
@@ -203,13 +193,17 @@ ngOnChanges(changes: any) {
           }
         })
 
-        let point: [number, number] = [36.9029, 10.1896]; 
-        let polylineCoordinates = this.decodePolyline(array);
-        let minDistance=this.minimumDistanceBetweenPointAndPolyline(polylineCoordinates,point)
-        console.log(minDistance)
        
-        //let passesByPoint = this.doesPolylinePassByPoint(polylineCoordinates, point, toleranceRadius);
-        //console.log("Does polyline pass by the point?", passesByPoint);
+        let polylineCoordinates = MapComponent.decodePolyline(array);
+        navigator.geolocation.getCurrentPosition((position)=>{
+          
+          let point: [number, number]=[position.coords.latitude,position.coords.longitude]
+          let minDistance=MapComponent.minimumDistanceBetweenPointAndPolyline(polylineCoordinates,point)
+          let distance=MapComponent.calculateDistance([point[0],point[1]],[MapComponent.esprit_location.lat,MapComponent.esprit_location.lng])
+          if(minDistance+600>=distance){
+            
+          }
+        })
         //--------------
         const routeLine = new H.map.Polyline(multiLineString, options);
         
@@ -223,14 +217,12 @@ ngOnChanges(changes: any) {
 
         // Set the map viewport to make the entire route visible:
        if(this.adresses.length==0)this.map?.getViewModel().setLookAtData({
-          bounds: group.getBoundingBox().resizeToCenter(this.esprit_location)
+          bounds: group.getBoundingBox().resizeToCenter(MapComponent.esprit_location)
         });
         else{
-          this.map?.setCenter(this.esprit_location)
+          this.map?.setCenter(MapComponent.esprit_location)
           this.map?.setZoom(15)
         }
-        
-  
       };
     };
 
@@ -247,26 +239,23 @@ ngOnChanges(changes: any) {
   }
   
   //----------------------
-  calculateDistance(point1: [number, number], point2: [number, number]): number {
+  public static calculateDistance(point1: [number, number], point2: [number, number]): number {
     const [lat1, lon1] = point1;
     const [lat2, lon2] = point2;
-
     const R = 6371e3; // meters
     const φ1 = (lat1 * Math.PI) / 180;
     const φ2 = (lat2 * Math.PI) / 180;
     const Δφ = ((lat2 - lat1) * Math.PI) / 180;
     const Δλ = ((lon2 - lon1) * Math.PI) / 180;
-
     const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-        Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
     const d = R * c;
 
     return d;
 }
 
-minimumDistanceBetweenPointAndPolyline(polylineCoordinates: [number, number][], point: [number, number]): number {
+public static minimumDistanceBetweenPointAndPolyline(polylineCoordinates: [number, number][], point: [number, number]): number {
 
   let distances=[]
   for (let i = 0; i < polylineCoordinates.length; i++) {
@@ -277,7 +266,7 @@ minimumDistanceBetweenPointAndPolyline(polylineCoordinates: [number, number][], 
   }
   return Math.min(...distances);
 }
-  decodePolyline(polylineData) {
+public static decodePolyline(polylineData) {
       var polylineCoordinates = [];
       for (var i = 0; i < polylineData.length; i += 3) {
           polylineCoordinates.push([polylineData[i], polylineData[i + 1]]);
