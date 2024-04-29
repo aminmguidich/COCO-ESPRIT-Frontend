@@ -157,6 +157,8 @@ refresh() {
       this.annCarpoolingService.AddAnnCarpoolingAdmin(annCarpooling).subscribe(
         () => {
           alert('Added Successfully!');
+          //this.router.navigate(["admin/carpooling/announcement"]);
+          this.annCarpoolingService.filter('RegisterClick')
         },
         error => {
           console.error(error);
