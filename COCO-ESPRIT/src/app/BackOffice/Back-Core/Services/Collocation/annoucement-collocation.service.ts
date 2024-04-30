@@ -74,7 +74,7 @@ export class AnnoucementCollocationService {
   
   updateAnnouncementCollocationg( idCollocationAnnouncement: any, data: any): Observable<any> {
 
-    return this.http.put(`http://localhost:9092/Collocation_Announcement/updateAnnouncementCollocation/${idCollocationAnnouncement}`, data);
+    return this.http.put(`http://localhost:9092/api/Collocation_Announcement/updateAnnouncementCollocation/${idCollocationAnnouncement}`, data);
 
   }  
 

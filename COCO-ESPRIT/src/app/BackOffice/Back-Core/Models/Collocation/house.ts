@@ -7,4 +7,6 @@ export class House {
   places!: number;
   nbrofBedrooms!:number;
   price!:number;
+  contracted!:boolean
+  title!:string
 }

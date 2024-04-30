@@ -33,7 +33,8 @@ export class AddContractComponent implements OnInit {
     }
 
     const newContract: Contract = {
-      ...this.validateForm.value
+      ...this.validateForm.value,
+      contracted:true
     };
 
     this.contractService.addContract(newContract).subscribe(

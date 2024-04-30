@@ -11,7 +11,7 @@ import { UpdateHouseComponent } from './update-house/update-house.component';
 @NgModule({
   declarations: [   AddHouseComponent,
     ListHouseComponent,
-    UpdateHouseComponent],
+    ],
   imports: [
     CommonModule,
     HouseRoutingModule,

@@ -36,7 +36,8 @@ export class AddHouseComponent implements OnInit {
       location: [null, [Validators.required]], // Champ manquant ajouté
       description: [null, [Validators.required]], // Champ manquant ajouté
       nbrofBedrooms: [null, [Validators.required]], // Champ manquant ajouté
-      price: [null, [Validators.required]]
+      price: [null, [Validators.required]],
+      title: [null, [Validators.required]]
     });
   }
 
@@ -88,7 +89,8 @@ export class AddHouseComponent implements OnInit {
 
         this.houseService.addHouse(formData).subscribe({
           next: data => {
-            
+            this.validateForm.reset()
+            this.photo = []
           },
           error: err => {
 

@@ -24,6 +24,7 @@
               </div>
               <div class="col-md-6">
                 <p class="mb-1">Poster: {{ house.username }}</p>
+                <p class="mb-1">House Title: {{ house.title }}</p>
                 <h5 class="mb-1">HouseType: {{ house.houseType }}</h5>
                 <p class="mb-1">Places: {{ house.places }}</p>
                 <!-- Ajout du rate sous forme d'étoiles -->
@@ -40,7 +41,11 @@
                 <!-- Bouton "SHOW MORE" pour afficher des informations supplémentaires -->
                 <button type="button" class="btn btn-info" (click)="showMoreInfo(house)">SHOW MORE</button>
                 <!-- Bouton "VIEW CONTRACT" pour générer le PDF -->
-                <button type="button" class="btn btn-success" (click)="houseSelected = house"  data-bs-toggle="modal" data-bs-target="#addContract"   >ADD CONTRACT</button>
+                <button type="button" class="btn btn-success" *ngIf="house.userId != userId && house.contracted===false" (click)="houseSelected = house"  data-bs-toggle="modal" data-bs-target="#addContract"   >ADD CONTRACT</button>
+                <br>
+                <button type="button" class="btn btn-info" *ngIf="house.userId === userId" (click)="selectHouseToEdit(house.idHouse);openHouseToEdit = true"  data-bs-toggle="modal" data-bs-target="#editHouseModal"   >UPDATE</button>
+                <br>
+                <button type="button" class="btn btn-danger" *ngIf="house.userId === userId" (click)="deleteHouse(house.idHouse)" >DELETE</button>
 
               </div>
             </div>
@@ -74,6 +79,29 @@
                       </div>
                     </div>
                   </div>
+
+                        <!-- Edit Announcement Modal -->
+                        <div class="modal fade" id="editHouseModal" tabindex="-1" aria-labelledby="editAnnouncementModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="editAnnouncementModalLabel">Edit House</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="custom-modal-content">
+                                  <app-update-house *ngIf="openHouseToEdit" ></app-update-house>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+  
+                      
 
             <!-- Informations supplémentaires masquées initialement -->
             <div class="popup" *ngIf="openmodaldetails==true">

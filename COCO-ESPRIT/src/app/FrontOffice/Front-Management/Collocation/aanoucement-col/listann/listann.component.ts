@@ -25,7 +25,7 @@ export class ListannComponent implements OnInit {
   newReply: string = '';
   newText: string = '';
   editingCommentIndex: number | null = null;
-  editedComment: string = ''; 
+  editedComment: string = '';
   p: number = 1;
   itemsPerPage: number = 3;
 
@@ -34,20 +34,31 @@ export class ListannComponent implements OnInit {
   @ViewChild('addAnnouncementModal') addAnnouncementModal!: ElementRef;
 
   // Utilisateur de la colocation
-  userAnnCollocation: any = { 
+  userAnnCollocation: any = {
     id: 1,
     fullname: 'User Fullname',
     email: 'user@example.com',
     // Autres propriétés de l'utilisateur...
   };
 
+  userReacts: any = []
+  userId: any;
+
   constructor(
     private Annoucementservice: AnnoucementCollocationService,
     private reactCollService: ReactcollService
-) { }
+  ) { }
 
 
+  getAllReactsForUserConnected() {
 
+    this.reactCollService.retrieveAllReactsByUserId().subscribe((res: any) => {
+
+      this.userReacts = res
+
+    })
+
+  }
 
   retrieveAllAnnouncements() {
     this.Annoucementservice.retrieveAllAnnouncements().subscribe((res: any[]) => {
@@ -90,9 +101,9 @@ export class ListannComponent implements OnInit {
     //   const usersList = res
 
     //   for (let i = 0; i < usersList.length; i++) {
-        
+
     //     const score = usersList[i].score
-        
+
     //   }
 
     // })
@@ -100,8 +111,8 @@ export class ListannComponent implements OnInit {
     if (this.roommateEmail.trim() !== '') {
 
       const request = {
-        id:1,
-        recipientEmaiL:this.roommateEmail
+        id: 1,
+        recipientEmaiL: this.roommateEmail
       }
 
       this.Annoucementservice.sendForm(request).subscribe(
@@ -171,24 +182,24 @@ export class ListannComponent implements OnInit {
 
 
 
-/*
-  handleRating(postId: number, rating: number) {
-    this.postService.getPost(postId).subscribe({
-      next: (postToUpdate) => {
-        if (postToUpdate) {
-          const newRating = postToUpdate.nb_etoil + rating;
-          
-          this.postService.updatePostRating(postId, newRating).subscribe({
-            next: () => {
-              console.log(postToUpdate.nb_etoil);
-              console.log(rating);
-            }
-          });
-        } 
-      }
-    });
-  }
-  */
+  /*
+    handleRating(postId: number, rating: number) {
+      this.postService.getPost(postId).subscribe({
+        next: (postToUpdate) => {
+          if (postToUpdate) {
+            const newRating = postToUpdate.nb_etoil + rating;
+            
+            this.postService.updatePostRating(postId, newRating).subscribe({
+              next: () => {
+                console.log(postToUpdate.nb_etoil);
+                console.log(rating);
+              }
+            });
+          } 
+        }
+      });
+    }
+    */
 
   cancelEditComment(): void {
     this.editingCommentIndex = null;
@@ -201,129 +212,182 @@ export class ListannComponent implements OnInit {
       this.comments = JSON.parse(storedComments);
     }
   }
-  likeAnnouncement(announcement: AnnouncementCollocation): void {
-    this.reactCollService.likePost(announcement.idCollocationAnnouncement).subscribe(
-      response => {
-        console.log('Announcement liked successfully', response);
-        announcement.nb_etoil++; // Increment the like counter of the announcement
-        // Update local storage with the new number of likes
-        localStorage.setItem(`announcement_${announcement.idCollocationAnnouncement}_likes`, announcement.nb_etoil.toString()); // Update local storage
-      },
-      error => {
-        console.error('Error liking announcement', error);
-      }
-    );
-}
 
 
-dislikeAnnouncement(announcement: AnnouncementCollocation): void {
-  this.reactCollService.dislikePost(announcement.idCollocationAnnouncement).subscribe(
-    response => {
-      console.log('Announcement disliked successfully', response);
-      announcement.nb_etoil--; // Decrement the like counter of the announcement
-      // Update local storage with the new number of dislikes
-      localStorage.setItem(`announcement_${announcement.idCollocationAnnouncement}_dislikes`, announcement.nb_etoil.toString()); // Update local storage
-    },
-    error => {
-      console.error('Error disliking announcement', error);
-    }
-  );
-}
 
+  handleRating(idCollocationAnnouncement: number) {
 
-handleRating(idCollocationAnnouncement: number) {
-  
-  // Appeler getAnnouncementCollocationById avec l'ID approprié
-  localStorage.setItem("annId",idCollocationAnnouncement+"")
+    // Appeler getAnnouncementCollocationById avec l'ID approprié
+    localStorage.setItem("annId", idCollocationAnnouncement + "")
 
-}
-
-maxRaitingAryy: any = [];
-SelectedStar = 0;
-
-
-Raiting(index: number) {
-
-  var rateNbr = index+1
-
-  if (rateNbr > this.SelectedStar) {
-    this.SelectedStar = rateNbr;
-    var annId: any
-
-
-    setTimeout(() => {
-      if (annId !== null) {
-        annId = localStorage.getItem("annId")
-      }
-
-      this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
-        next: () => {
-          alert("rated")
-        }
-      });
-    }, 4000);
-  } else {
-    this.SelectedStar = rateNbr;
-    var annId: any
-
-    setTimeout(() => {
-      if (annId !== null) {
-        annId = localStorage.getItem("annId")
-      }
-
-      this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
-        next: () => {
-          alert("rated")
-        }
-      });
-    }, 4000);
   }
 
-  
-
-}
-
+  maxRaitingAryy: any = [];
+  SelectedStar = 0;
 
 
-rate(rateNbr:any,itemIndex:any, annId:any){
+  Raiting(index: number) {
+
+    var rateNbr = index + 1
+
+    if (rateNbr > this.SelectedStar) {
+      this.SelectedStar = rateNbr;
+      var annId: any
 
 
+      setTimeout(() => {
+        if (annId !== null) {
+          annId = localStorage.getItem("annId")
+        }
 
-  this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
-    next: () => {
-      this.annoucementscol[itemIndex].nb_etoil = rateNbr
+        this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
+          next: () => {
+            alert("rated")
+          }
+        });
+      }, 4000);
+    } else {
+      this.SelectedStar = rateNbr;
+      var annId: any
+
+      setTimeout(() => {
+        if (annId !== null) {
+          annId = localStorage.getItem("annId")
+        }
+
+        this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
+          next: () => {
+            alert("rated")
+          }
+        });
+      }, 4000);
     }
-  });
 
-}
 
-react(like:any,dislike:any,annId:any,index:any){
-  // this.posts[index].like = status
-  const request = {
-    likes:like,
-    dislikes:dislike
-   
+
+  }
+
+
+
+  rate(rateNbr: any, itemIndex: any, annId: any) {
+
+
+
+    this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
+      next: () => {
+        this.annoucementscol[itemIndex].nb_etoil = rateNbr
+      }
+    });
+
+  }
+
+  react(action: string, likes: any, dislikes: any, index: any, annId: any) {
+    // this.posts[index].like = status
+
+    var request = {
+      likes: likes,
+      dislikes: dislikes
     }
-    this.annoucementscol[index].likes = like
-    this.annoucementscol[index].dislikes = dislike
-  this.Annoucementservice.updateAnnouncementCollocationg(annId, this.annoucementscol[index]).subscribe({
-    next: () => {
 
-    
-       console.log(this.annoucementscol[index])
-    
-      
+    if (action === "like") {
+      request.likes++
+    } else if (action === "no_like") {
+      request.likes = request.likes > 0 ? request.likes-- : request.likes
+    } else if (action === "dislike") {
+      request.dislikes++
+    } else if (action === "no_dislike") {
+      request.dislikes = request.dislikes > 0 ? request.dislikes-- : request.dislikes
     }
-  })
-}
+
+
+    this.annoucementscol[index].likes = request.likes
+    this.annoucementscol[index].dislikes = request.dislikes
+
+    console.log(this.annoucementscol[index])
+
+    this.Annoucementservice.updateAnnouncementCollocationg(annId, this.annoucementscol[index]).subscribe({
+
+      next: (res:any) => {
+
+        console.log(res)
+        
+        // if (action === "like") {
+        //   this.sendUserReact(this.userId,annId,true,null)
+        // } else if (action === "no_like") {
+        //   this.sendUserReact(this.userId,annId,false,null)
+        // } else if (action === "dislike") {
+        //   this.sendUserReact(this.userId,annId,null,true)
+        // } else if (action === "no_dislike") {
+        //   this.sendUserReact(this.userId,annId,null,false)
+        // }
+
+      }
+    })
+  }
+
+  sendUserReact(idUser:any,idAnn:any,likes:any,dislikes:any){
+
+    var trouv = false
+
+    var index = 0
+
+    for (let i = 0; i < this.userReacts.length; i++) {
+
+
+      if (this.userReacts[i].idAnn === idAnn && this.userReacts[i].idUser === idUser) {
+
+        trouv = true
+
+        index = i
+
+      }
+
+
+    }
+
+    if (trouv) {
+      this.reactCollService.updateReact(this.userReacts[index].idReact, {
+        idAnn: this.userReacts[index].idAnn,
+        idUser: this.userReacts[index].idUser,
+        likes: likes,
+        dislikes: dislikes
+      }).subscribe((res: any) => {
+
+        this.userReacts[index].likes = likes != null ? likes : this.userReacts[index].likes
+        this.userReacts[index].dislikes = dislikes != null ? dislikes : this.userReacts[index].dislikes
+
+
+      })
+
+    } else {
+      this.reactCollService.postReactCol({
+        idAnn: 8,
+        idUser: parseInt(localStorage.getItem("idUser") + ""),
+        likes: likes,
+        dislikes: dislikes
+      }).subscribe((res: any) => {
+
+        this.userReacts[index].likes = likes != null ? likes : this.userReacts[index].likes
+        this.userReacts[index].dislikes = dislikes != null ? dislikes : this.userReacts[index].dislikes
+
+      })
+    }
+
+  }
+
+  ngOnInit() {
+    this.retrieveAllAnnouncements();
+    this.loadComments();
+    this.maxRaitingAryy = Array(5).fill(0);
+
+    this.userId = parseInt(localStorage.getItem("idUser") + "")
+
+    this.getAllReactsForUserConnected()
 
 
 
-ngOnInit() {
-  this.retrieveAllAnnouncements();
-  this.loadComments();
-  this.maxRaitingAryy = Array(5).fill(0);
 
-}
+
+  }
 
 }

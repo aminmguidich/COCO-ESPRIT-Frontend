@@ -7,9 +7,14 @@ import { AnnouncementCollocation } from '../../Models/Collocation/annoucement-co
   providedIn: 'root'
 })
 export class HouseService {
+
   private apiURL = 'http://localhost:9092/api/House/';
 
   constructor(private http: HttpClient) { }
+
+  getHouseById(id: any) {
+    return this.http.get(`${this.apiURL}house/${id}`);
+  }
 
   addHouse(data: any): Observable<any> {
     return this.http.post(`${this.apiURL}addHouse`, data);
@@ -20,10 +25,10 @@ export class HouseService {
   }
 
   deleteHouse(id: number): Observable<any> {
-    return this.http.delete(`${this.apiURL}house/delete/${id}`);
+    return this.http.get(`${this.apiURL}house/delete/${id}`);
   }
 
-  updateHouse(id: number, updatedHouse: House): Observable<any> {
+  updateHouse(id: number, updatedHouse: any): Observable<any> {
     return this.http.put(`${this.apiURL}house/update/${id}`, updatedHouse);
   }
 

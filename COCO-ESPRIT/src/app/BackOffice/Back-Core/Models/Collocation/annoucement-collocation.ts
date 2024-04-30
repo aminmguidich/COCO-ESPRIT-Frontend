@@ -9,5 +9,6 @@ export class AnnouncementCollocation {
     likes:number=0;
     dislikes:number=0;
     user_ann_collocation_id:number=0
+    title!:string
   }
   

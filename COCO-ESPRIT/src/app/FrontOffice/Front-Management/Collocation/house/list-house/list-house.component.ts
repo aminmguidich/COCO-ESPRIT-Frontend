@@ -38,6 +38,10 @@ export class ListHouseComponent {
 
   houseSelected:any
 
+  houseIdSelectedToEdit:any
+
+  openHouseToEdit = false
+
   validateForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -55,6 +59,12 @@ export class ListHouseComponent {
     });
   }
 
+  selectHouseToEdit(id:any){
+
+    localStorage.setItem("houseUp",id+"")
+
+  }
+
   getAllHouses() {
     this.houseService.getAllHouses().subscribe(res => {
       console.log(res);
@@ -65,6 +75,7 @@ export class ListHouseComponent {
   deleteHouse(id: number) {
     this.houseService.deleteHouse(id).subscribe(
       () => {
+        alert("deleted")
         console.log('Maison supprimée avec succès');
         // Mettre à jour la liste des maisons après la suppression si nécessaire
       },
