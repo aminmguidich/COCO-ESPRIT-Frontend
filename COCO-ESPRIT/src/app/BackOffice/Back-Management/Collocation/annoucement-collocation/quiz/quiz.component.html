@@ -1,0 +1,14 @@
+<div class="quiz-app">
+    <div class="box" *ngFor="let qt of quiz">
+        <div class="question">{{qt.question}}</div>
+        <div *ngFor="let res of qt.responses" style="display: flex;align-items: center;width: 100%;">
+            <input class="form-check-input" type="radio" [value]="res.title" name="response"
+                (change)="selectAnswer($event,qt.key)" >
+        
+            <label class="form-check-label">
+                {{res.title}}
+            </label>
+        </div>
+    </div>
+    <button (click)="submit()">submit</button>
+</div>

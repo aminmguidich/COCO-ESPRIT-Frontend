@@ -1,0 +1,16 @@
+<form [formGroup]="validateForm" (ngSubmit)="updateAnnoucementCollocation()">
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" class="form-control" formControlName="description" id="description" required />
+    </div>
+    <div class="form-group">
+      <label for="budgetPart">Budget Part:</label>
+      <input type="text" class="form-control" formControlName="budgetPart" id="budgetPart" required />
+    </div>
+    <div class="form-group">
+      <label for="score">Score:</label>
+      <input type="number" class="form-control" formControlName="score" id="score" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+  

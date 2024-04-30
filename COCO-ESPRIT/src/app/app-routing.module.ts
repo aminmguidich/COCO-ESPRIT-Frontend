@@ -48,6 +48,15 @@ const routes: Routes = [
         component:AboutFrontComponent
       },
       {
+        path :"Annoucement",
+        loadChildren: () => import('./FrontOffice/Front-Management/Collocation/aanoucement-col/aanoucement-col.module').then(m => m.AannoucementCollModule),
+      },
+
+      {
+        path:"House",
+        loadChildren: () => import('./FrontOffice/Front-Management/Collocation/house/house.module').then(m => m.HouseModule),
+      },
+      {
         path :"services",
         component:ServicesFrontComponent
       },
@@ -71,16 +80,7 @@ const routes: Routes = [
         path:"Frontcarpooling/announcement",
         loadChildren:() => import('./FrontOffice/Front-Management/Carpooling/announcement-carpooling/announcement-carpooling.module').then(m => m.AnnouncementCarpoolingModule),
       },
-      {
-        path: "ListPostFront",
-        loadChildren: () => import('./FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module').then(m => m.PostFrontModule),
-      }
-
-    ,
-    {
-      path: "ListCarsFront",
-      loadChildren: () => import('./FrontOffice/Front-Management/health-management/health-management.module').then(m => m.HealthManagementModule),
-  }
+     
 
     ]
   },
@@ -112,11 +112,22 @@ const routes: Routes = [
 
       },
       
-     {
-        path: "ListPost",
-        loadChildren: () => import('./BackOffice/Back-Management/ForumManagement/post/post.module').then(m => m.PostModule),
-    },
+  
     
+
+    { 
+      path:"collocation/announcement",
+      loadChildren: () => import('./BackOffice/Back-Management/Collocation/annoucement-collocation/annoucement-collocation.module').then(m => m.AnnoucementCollocationModule),
+    },
+
+    
+
+   
+    { 
+      path:"collocation/house",
+      loadChildren: () => import('./BackOffice/Back-Management/Collocation/House/house.module').then(m => m.HouseModule),
+    },
+
     
     
 

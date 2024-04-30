@@ -12,6 +12,9 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
+
+  userLoggedDetails:any
+
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {

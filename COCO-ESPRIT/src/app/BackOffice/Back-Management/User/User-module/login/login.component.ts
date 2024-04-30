@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
       next: data => {
         this.storageService.saveUser(data);
 
+        this.authService.userLoggedDetails = data
+
+        localStorage.setItem("idUser",data.id+"")
+
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.storageService.getUser().roles;

@@ -37,9 +37,6 @@ import { ListDragAndDropComponent } from './FrontOffice/list-drag-and-drop/list-
 import { MapComponent } from './FrontOffice/map/map.component';
 import { MapPositionComponent } from './FrontOffice/map-position/map-position.component';
 import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
-import { PostModule } from './BackOffice/Back-Management/ForumManagement/post/post.module';
-import { PostFrontModule } from './FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module';
-import { HealthManagementModule } from './FrontOffice/Front-Management/health-management/health-management.module';
 
 
 @NgModule({
@@ -84,10 +81,9 @@ import { HealthManagementModule } from './FrontOffice/Front-Management/health-ma
     CommonModule,
     AnnouncementCarpoolingModule,
     BrowserAnimationsModule,
-    PostModule,
-    PostFrontModule,
+   
     BrowserAnimationsModule,
-    HealthManagementModule,
+   
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

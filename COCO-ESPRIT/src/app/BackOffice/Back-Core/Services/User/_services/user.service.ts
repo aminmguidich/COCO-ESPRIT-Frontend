@@ -25,4 +25,8 @@ export class UserService {
   getAdminBoard(): Observable<any> {
     return this.http.get(API_URL + 'admin', { responseType: 'text' });
   }
+
+  getById(id:number): Observable<any> {
+    return this.http.get("http://localhost:9092/api/user/retrieve/"+id);
+  }
 }

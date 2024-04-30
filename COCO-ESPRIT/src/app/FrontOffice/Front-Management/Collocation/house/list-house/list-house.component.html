@@ -1,0 +1,129 @@
+
+  <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/assets/FrontOffice/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start" style="height: 490px;">
+        <div class="col-md-9 ftco-animate pb-5 fadeInUp ftco-animated">
+          <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Pricing <i class="ion-ios-arrow-forward"></i></span></p>
+          <h1 class="mb-3 bread">Pricing</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Liste des maisons -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <ul class="list-group">
+          <!-- Utilisez une boucle pour afficher chaque maison -->
+          <li class="list-group-item" *ngFor="let house of houses | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+            <div class="row">
+              <div class="col-md-3">
+                <img [src]="'data:'+house.image?.type+';base64,' + house.image?.data" alt="House Image" class="img-fluid">
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1">Poster: {{ house.username }}</p>
+                <h5 class="mb-1">HouseType: {{ house.houseType }}</h5>
+                <p class="mb-1">Places: {{ house.places }}</p>
+                <!-- Ajout du rate sous forme d'étoiles -->
+                <p class="mb-0 rated">
+                  <span>Rated:</span>
+                  <span class="ion-ios-star"></span>
+                  <span class="ion-ios-star"></span>
+                  <span class="ion-ios-star"></span>
+                  <span class="ion-ios-star"></span>
+                  <span class="ion-ios-star"></span>
+                </p>
+              </div>
+              <div class="col-md-3">
+                <!-- Bouton "SHOW MORE" pour afficher des informations supplémentaires -->
+                <button type="button" class="btn btn-info" (click)="showMoreInfo(house)">SHOW MORE</button>
+                <!-- Bouton "VIEW CONTRACT" pour générer le PDF -->
+                <button type="button" class="btn btn-success" (click)="houseSelected = house"  data-bs-toggle="modal" data-bs-target="#addContract"   >ADD CONTRACT</button>
+
+              </div>
+            </div>
+              <!-- Add Contract Modal -->
+                  <div class="modal fade" id="addContract" tabindex="-1" aria-labelledby="addContract" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="addContract">Add Contract</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form [formGroup]="validateForm" (ngSubmit)="addContrat()">
+                        <div class="modal-body">
+                          <div class="custom-modal-content">
+
+
+
+                              <!-- Ajouter les champs manquants ici -->
+                              <div class="form-group">
+                                <label for="description">Description: </label>
+                                <input type="text" class="form-control" formControlName="description" id="description" />
+                              </div>
+                              <!-- Fin des champs manquants -->
+                             </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="saveHouseButton" data-bs-dismiss="modal" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+            <!-- Informations supplémentaires masquées initialement -->
+            <div class="popup" *ngIf="openmodaldetails==true">
+              <div class="popup-content">
+                <a class="closedialog" (click)="closemodaldetails()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </a>
+                <!-- Informations supplémentaires -->
+                <p><strong>Description:</strong> {{ description }}</p>
+                <p><strong>Location:</strong> {{ location }}</p>
+                <p><strong>Price:</strong> {{ price }}</p>
+                <!-- Ajoutez d'autres détails si nécessaire -->
+              </div>
+            </div>
+          </li>
+          <!-- Fin de la boucle -->
+        </ul>
+      </div>
+      <div class="mt-8 py-5 d-flex justify-content-center align-items-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+
+
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addHouseModal">
+    Add House
+  </button>
+
+  <!-- Add House Modal -->
+  <div class="modal fade" id="addHouseModal" tabindex="-1" aria-labelledby="addHouseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addHouseModalLabel">Add House</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="custom-modal-content">
+            <app-add-house></app-add-house>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" id="saveHouseButton" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

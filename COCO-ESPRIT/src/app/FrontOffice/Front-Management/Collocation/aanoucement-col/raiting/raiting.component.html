@@ -1,0 +1,7 @@
+<mat-icon *ngFor="let icon of maxRaitingAryy; let index=index"
+(click)="Raiting(index)"
+[ngClass]="{checked:SelectedStar>index}"
+>
+<span *ngIf="SelectedStar-1 >= index"><i class="fa-solid fa-star" style="color: #ffc300;"></i></span>
+<span *ngIf="SelectedStar-1 < index"><i class="fa-regular fa-star" style="color: #ffc300;"></i></span>
+</mat-icon>

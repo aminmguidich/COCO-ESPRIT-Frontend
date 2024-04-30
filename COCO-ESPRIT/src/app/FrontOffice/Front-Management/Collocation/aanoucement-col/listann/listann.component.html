@@ -1,0 +1,290 @@
+
+    <section class="hero-wrap hero-wrap-2 js-fullheight"
+        style="background-image: url('/assets/FrontOffice/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start"
+                style="height: 490px;">
+                <div class="col-md-9 ftco-animate pb-5 fadeInUp ftco-animated">
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
+                                    class="ion-ios-arrow-forward"></i></a></span> <span>Announcement <i
+                                class="ion-ios-arrow-forward"></i></span></p>
+                    <h1 class="mb-3 bread">Our Announcement</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
+                    <span class="subheading">Announcement</span>
+                    <h2 class="mb-3">Announcement</h2>
+                </div>
+            </div>
+
+            <!-- Ajout de l'agenda dans la marge à gauche -->
+            <div class="agenda-wrapper">
+                
+            </div>
+
+            <!-- Recherche d'annonces -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" style="width: 200px;"
+                            placeholder="Search by description" [(ngModel)]="description"
+                            (keyup)="filterAnnouncements()">
+                        <input type="number" class="form-control" style="width: 100px;" placeholder="Budget Part"
+                            [(ngModel)]="budgetPart" (keyup)="filterAnnouncements()">
+                        <input type="number" class="form-control" style="width: 100px;" placeholder="Score"
+                            [(ngModel)]="score" (keyup)="filterAnnouncements()">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button"
+                                (click)="filterAnnouncements()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Liste des annonces -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-deck">
+                        <div (load)="SelectedStar = announcement.nb_etoil "
+                            *ngFor="let announcement of annoucementscol  | paginate: { itemsPerPage: itemsPerPage, currentPage: p };let index=index"
+                            class="card">
+                            <img class="card-img-top" src="/assets/FrontOffice/images/house4.jpg" alt="Card image cap">
+
+                            <div class="card-body">
+
+                                <p class="card-text"><strong>Description:</strong> {{announcement.description}}</p>
+                                <p class="card-text"><strong>Score:</strong> {{announcement.score}}</p>
+                                <p class="card-text"><strong>BudgetPart:</strong> {{announcement.budgetPart}}</p>
+
+                                <!-- Bouton de like avec icône -->
+                                <!-- <app-raiting (click)="handleRating(announcement.idCollocationAnnouncement)"></app-raiting> -->
+                                <div class="custom-rating">
+                                    <div class="star" (click)="rate(1,index,announcement.idCollocationAnnouncement)">
+                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 1"></i>
+                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 1"></i>
+                                    </div>
+                                    <div class="star" (click)="rate(2,index,announcement.idCollocationAnnouncement)">
+                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 2"></i>
+                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 2"></i>
+                                    </div>
+                                    <div class="star" (click)="rate(3,index,announcement.idCollocationAnnouncement)">
+                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 3"></i>
+                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 3"></i>
+                                    </div>
+                                    <div class="star" (click)="rate(4,index,announcement.idCollocationAnnouncement)">
+                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 4"></i>
+                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 4"></i>
+                                    </div>
+                                    <div class="star" (click)="rate(5,index,announcement.idCollocationAnnouncement)">
+                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 5"></i>
+                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 5"></i>
+                                    </div>
+                                </div>
+                                <div class="custom-react">
+                                    
+    
+                                    <div class="custom-btn">
+                                        <i class="fa-solid fa-thumbs-up" *ngIf="announcement.likes===1"
+                                            (click)="react(0,1,announcement.idCollocationAnnouncement,index)"></i>
+                                        <i class="fa-regular fa-thumbs-up" *ngIf="announcement.likes===0"
+                                            (click)="react(1,0,announcement.idCollocationAnnouncement,index)"></i>
+                                    </div>
+                                    <div class="custom-btn">
+                                        <i class="fa-solid fa-thumbs-down" *ngIf="announcement.dislikes===1"
+                                            (click)="react(1,0,announcement.idCollocationAnnouncement,index)"></i>
+                                        <i class="fa-regular fa-thumbs-down" *ngIf="announcement.dislikes===0"
+                                            (click)="react(0,1,announcement.idCollocationAnnouncement,index)"></i>
+    
+                                    </div>
+    
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="mt-8 py-5 d-flex justify-content-center align-items-center">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    <hr>
+
+    <!-- Ajout de commentaires -->
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <div class="input-group">
+                <textarea class="form-control" rows="3" [(ngModel)]="comment" placeholder="Add Comment"></textarea>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="submitComment()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> <!-- Icône de soumission -->
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Section pour modifier un commentaire -->
+    <div class="row justify-content-center mb-3" *ngIf="editingCommentIndex !== null">
+        <div class="col-md-6">
+            <div class="input-group">
+                <textarea class="form-control" rows="3" [(ngModel)]="editedComment"
+                    placeholder="Edit Comment"></textarea>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="saveEditedComment()">
+                        <i class="fa fa-check" aria-hidden="true"></i> <!-- Icône de validation -->
+                    </button>
+                    <button class="btn btn-danger" type="button" (click)="cancelEditComment()">
+                        <i class="fa fa-times" aria-hidden="true"></i> <!-- Icône d'annulation -->
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <div *ngIf="comments.length > 0">
+                <h5>Comments:</h5>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let comment of comments; let i = index">
+                        {{ comment.text }}
+                        <!-- Bouton de suppression du commentaire -->
+                        <button class="btn btn-link btn-delete" (click)="deleteComment(i)">
+                            <i class="fa fa-trash" aria-hidden="true"></i> delete
+                        </button>
+                        <!-- Bouton de modification du commentaire -->
+                        <button class="btn btn-link btn-edit" (click)="editComment(i,newText)">
+                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                        </button>
+
+                        <button class="btn btn-link btn-reply" (click)="toggleReplyForm(i)">
+                            <i class="fa fa-reply" aria-hidden="true"></i> Reply <!-- Bouton de réponse -->
+                        </button>
+                        <!-- Condition pour afficher le formulaire de réponse -->
+                        <div *ngIf="showReplyField !== null && showReplyField === i">
+                            <textarea class="form-control mt-2" rows="2" [(ngModel)]="newReply"></textarea>
+                            <button class="btn btn-primary btn-sm mt-2"
+                                (click)="submitReply(comment, i)">Envoyer</button> <!-- Bouton d'envoi de réponse -->
+                        </div>
+
+                        <!-- Afficher les réponses -->
+                        <ul class="list-group mt-2">
+                            <li class="list-group-item" *ngFor="let reply of comment.replies">
+                                {{ reply.text }}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="comments.length === 0">
+                <p>No comments yet .</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#searchRoomatesModal">Search for Roommates</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#announcementCostModal">Visualize Announcement</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#addAnnouncementModal">Add Announcement</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="searchRoomatesModal" tabindex="-1" aria-labelledby="searchRoomatesModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchRoomatesModalLabel">Search for Roommates</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email">Enter your email:</label>
+                        <input type="email" class="form-control" id="email" [(ngModel)]="roommateEmail">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="sendEmail()">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour visualiser le coût des annonces -->
+    <div class="modal fade" id="announcementCostModal" tabindex="-1" aria-labelledby="announcementCostModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="announcementCostModalLabel">Announcement Cost
+                        Visualization</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="custom-modal-content">
+                        <app-pie-chart-component></app-pie-chart-component>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour ajouter une annonce -->
+    <div class="modal fade" id="addAnnouncementModal" tabindex="-1" aria-labelledby="addAnnouncementModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAnnouncementModalLabel">Add Announcement</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="custom-modal-content">
+                        <app-addanoucecol></app-addanoucecol>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="closeModal()">Close</button>
+
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        function closeModal() {
+            $('#searchRoomatesModal').modal('hide');
+            // Ajoutez des lignes similaires pour les autres modals si nécessaire
+        }
+    </script>
+
