@@ -13,4 +13,6 @@ export class AnnouncementCarpooling {
     ridePrice!:number;
     places!:number;
     reactCarpoolingsAnnCarpooling!:Array<ReactCarpooling>
+    show:boolean=false
+    distance:number=-1
 }

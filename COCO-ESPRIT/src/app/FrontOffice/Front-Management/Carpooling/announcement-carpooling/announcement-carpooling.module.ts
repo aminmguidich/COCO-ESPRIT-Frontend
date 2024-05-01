@@ -17,6 +17,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatBadgeModule} from '@angular/material/badge';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatListModule } from '@angular/material/list';
+import { SetLocationComponent } from './set-location/set-location.component';
 
 
 
@@ -35,6 +36,7 @@ import { MatListModule } from '@angular/material/list';
     //MapComponent,
     //MapPositionComponent,
     DeteailsAnnouncementComponent,
+    SetLocationComponent,
 
 
 

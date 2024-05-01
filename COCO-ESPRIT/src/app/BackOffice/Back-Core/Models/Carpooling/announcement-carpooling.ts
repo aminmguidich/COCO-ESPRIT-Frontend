@@ -7,7 +7,6 @@ export class AnnouncementCarpooling {
     idCarpoolingAnnouncement!:number;
     dateCarpoolingAnnouncement!:Date;
     description!:string;
-    score!:number;
     userAnnCarpooling!:User;
     routeAnnCarpooling!:Route;
     ridePrice!:number;

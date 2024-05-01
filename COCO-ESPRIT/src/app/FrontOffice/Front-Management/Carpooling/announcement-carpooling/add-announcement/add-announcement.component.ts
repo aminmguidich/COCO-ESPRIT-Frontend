@@ -129,7 +129,9 @@ onAddMarker($event:H.map.Marker) {
       routeAnnCarpooling: newRoute,
       ridePrice: form.value.price,
       places: form.value.places,
-      reactCarpoolingsAnnCarpooling: []
+      reactCarpoolingsAnnCarpooling: [],
+      show: true,
+      distance: 0
     };
 
     this.annCarpoolingService.AddAnnCarpooling(annCarpooling).subscribe(

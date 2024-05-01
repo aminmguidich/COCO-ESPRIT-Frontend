@@ -13,7 +13,10 @@ public static  esprit_location:H.geo.Point=new H.geo.Point( 36.90007,  10.18798)
 @Input() public zoom = 2;
 @Input() public lat = 0;
 @Input() public lng = 0;
-
+@Input() location_setter:boolean=false;
+@Input() location:H.geo.Point|undefined;
+@Input() location_marker:H.map.Marker|undefined;
+@Output() OnChangeLocation=new EventEmitter<H.geo.Point>()
 private timeoutHandle: any;
 @Input() readonly:boolean=true;
 @Input() adresses:Array<Adress>=[]
@@ -23,6 +26,15 @@ private timeoutHandle: any;
   platform: H.service.Platform|undefined;
 ngOnChanges(changes: any) {
   clearTimeout(this.timeoutHandle);
+  if(changes['location']!==undefined &&changes['location'].currentValue){
+    this.location=changes['location'].currentValue 
+    console.log(this.location)
+    this.map?.setCenter(this.location?this.location:MapComponent.esprit_location)
+    this.map?.setZoom(15)
+    const marker = new H.map.Marker(this.location);
+    this.map.addObject(marker);
+    this.location_marker=marker
+  }
   if (changes['markers'] !== undefined) {
     let objects=this.map?.getObjects()
     if(objects){
@@ -77,12 +89,15 @@ ngOnChanges(changes: any) {
           center: MapComponent.esprit_location
         },
       );
-      
+    
 
-      const marker = new H.map.Marker(MapComponent.esprit_location);
-      marker.setData("Esprit");
-      map.addObject(marker);
-      
+      if(!this.location_setter){
+        const marker = new H.map.Marker(MapComponent.esprit_location);
+        marker.setData("Esprit");
+        map.addObject(marker);
+        
+      }
+     
       onResize(this.mapDiv.nativeElement, () => {
         map.getViewPort().resize();
       });
@@ -116,12 +131,18 @@ ngOnChanges(changes: any) {
               this.OnAddMarker.emit(marker);
             }
           }, alert);
-          this.map.addObject(marker);
+          if(this.location_setter){
+            this.map.removeObject(this.location_marker)
+            this.OnChangeLocation.emit(coord)
+          }else{
+
+            this.map.addObject(marker);
+          }
           
         }
       })}
       
-      if(this.platform &&!this.readonly){
+      if(this.platform &&!this.location_setter){
         let markers=this.adresses.map((value,index,array)=>{
           const marker = new H.map.Marker({lat:value.latitude,lng:value.longitude});
           marker.setData(value.streetName);

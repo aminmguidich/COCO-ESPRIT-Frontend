@@ -145,7 +145,6 @@ refresh() {
       const annCarpooling: AnnouncementCarpooling = {
         idCarpoolingAnnouncement: 0,
         description: form.value.description,
-        score: Number(form.value.score),
         dateCarpoolingAnnouncement: date,
         userAnnCarpooling: user,
         routeAnnCarpooling: newRoute,

@@ -20,6 +20,12 @@ import { MapComponent } from 'src/app/shared/map/map.component';
   styleUrls: ['./list-announcement.component.css'],
 })
 export class ListAnnouncementComponent implements OnInit {
+  location:H.geo.Point
+
+OnLocationChange($event: H.geo.Point) {
+  this.location=$event
+  this.ngOnInit()
+}
   deleteAnnCarpooling(id: number) {
     this.annCarpoolingService.deleteAnnCarpooling(id).subscribe((response) => {
       alert(' Announcement deleted Successfully!');
@@ -59,6 +65,8 @@ export class ListAnnouncementComponent implements OnInit {
         ridePrice: 0,
         places: 0,
         reactCarpoolingsAnnCarpooling: [],
+        show: true,
+        distance: 0
       },
     };
     this.reqCarpoolingService
@@ -93,11 +101,13 @@ export class ListAnnouncementComponent implements OnInit {
   */
   }
 
-  onLike(reacts: Array<ReactCarpooling>, announcementId: number) {
+  onLike(reacts: Array<any>, announcementId: number) {
     let reacted = false;
     let react: ReactCarpooling;
-    console.log(reacts);
     reacts.forEach((value, index, array) => {
+      if(value.userReact.id){
+        value.userReact=value.userReact.id
+      }
       if (value.userReact == this.user.id) {
         reacted = true;
         react = value;
@@ -107,7 +117,6 @@ export class ListAnnouncementComponent implements OnInit {
       this.reactCarpoolingService
         .deleteReactCarpooling(react.idReactCarpooling, announcementId)
         .subscribe((data) => {
-          console.log('react deleted???');
           this.ngOnInit();
         });
       return;
@@ -171,29 +180,34 @@ export class ListAnnouncementComponent implements OnInit {
                 })
             );
             return(new Promise((resolve,reject)=>{
-              navigator.geolocation.getCurrentPosition((position) => {
-                let pos: [number,number]=[position.coords.latitude,position.coords.longitude]
-                this.routing(platform, markers,pos, (result) => {
-                  if (value.userAnnCarpooling.id) {
-                    resolve(value);
+              let position=this.location
+                let pos: [number,number]=position?[position.lat,position.lng]:undefined
+                this.routing(platform, markers,pos, (distance,distanceToEsprit) => {
+                  if (distance>0 && distance  <= distanceToEsprit*0.8) {
+                    value.show=true,
+                    value.distance=distance
                   }
-                  for (let index = 0; index < users.length; index++) {
-                    const element = users[index];
-                    if (element.id.toString() == value.userAnnCarpooling.toString()) {
-                      value.userAnnCarpooling = element;
-                      break;
+                  
+                  if (!value.userAnnCarpooling.id) {
+                    for (let index = 0; index < users.length; index++) {
+                      const element = users[index];
+                      if (element.id.toString() == value.userAnnCarpooling.toString()) {
+                        value.userAnnCarpooling = element;
+                        break;
+                      }
                     }
                   }
-                  if(result){
-                    value.idCarpoolingAnnouncement=-2
+                  if(this.user.id==value.userAnnCarpooling.id){
+                    value.show=true
                   }
+                 
                   resolve(value)
                 });
-              });
+              
             }))
           }));
-          this.data=this.data.filter((value,index,array)=>value.idCarpoolingAnnouncement!=-2)
-
+          this.data=this.data.filter((value,index,array)=>value.show)
+          this.data=this.data.sort((a,b)=>a.distance-b.distance)
           let o = this.paginatorData.pageIndex * this.paginatorData.pageSize;
 
           if (o + this.paginatorData.pageSize < this.data.length) {
@@ -214,7 +228,7 @@ export class ListAnnouncementComponent implements OnInit {
             console.error('Error fetching user by ID:', error);
           };
 
-        this.totalAnnouncements = this.data.filter((value,index,arr)=>value.idCarpoolingAnnouncement!=-2).length;
+        this.totalAnnouncements = this.data.filter((value,index,arr)=>value.show).length;
       }),
       (error: any) => {
         console.error('Error fetching user by ID:', error);
@@ -226,9 +240,13 @@ export class ListAnnouncementComponent implements OnInit {
   private routing(
     platform: H.service.Platform,
     markers: Array<H.map.Marker>,
-    position: [number,number],
-    callback: (result: boolean) => void
+    position: [number,number]|undefined,
+    callback: (distance:number,distanceToEsprit:number) => void
   ) {
+    if(!position){
+      callback(-1,-1)
+      return
+    }
     let waypoints = [];
     waypoints = markers.slice(1).map((value, index, array) => {
       let point: any = value.getGeometry();
@@ -293,14 +311,9 @@ export class ListAnnouncementComponent implements OnInit {
             [position[0], position[1]],
             [MapComponent.esprit_location.lat, MapComponent.esprit_location.lng]
           );
-          console.log('minDistance', minDistance);
-          console.log('distance', distance);
-
-          if (minDistance + 600 >= distance) {
-            callback(true);
-          } else {
-            callback(false);
-          }
+        
+          callback(minDistance,distance)
+          
         
       }
     };

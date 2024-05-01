@@ -9,10 +9,12 @@ import { Adress } from '../../FrontOffice/Front-Core/Models/Carpooling/adress';
 export class MapContainerComponent implements OnChanges {
   @Input()  adresses:Array<Adress>=[];
   @Input() readonly:boolean=true;
-
+  @Input() location_setter:boolean=false;
   @Input()  markers:Array<H.map.Marker>=[];
   @Output() OnAddMarker= new EventEmitter<H.map.Marker>();
   @Output() OnRouteIsInconvenient = new EventEmitter();
+  @Input() location:H.geo.Point|undefined;
+  @Output() OnChangeLocation=new EventEmitter<H.geo.Point>()
 
 handleAddMarker($event: H.map.Marker) {
   this.OnAddMarker.emit($event)
@@ -25,6 +27,10 @@ handleAddMarker($event: H.map.Marker) {
     this.lng = 0;
   }
   ngOnChanges(changes: SimpleChanges): void {
+    if(changes['location']!==undefined){
+      this.location=changes['location'].currentValue 
+    }
+    console.log("container",this.location)
   }
 
   zoom: number;

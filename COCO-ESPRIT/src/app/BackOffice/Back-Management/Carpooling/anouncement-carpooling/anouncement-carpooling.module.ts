@@ -7,6 +7,12 @@ import { AddAnnoucementComponent } from './add-annoucement/add-annoucement.compo
 import { ListAnnoucementComponent } from './list-annoucement/list-annoucement.component';
 import { UpdateAnnouncementComponent } from './update-announcement/update-announcement.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TableAnnouncementCarpoolingComponent } from './table-announcement-carpooling/table-announcement-carpooling.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -14,6 +20,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AddAnnoucementComponent,
     ListAnnoucementComponent,
     UpdateAnnouncementComponent,
+    TableAnnouncementCarpoolingComponent,
 
   ],
   imports: [
@@ -21,8 +28,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AnouncementCarpoolingRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
-
+    SharedModule,
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatTableModule,
+     MatSortModule, 
+     MatPaginatorModule
     
   ],
   providers:[DatePipe]

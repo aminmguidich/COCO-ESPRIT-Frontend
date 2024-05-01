@@ -18,7 +18,6 @@ export class ListAnnoucementComponent implements OnInit{
     private router: Router,
     private formB: FormBuilder,
     private annCarpoolingService: AnnouncementCarpoolingService,) { 
-    
       this.annCarpoolingService.listen().subscribe((m:any)=>{
         console.log(m);
         this.loadData();
