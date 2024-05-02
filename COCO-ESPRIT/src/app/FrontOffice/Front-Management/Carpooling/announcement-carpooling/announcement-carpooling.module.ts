@@ -10,20 +10,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {CDK_DRAG_CONFIG, DragDropModule} from '@angular/cdk/drag-drop';
-import { DeteailsAnnouncementComponent } from './deteails-announcement/deteails-announcement.component';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatIconModule} from '@angular/material/icon';
-import {MatBadgeModule} from '@angular/material/badge';
+import { CDK_DRAG_CONFIG, DragDropModule } from '@angular/cdk/drag-drop';
+import { DeteailsAnnouncementComponent } from '../../../../shared/deteails-announcement/deteails-announcement.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatListModule } from '@angular/material/list';
 import { SetLocationComponent } from './set-location/set-location.component';
-
-
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -35,12 +29,7 @@ import { SetLocationComponent } from './set-location/set-location.component';
     //MapContainerComponent,
     //MapComponent,
     //MapPositionComponent,
-    DeteailsAnnouncementComponent,
     SetLocationComponent,
-
-
-
-    
   ],
   imports: [
     CommonModule,
@@ -55,9 +44,8 @@ import { SetLocationComponent } from './set-location/set-location.component';
     MatMenuModule,
     MatIconModule,
     MatBadgeModule,
-    SharedModule
+    SharedModule,
   ],
-  providers:[DatePipe]
-
+  providers: [DatePipe],
 })
-export class AnnouncementCarpoolingModule { }
+export class AnnouncementCarpoolingModule {}

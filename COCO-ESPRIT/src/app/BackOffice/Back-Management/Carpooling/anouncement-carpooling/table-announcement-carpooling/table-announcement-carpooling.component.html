@@ -1,54 +1,413 @@
 <body>
   <div class="pcoded-main-container">
-      <div class="pcoded-wrapper">
-          <div class="pcoded-content">
-              <div class="pcoded-inner-content">
+    <div class="pcoded-wrapper">
+      <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+          <div class="main-body">
+            <div class="page-wrapper">
+              <!-- [ Main Content ] start -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Announcements</h5>
+                      &nbsp;
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm transparent-button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="black"
+                          class="bi bi-plus-square"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
+                          />
+                          <path
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+                          />
+                        </svg>
+                      </button>
 
-                  <div class="main-body">
-                      <div class="page-wrapper">
-                          <!-- [ Main Content ] start -->
-                          <div class="row">
-                              <div class="col-sm-12">
-                                  <div class="card">
-                                      <div class="card-header">
-                                          <h5> Announcements</h5>
-                                      </div>
-<mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-  </mat-form-field>
-  
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-  
-      <!-- ID Column -->
-      <ng-container matColumnDef="dateCarpoolingAnnouncement">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let row"> {{row.dateCarpoolingAnnouncement}} </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-      </tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+                      <div
+                        class="modal fade"
+                        id="exampleModal"
+                        tabindex="-1"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <app-add-annoucement></app-add-annoucement>
+                      </div>
+                    </div>
+                    <mat-form-field>
+                      <mat-label>Filter</mat-label>
+                      <input
+                        matInput
+                        (keyup)="applyFilter($event)"
+                        placeholder="Ex. Mia"
+                        #input
+                      />
+                    </mat-form-field>
+
+                    <div class="mat-elevation-z8">
+                      <table mat-table [dataSource]="dataSource" matSort>
+                        <!-- Id Column -->
+                        <ng-container matColumnDef="id">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Id
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                            {{ row.idCarpoolingAnnouncement }}
+                          </td>
+                        </ng-container>
+
+                        <!-- Username Column -->
+                        <ng-container matColumnDef="user">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            User
+                          </th>
+                          <td
+                            style="vertical-align: middle"
+                            mat-cell
+                            *matCellDef="let row; let i = index"
+                          >
+                            <div
+                              style="
+                                display: inline-block;
+                                vertical-align: middle;
+                              "
+                            >
+                              {{ row.userAnnCarpooling.username }}
+                            </div>
+                            <div
+                              style="
+                                display: inline-block;
+                                vertical-align: middle;
+                              "
+                            >
+                              <button
+                                data-bs-toggle="modal"
+                                [attr.data-bs-target]="'#showProfile' + i"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Edit"
+                                mat-icon-button
+                                color="accent"
+                                aria-label="Example icon button with a menu icon"
+                                (click)="OnViewProfile(i)"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="10"
+                                  height="10"
+                                  fill="gray"
+                                  class="bi bi-eye"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"
+                                  />
+                                  <path
+                                    d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"
+                                  />
+                                </svg>
+                              </button>
+                              <div
+                                class="modal fade"
+                                [id]="'showProfile' + i"
+                                role="dialog"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                              >
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Profile</h5>
+                                      <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                      ></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <!-- Profile here please -->
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </ng-container>
+
+                        <!-- Date Column -->
+                        <ng-container matColumnDef="date">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Date
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                            {{
+                              row.dateCarpoolingAnnouncement
+                                .toString()
+                                .replaceAll(",", "/")
+                            }}
+                          </td>
+                        </ng-container>
+
+                        <!-- Description Column -->
+                        <ng-container matColumnDef="description">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Description
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                            {{ row.description }}
+                          </td>
+                        </ng-container>
+
+                        <!-- Price Column -->
+                        <ng-container matColumnDef="price">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Price
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                            {{ row.ridePrice }}
+                          </td>
+                        </ng-container>
+
+                        <!-- Places Column -->
+                        <ng-container matColumnDef="places">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Places
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                            {{ row.places }}
+                          </td>
+                        </ng-container>
+
+                        <!-- Reacts Column -->
+                        <ng-container matColumnDef="reacts">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Reacts
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                            {{ row.reactCarpoolingsAnnCarpooling.length }}
+                          </td>
+                        </ng-container>
+
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Actions
+                          </th>
+                          <td mat-cell *matCellDef="let row; let i = index">
+                            <div
+                              style="
+                                display: inline-block;
+                                vertical-align: middle;
+                              "
+                              class="list-inline-item"
+                            >
+                              <button
+                                type="button"
+                                data-bs-toggle="modal"
+                                [attr.data-bs-target]="
+                                  '#exampleModalupdate' + i
+                                "
+                                class="btn btn-success btn-sm rounded-0 transparent-button1"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Edit"
+                              >
+                                <i class="fa fa-edit text-success"></i>
+                              </button>
+
+                              <!-- Modal -->
+                              <div
+                                class="modal fade"
+                                [id]="'exampleModalupdate' + i"
+                                role="dialog"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                              >
+                                <app-update-announcement
+                                  [adresses]="
+                                    this.data[i]?.routeAnnCarpooling
+                                      ?.adressesRoute
+                                  "
+                                  [announcement]="row"
+                                ></app-update-announcement>
+                              </div>
+                            </div>
+
+                            <div
+                              style="
+                                display: inline-block;
+                                vertical-align: middle;
+                              "
+                              class="list-inline-item"
+                            >
+                              <button
+                                type="button"
+                                class="btn btn-danger btn-sm rounded-0 transparent-button1"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Delete"
+                                data-bs-toggle="modal"
+                                [attr.data-bs-target]="
+                                  '#exampleModalConfirm' + i
+                                "
+                              >
+                                <i class="fas fa-trash red-icon"></i>
+                              </button>
+
+                              <!-- Button trigger modal -->
+
+                              <!-- Modal -->
+                              <div
+                                class="modal fade"
+                                [id]="'exampleModalConfirm' + i"
+                                tabindex="-1"
+                                role="dialog"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                              >
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5
+                                        class="modal-title"
+                                        id="exampleModalLabel"
+                                      >
+                                        Delete Item
+                                      </h5>
+                                      <button
+                                        type="button"
+                                        class="close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                      >
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Are you sure you want to delete this item?
+                                      This action cannot be undone.
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                      >
+                                        Close
+                                      </button>
+                                      <button
+                                        type="button"
+                                        class="btn btn-primary"
+                                        (click)="
+                                          deleteAnnCarpooling(
+                                            row.idCarpoolingAnnouncement
+                                          )
+                                        "
+                                        data-bs-dismiss="modal"
+                                      >
+                                        Confirm
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div
+                              style="
+                                display: inline-block;
+                                vertical-align: middle;
+                              "
+                              class="list-inline-item"
+                            >
+                              <button
+                                type="button"
+                                data-bs-toggle="modal"
+                                [attr.data-bs-target]="'#detailModal' + i"
+                                class="btn btn-success btn-sm rounded-0 transparent-button1"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Edit"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  fill="blue"
+                                  class="bi bi-map"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.5.5 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103M10 1.91l-4-.8v12.98l4 .8zm1 12.98 4-.8V1.11l-4 .8zm-6-.8V1.11l-4 .8v12.98z"
+                                  />
+                                </svg>
+                              </button>
+
+                              <!-- Modal -->
+                              <div
+                                class="modal fade"
+                                [id]="'detailModal' + i"
+                                role="dialog"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                              >
+                                <app-deteails-announcement
+                                  [adresses]="
+                                    row.routeAnnCarpooling?.adressesRoute
+                                  "
+                                ></app-deteails-announcement>
+                              </div>
+                            </div>
+                          </td>
+                        </ng-container>
+                        <tr
+                          mat-header-row
+                          *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                          mat-row
+                          *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+
+                        <!-- Row shown when there is no matching data. -->
+                        <tr class="mat-row" *matNoDataRow>
+                          <td class="mat-cell" colspan="4">
+                            No data matching the filter "{{ input.value }}"
+                          </td>
+                        </tr>
+                      </table>
+
+                      <mat-paginator
+                        [pageSizeOptions]="[5, 10, 25, 100]"
+                        aria-label="Select page of users"
+                      ></mat-paginator>
+                    </div>
+                  </div>
+
+                  <!-- Input group -->
+                </div>
+              </div>
+              <!-- [ Main Content ] end -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
-</div>
-<!-- Input group -->
-</div>
-</div>
-<!-- [ Main Content ] end -->
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 </body>
-

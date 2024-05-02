@@ -6,11 +6,12 @@ import { MapComponent } from './map/map.component';
 import { CDK_DRAG_CONFIG, DragDropModule } from '@angular/cdk/drag-drop';
 import { MatListModule } from '@angular/material/list';
 import { MapPositionComponent } from './map-position/map-position.component';
+import { DeteailsAnnouncementComponent } from './deteails-announcement/deteails-announcement.component';
 
 const DragConfig = {
   dragStartThreshold: 0,
   pointerDirectionChangeThreshold: 5,
-  zIndex: 10000
+  zIndex: 10000,
 };
 
 @NgModule({
@@ -19,21 +20,16 @@ const DragConfig = {
     MapContainerComponent,
     MapComponent,
     MapPositionComponent,
-    
+    DeteailsAnnouncementComponent,
   ],
   exports: [
     ListDragAndDropComponent,
     MapContainerComponent,
     MapComponent,
     MapPositionComponent,
-    
+    DeteailsAnnouncementComponent,
   ],
-  imports: [
-    CommonModule,
-    DragDropModule ,
-    MatListModule,
-  ],
-  providers: [{ provide: CDK_DRAG_CONFIG, useValue: DragConfig }]
-
+  imports: [CommonModule, DragDropModule, MatListModule],
+  providers: [{ provide: CDK_DRAG_CONFIG, useValue: DragConfig }],
 })
-export class SharedModule { }
+export class SharedModule {}

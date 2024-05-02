@@ -13,19 +13,19 @@ import { RequirementCarpoolingService } from 'src/app/FrontOffice/Front-Core/Ser
 import { ReactCarpoolingService } from 'src/app/FrontOffice/Front-Core/Services/Carpooling/react-carpooling.service';
 import { ReactCarpooling } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/react-carpooling';
 import { MapComponent } from 'src/app/shared/map/map.component';
-
+import { DeteailsAnnouncementComponent } from 'src/app/shared/deteails-announcement/deteails-announcement.component';
 @Component({
   selector: 'app-list-announcement',
   templateUrl: './list-announcement.component.html',
   styleUrls: ['./list-announcement.component.css'],
 })
 export class ListAnnouncementComponent implements OnInit {
-  location:H.geo.Point
+  location: H.geo.Point;
 
-OnLocationChange($event: H.geo.Point) {
-  this.location=$event
-  this.ngOnInit()
-}
+  OnLocationChange($event: H.geo.Point) {
+    this.location = $event;
+    this.ngOnInit();
+  }
   deleteAnnCarpooling(id: number) {
     this.annCarpoolingService.deleteAnnCarpooling(id).subscribe((response) => {
       alert(' Announcement deleted Successfully!');
@@ -66,7 +66,7 @@ OnLocationChange($event: H.geo.Point) {
         places: 0,
         reactCarpoolingsAnnCarpooling: [],
         show: true,
-        distance: 0
+        distance: 0,
       },
     };
     this.reqCarpoolingService
@@ -105,8 +105,8 @@ OnLocationChange($event: H.geo.Point) {
     let reacted = false;
     let react: ReactCarpooling;
     reacts.forEach((value, index, array) => {
-      if(value.userReact.id){
-        value.userReact=value.userReact.id
+      if (value.userReact.id) {
+        value.userReact = value.userReact.id;
       }
       if (value.userReact == this.user.id) {
         reacted = true;
@@ -170,65 +170,79 @@ OnLocationChange($event: H.geo.Point) {
     this.annCarpoolingService
       .getallPlaces()
       .subscribe((data: AnnouncementCarpooling[]) => {
-        this.annCarpoolingService.getAllUsers().subscribe(async (users: User[]) => {
-          this.data =await Promise.all(data.map( async (value, index, array) => {
-            let markers = value.routeAnnCarpooling?.adressesRoute.map(
-              (adress, index, array) =>
-                new H.map.Marker({
-                  lat: adress.latitude,
-                  lng: adress.longitude,
-                })
-            );
-            return(new Promise((resolve,reject)=>{
-              let position=this.location
-                let pos: [number,number]=position?[position.lat,position.lng]:undefined
-                this.routing(platform, markers,pos, (distance,distanceToEsprit) => {
-                  if (distance>0 && distance  <= distanceToEsprit*0.8) {
-                    value.show=true,
-                    value.distance=distance
-                  }
-                  
-                  if (!value.userAnnCarpooling.id) {
-                    for (let index = 0; index < users.length; index++) {
-                      const element = users[index];
-                      if (element.id.toString() == value.userAnnCarpooling.toString()) {
-                        value.userAnnCarpooling = element;
-                        break;
+        this.annCarpoolingService
+          .getAllUsers()
+          .subscribe(async (users: User[]) => {
+            this.data = await Promise.all(
+              data.map(async (value, index, array) => {
+                let markers = value.routeAnnCarpooling?.adressesRoute.map(
+                  (adress, index, array) =>
+                    new H.map.Marker({
+                      lat: adress.latitude,
+                      lng: adress.longitude,
+                    })
+                );
+                return new Promise((resolve, reject) => {
+                  let position = this.location;
+                  let pos: [number, number] = position
+                    ? [position.lat, position.lng]
+                    : undefined;
+                  this.routing(
+                    platform,
+                    markers,
+                    pos,
+                    (distance, distanceToEsprit) => {
+                      if (distance > 0 && distance <= distanceToEsprit * 0.8) {
+                        (value.show = true), (value.distance = distance);
                       }
-                    }
-                  }
-                  if(this.user.id==value.userAnnCarpooling.id){
-                    value.show=true
-                  }
-                 
-                  resolve(value)
-                });
-              
-            }))
-          }));
-          this.data=this.data.filter((value,index,array)=>value.show)
-          this.data=this.data.sort((a,b)=>a.distance-b.distance)
-          let o = this.paginatorData.pageIndex * this.paginatorData.pageSize;
 
-          if (o + this.paginatorData.pageSize < this.data.length) {
-            this.availableData = this.data.slice(
-              o,
-              o + this.paginatorData.pageSize
+                      if (!value.userAnnCarpooling.id) {
+                        for (let index = 0; index < users.length; index++) {
+                          const element = users[index];
+                          if (
+                            element.id.toString() ==
+                            value.userAnnCarpooling.toString()
+                          ) {
+                            value.userAnnCarpooling = element;
+                            break;
+                          }
+                        }
+                      }
+                      if (this.user.id == value.userAnnCarpooling.id) {
+                        value.show = true;
+                      }
+
+                      resolve(value);
+                    }
+                  );
+                });
+              })
             );
-          } else {
-            this.availableData = this.data.slice(o, this.data.length);
-            let k = this.paginatorData.pageSize - this.availableData.length;
-            for (let i = 0; i < k; i++) {
-              this.availableData.push(null);
+            this.data = this.data.filter((value, index, array) => value.show);
+            this.data = this.data.sort((a, b) => a.distance - b.distance);
+            let o = this.paginatorData.pageIndex * this.paginatorData.pageSize;
+
+            if (o + this.paginatorData.pageSize < this.data.length) {
+              this.availableData = this.data.slice(
+                o,
+                o + this.paginatorData.pageSize
+              );
+            } else {
+              this.availableData = this.data.slice(o, this.data.length);
+              let k = this.paginatorData.pageSize - this.availableData.length;
+              for (let i = 0; i < k; i++) {
+                this.availableData.push(null);
+              }
             }
-          }
-          console.log(this.availableData, 'j');
-        }),
+            console.log(this.availableData, 'j');
+          }),
           (error: any) => {
             console.error('Error fetching user by ID:', error);
           };
 
-        this.totalAnnouncements = this.data.filter((value,index,arr)=>value.show).length;
+        this.totalAnnouncements = this.data.filter(
+          (value, index, arr) => value.show
+        ).length;
       }),
       (error: any) => {
         console.error('Error fetching user by ID:', error);
@@ -240,12 +254,12 @@ OnLocationChange($event: H.geo.Point) {
   private routing(
     platform: H.service.Platform,
     markers: Array<H.map.Marker>,
-    position: [number,number]|undefined,
-    callback: (distance:number,distanceToEsprit:number) => void
+    position: [number, number] | undefined,
+    callback: (distance: number, distanceToEsprit: number) => void
   ) {
-    if(!position){
-      callback(-1,-1)
-      return
+    if (!position) {
+      callback(-1, -1);
+      return;
     }
     let waypoints = [];
     waypoints = markers.slice(1).map((value, index, array) => {
@@ -287,7 +301,6 @@ OnLocationChange($event: H.geo.Point) {
             lineWidth: 3,
           },
 
-        
           data: undefined,
         };
         //--------------
@@ -301,20 +314,17 @@ OnLocationChange($event: H.geo.Point) {
         });
 
         let polylineCoordinates = MapComponent.decodePolyline(array);
-        
-         
-          let minDistance = MapComponent.minimumDistanceBetweenPointAndPolyline(
-            polylineCoordinates,
-            position
-          );
-          let distance = MapComponent.calculateDistance(
-            [position[0], position[1]],
-            [MapComponent.esprit_location.lat, MapComponent.esprit_location.lng]
-          );
-        
-          callback(minDistance,distance)
-          
-        
+
+        let minDistance = MapComponent.minimumDistanceBetweenPointAndPolyline(
+          polylineCoordinates,
+          position
+        );
+        let distance = MapComponent.calculateDistance(
+          [position[0], position[1]],
+          [MapComponent.esprit_location.lat, MapComponent.esprit_location.lng]
+        );
+
+        callback(minDistance, distance);
       }
     };
 
@@ -328,8 +338,4 @@ OnLocationChange($event: H.geo.Point) {
       alert(error.message);
     });
   }
-
-
-
-  
 }

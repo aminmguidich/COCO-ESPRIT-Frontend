@@ -13,7 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,6 @@ import { MatTableModule } from '@angular/material/table';
     ListAnnoucementComponent,
     UpdateAnnouncementComponent,
     TableAnnouncementCarpoolingComponent,
-
   ],
   imports: [
     CommonModule,
@@ -29,13 +28,13 @@ import { MatTableModule } from '@angular/material/table';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    MatFormFieldModule, 
-    MatInputModule, 
+    MatFormFieldModule,
+    MatInputModule,
     MatTableModule,
-     MatSortModule, 
-     MatPaginatorModule
-    
+    MatSortModule,
+    MatPaginatorModule,
+    MatButtonModule,
   ],
-  providers:[DatePipe]
+  providers: [DatePipe],
 })
-export class AnouncementCarpoolingModule { }
+export class AnouncementCarpoolingModule {}
