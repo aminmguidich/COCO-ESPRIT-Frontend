@@ -12,17 +12,13 @@ import { RouteService } from 'src/app/FrontOffice/Front-Core/Services/Carpooling
 @Component({
   selector: 'app-add-annoucement',
   templateUrl: './add-annoucement.component.html',
-  styleUrls: ['./add-annoucement.component.css']
+  styleUrls: ['./add-annoucement.component.css'],
 })
 export class AddAnnoucementComponent implements OnInit {
-
-
-  users:  User[]=[];
+  users: User[] = [];
   selectedUser: number | undefined;
 
-
-  onMoveItem($event: { previousIndex: number; currentIndex: number; }) {
-    console.log($event)
+  onMoveItem($event: { previousIndex: number; currentIndex: number }) {
     /*
    let adress=JSON.parse(JSON.stringify(this.adresses[$event.previousIndex].split('').join('')));
    this.adresses[$event.previousIndex]=JSON.parse(JSON.stringify(this.adresses[$event.currentIndex].split('').join('')))
@@ -30,115 +26,111 @@ export class AddAnnoucementComponent implements OnInit {
    let newAdArr=this.adresses.slice(0)
    this.adresses=newAdArr
    */
-    let markerToMove=this.markers[$event.previousIndex]
-    if($event.previousIndex<$event.currentIndex){
-      for(let i=$event.previousIndex;i<$event.currentIndex;i++){
-        this.markers[i]=this.markers[i+1]
+    let markerToMove = this.markers[$event.previousIndex];
+    if ($event.previousIndex < $event.currentIndex) {
+      for (let i = $event.previousIndex; i < $event.currentIndex; i++) {
+        this.markers[i] = this.markers[i + 1];
       }
-    }else{
-      for(let i=$event.previousIndex;i>$event.currentIndex;i--){
-        this.markers[i]=this.markers[i-1]
+    } else {
+      for (let i = $event.previousIndex; i > $event.currentIndex; i--) {
+        this.markers[i] = this.markers[i - 1];
       }
     }
-    this.markers[$event.currentIndex]=markerToMove
+    this.markers[$event.currentIndex] = markerToMove;
     /*
   let marker=this.markers[$event.previousIndex]
   this.markers[$event.previousIndex]=this.markers[$event.currentIndex]
   this.markers[$event.currentIndex]=marker*/
-  let newArr=this.markers.slice(0)
-  this.markers=newArr
-  console.log(this.markers)
+    let newArr = this.markers.slice(0);
+    this.markers = newArr;
   }
   onClose() {
-    this.markers=[]
-    this.adresses=["Esprit"]
+    this.markers = [];
+    this.adresses = ['Esprit'];
   }
   onRemoveItem($event: number) {
-    let newArr=this.adresses.slice(0,this.adresses.length-1).filter((value,index,array)=>
-       index!=$event)
-      newArr.push("Esprit")
-    this.adresses=newArr
-    
-    let newMarkersArr=this.markers.filter((value,index,array)=>
-    index!=$event)
-    this.markers=newMarkersArr;
-    document.getElementById("map")?.scrollIntoView()
-  
+    let newArr = this.adresses
+      .slice(0, this.adresses.length - 1)
+      .filter((value, index, array) => index != $event);
+    newArr.push('Esprit');
+    this.adresses = newArr;
+
+    let newMarkersArr = this.markers.filter(
+      (value, index, array) => index != $event
+    );
+    this.markers = newMarkersArr;
+    document.getElementById('map')?.scrollIntoView();
   }
-  
-    markers:Array<H.map.Marker>=[];
-    adresses:Array<string>=["Esprit"]
-  onAddMarker($event:H.map.Marker) {
-    let newArr=this.adresses.slice(0,this.adresses.length-1)
-    newArr.push($event.getData())
-    newArr.push("Esprit")
-    
-    this.markers.push($event)
+
+  markers: Array<H.map.Marker> = [];
+  adresses: Array<string> = ['Esprit'];
+  onAddMarker($event: H.map.Marker) {
+    let newArr = this.adresses.slice(0, this.adresses.length - 1);
+    newArr.push($event.getData());
+    newArr.push('Esprit');
+
+    this.markers.push($event);
     //let ms=this.markers;
-    this.markers=this.markers.slice(0)
-    this.adresses=newArr
-    document.getElementById("map")?.scrollIntoView()
+    this.markers = this.markers.slice(0);
+    this.adresses = newArr;
+    document.getElementById('map')?.scrollIntoView();
   }
-    isMapVisible: Boolean=false;
-    constructor(private annCarpoolingService:AnnouncementCarpoolingService , private router: Router,private adressService:AdressService,private routeService:RouteService) { }
-   
-    ngOnInit() {
+  isMapVisible: Boolean = false;
+  constructor(
+    private annCarpoolingService: AnnouncementCarpoolingService,
+    private router: Router,
+    private adressService: AdressService,
+    private routeService: RouteService
+  ) {}
 
-
-              
-      this.annCarpoolingService.getAllUsers().subscribe(
-        (data: User[]) => {
-          console.log(data,);
-          this.users = data;
-  
-        }),
-        (error: any) => {
-          console.error('Error fetching user by ID:', error);
-        }
-      ;
+  ngOnInit() {
+    this.annCarpoolingService.getAllUsers().subscribe((data: User[]) => {
+      this.users = data;
+    }),
+      (error: any) => {
+        console.error('Error fetching user by ID:', error);
+      };
+  }
+  OnAddAdress() {
+    this.isMapVisible = true;
+  }
+  async add(form: NgForm) {
+    if (!form.valid) {
+      return;
     }
-    OnAddAdress(){
-      this.isMapVisible=true
+    let adresses: Array<Adress> = [];
+    for (let i = 0; i < this.markers.length; i++) {
+      let position: any = this.markers[i].getGeometry();
+      const adress: Adress = {
+        idAdress: 0,
+        streetName: this.markers[i].getData(),
+        latitude: position.lat,
+        longitude: position.lng,
+      };
+      let newAdress = await this.adressService.addAdress(adress).toPromise();
+      if (newAdress) {
+        adresses.push(newAdress);
+      }
     }
-    async add(form: NgForm) {
-      if(!form.valid){
-        console.log("yaeoisjf")
-        return
-      }
-      let adresses:Array<Adress>=[]
-      for(let i=0;i<this.markers.length;i++){
-        let position:any=this.markers[i].getGeometry()
-        const adress:Adress={
-          idAdress:0,
-          streetName:this.markers[i].getData(),
-          latitude :position.lat,
-        longitude:position.lng
-        }
-        let newAdress=await this.adressService.addAdress(adress).toPromise();
-        if(newAdress){
-  
-          adresses.push(newAdress)
-        }
-      }
-      const route:Route={
-        idRoute:0,
-        adressesRoute:adresses,
-        distance:5,
-      }
-      let newRoute=await this.routeService.addRoute(route).toPromise();
-      if(newRoute){
-  // Convert the string to a Date object
+    const route: Route = {
+      idRoute: 0,
+      adressesRoute: adresses,
+      distance: 5,
+    };
+    let newRoute = await this.routeService.addRoute(route).toPromise();
+    if (newRoute) {
+      // Convert the string to a Date object
       const date = new Date(form.value.date);
-      const user:User={
+      const user: User = {
         id: this.selectedUser,
         fullname: '',
         score: 0,
-        adressUser: new Adress,
+        adressUser: new Adress(),
         username: '',
         password: '',
         email: '',
-        roles: []
-      }
+        roles: [],
+      };
       const annCarpooling: AnnouncementCarpooling = {
         idCarpoolingAnnouncement: 0,
         description: form.value.description,
@@ -147,33 +139,24 @@ export class AddAnnoucementComponent implements OnInit {
         routeAnnCarpooling: newRoute,
         ridePrice: form.value.price,
         places: form.value.places,
-        reactCarpoolingsAnnCarpooling: []
+        reactCarpoolingsAnnCarpooling: [],
       };
-  
+
       this.annCarpoolingService.AddAnnCarpoolingAdmin(annCarpooling).subscribe(
         () => {
           alert('Added Successfully!');
           //this.router.navigate(["admin/carpooling/announcement"]);
-          this.annCarpoolingService.filter('RegisterClick')
+          this.annCarpoolingService.filter('RegisterClick');
         },
-        error => {
+        (error) => {
           console.error(error);
         }
       );
-      }
-
-      
     }
-
-    selectUser(event: Event): void {
-      const target = event.target as HTMLSelectElement;
-      this.selectedUser =Number.parseInt(target.value);
-      console.log(this.selectedUser)
-    }
-      
-    
-
-
-  
   }
-  
+
+  selectUser(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.selectedUser = Number.parseInt(target.value);
+  }
+}

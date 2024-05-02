@@ -1,24 +1,31 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Adress } from '../../FrontOffice/Front-Core/Models/Carpooling/adress';
 
 @Component({
   selector: 'app-map-container',
   templateUrl: './map-container.component.html',
-  styleUrls: ['./map-container.component.css']
+  styleUrls: ['./map-container.component.css'],
 })
 export class MapContainerComponent implements OnChanges {
-  @Input()  adresses:Array<Adress>=[];
-  @Input() readonly:boolean=true;
-  @Input() location_setter:boolean=false;
-  @Input()  markers:Array<H.map.Marker>=[];
-  @Output() OnAddMarker= new EventEmitter<H.map.Marker>();
+  @Input() adresses: Array<Adress> = [];
+  @Input() readonly: boolean = true;
+  @Input() location_setter: boolean = false;
+  @Input() markers: Array<H.map.Marker> = [];
+  @Output() OnAddMarker = new EventEmitter<H.map.Marker>();
   @Output() OnRouteIsInconvenient = new EventEmitter();
-  @Input() location:H.geo.Point|undefined;
-  @Output() OnChangeLocation=new EventEmitter<H.geo.Point>()
+  @Input() location: H.geo.Point | undefined;
+  @Output() OnChangeLocation = new EventEmitter<H.geo.Point>();
 
-handleAddMarker($event: H.map.Marker) {
-  this.OnAddMarker.emit($event)
-}
+  handleAddMarker($event: H.map.Marker) {
+    this.OnAddMarker.emit($event);
+  }
   title = 'jsapi-angular';
 
   constructor() {
@@ -27,19 +34,17 @@ handleAddMarker($event: H.map.Marker) {
     this.lng = 0;
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['location']!==undefined){
-      this.location=changes['location'].currentValue 
+    if (changes['location'] !== undefined) {
+      this.location = changes['location'].currentValue;
     }
-    console.log("container",this.location)
   }
 
   zoom: number;
   lat: number;
   lng: number;
 
-
   handleInputChange(event: Event) {
-    const target = <HTMLInputElement> event.target;
+    const target = <HTMLInputElement>event.target;
     if (target) {
       if (target.name === 'zoom') {
         this.zoom = parseFloat(target.value);
@@ -60,5 +65,4 @@ handleAddMarker($event: H.map.Marker) {
       this.lng = lookAt.position.lng;
     }
   }
-  
 }

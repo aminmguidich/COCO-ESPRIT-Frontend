@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,11 +17,75 @@ import { AnnouncementCarpoolingService } from 'src/app/BackOffice/Back-Core/Serv
   styleUrls: ['./table-announcement-carpooling.component.css'],
 })
 export class TableAnnouncementCarpoolingComponent implements AfterViewInit {
+  displayedColumns: string[] = [
+    'id',
+    'user',
+    'date',
+    'description',
+    'price',
+    'places',
+    'reacts',
+    'actions',
+  ];
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+  sortData($event: Sort) {
+    if (!$event.active) {
+      return;
+    }
+    this.data = this.data.sort((a, b) => {
+      const isAsc = $event.direction === 'asc';
+      if ($event.direction.length == 0) {
+        return this.compare(
+          a.idCarpoolingAnnouncement,
+          b.idCarpoolingAnnouncement,
+          !isAsc
+        );
+      }
+      switch ($event.active) {
+        case 'id':
+          return this.compare(
+            a.idCarpoolingAnnouncement,
+            b.idCarpoolingAnnouncement,
+            isAsc
+          );
+        case 'user':
+          return this.compare(
+            a.userAnnCarpooling.username,
+            b.userAnnCarpooling.username,
+            isAsc
+          );
+        case 'date':
+          return this.compare(
+            a.dateCarpoolingAnnouncement.toString(),
+            b.dateCarpoolingAnnouncement.toString(),
+            isAsc
+          );
+        case 'description':
+          return this.compare(a.description, b.description, isAsc);
+        case 'price':
+          return this.compare(a.ridePrice, b.ridePrice, isAsc);
+        case 'places':
+          return this.compare(a.places, b.places, isAsc);
+        case 'reacts':
+          return this.compare(
+            a.reactCarpoolingsAnnCarpooling.length,
+            a.reactCarpoolingsAnnCarpooling.length,
+            isAsc
+          );
+        default:
+          return 0;
+      }
+    });
+
+    this.dataSource.data = this.data;
+  }
   OnViewProfile(arg0: any) {
     throw new Error('Method not implemented.');
   }
   data: AnnouncementCarpooling[] = [];
-
+  sortedData: AnnouncementCarpooling[] = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -29,7 +93,6 @@ export class TableAnnouncementCarpoolingComponent implements AfterViewInit {
     private annCarpoolingService: AnnouncementCarpoolingService
   ) {
     this.annCarpoolingService.listen().subscribe((m: any) => {
-      console.log(m);
       this.loadData();
     });
   }
@@ -50,9 +113,28 @@ export class TableAnnouncementCarpoolingComponent implements AfterViewInit {
     this.annCarpoolingService
       .getall()
       .subscribe((data: AnnouncementCarpooling[]) => {
-        this.data = data;
-        this.totalAnnouncements = data.length;
-        this.dataSource = new MatTableDataSource(this.data);
+        this.annCarpoolingService
+          .getAllUsers()
+          .subscribe(async (users: any[]) => {
+            this.data = data.map((value, index, array) => {
+              if (!value.userAnnCarpooling.id) {
+                for (let index = 0; index < users.length; index++) {
+                  const element = users[index];
+                  if (
+                    element.id.toString() == value.userAnnCarpooling.toString()
+                  ) {
+                    value.userAnnCarpooling = element;
+                    break;
+                  }
+                }
+              }
+              return value;
+            });
+            this.totalAnnouncements = data.length;
+            this.dataSource = new MatTableDataSource(this.data);
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
+          });
       }),
       (error: any) => {
         console.error('Error fetching user by ID:', error);
@@ -61,25 +143,12 @@ export class TableAnnouncementCarpoolingComponent implements AfterViewInit {
 
   totalAnnouncements!: number;
 
-  displayedColumns: string[] = [
-    'id',
-    'user',
-    'date',
-    'description',
-    'price',
-    'places',
-    'reacts',
-    'actions',
-  ];
   dataSource: MatTableDataSource<AnnouncementCarpooling>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  ngAfterViewInit() {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -234,7 +234,6 @@ export class ListAnnouncementComponent implements OnInit {
                 this.availableData.push(null);
               }
             }
-            console.log(this.availableData, 'j');
           }),
           (error: any) => {
             console.error('Error fetching user by ID:', error);
