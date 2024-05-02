@@ -1,4 +1,3 @@
-<body>
   <div class="pcoded-main-container">
     <div class="pcoded-wrapper">
       <div class="pcoded-content">
@@ -200,11 +199,12 @@
                             {{ row.reactCarpoolingsAnnCarpooling.length }}
                           </td>
                         </ng-container>
+                        
 
                         <!-- Actions Column -->
                         <ng-container matColumnDef="actions">
                           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                            Actions
+                              &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;Actions
                           </th>
                           <td mat-cell *matCellDef="let row; let i = index">
                             <div class="list-inline-item">
@@ -274,7 +274,7 @@
                                         class="modal-title"
                                         id="exampleModalLabel"
                                       >
-                                        Delete Item
+                                        Delete Announcement
                                       </h5>
                                       <button
                                         type="button"
@@ -286,8 +286,8 @@
                                       </button>
                                     </div>
                                     <div class="modal-body">
-                                      Are you sure you want to delete this item?
-                                      This action cannot be undone.
+                                      <h5>Are you sure you want to delete this item?
+                                        This action cannot be undone.</h5>
                                     </div>
                                     <div class="modal-footer">
                                       <button
@@ -392,4 +392,3 @@
       </div>
     </div>
   </div>
-</body>
