@@ -29,7 +29,9 @@ th {
 .transparent-button1:hover {
   background-color: transparent; /* Reset background color on hover */
 }
-
+.transparent-button1:active {
+  background-color: rgb(235, 235, 235); /* Reset background color on hover */
+}
 .red-icon {
   color: red;
 }

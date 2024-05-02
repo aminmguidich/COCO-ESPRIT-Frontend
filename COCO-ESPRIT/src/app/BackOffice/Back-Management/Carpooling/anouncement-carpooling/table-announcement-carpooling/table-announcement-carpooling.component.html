@@ -14,7 +14,7 @@
                       &nbsp;
                       <button
                         type="button"
-                        class="btn btn-primary btn-sm transparent-button"
+                        class="btn btn-sm transparent-button"
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
                       >
@@ -207,20 +207,14 @@
                             Actions
                           </th>
                           <td mat-cell *matCellDef="let row; let i = index">
-                            <div
-                              style="
-                                display: inline-block;
-                                vertical-align: middle;
-                              "
-                              class="list-inline-item"
-                            >
+                            <div class="list-inline-item">
                               <button
                                 type="button"
                                 data-bs-toggle="modal"
                                 [attr.data-bs-target]="
                                   '#exampleModalupdate' + i
                                 "
-                                class="btn btn-success btn-sm rounded-0 transparent-button1"
+                                class="btn btn-sm rounded-0 transparent-button1"
                                 data-toggle="tooltip"
                                 data-placement="top"
                                 title="Edit"
@@ -247,16 +241,10 @@
                               </div>
                             </div>
 
-                            <div
-                              style="
-                                display: inline-block;
-                                vertical-align: middle;
-                              "
-                              class="list-inline-item"
-                            >
+                            <div class="list-inline-item">
                               <button
                                 type="button"
-                                class="btn btn-danger btn-sm rounded-0 transparent-button1"
+                                class="btn btn-sm rounded-0 transparent-button1"
                                 data-toggle="tooltip"
                                 data-placement="top"
                                 title="Delete"
@@ -327,18 +315,12 @@
                               </div>
                             </div>
 
-                            <div
-                              style="
-                                display: inline-block;
-                                vertical-align: middle;
-                              "
-                              class="list-inline-item"
-                            >
+                            <div class="list-inline-item">
                               <button
                                 type="button"
                                 data-bs-toggle="modal"
                                 [attr.data-bs-target]="'#detailModal' + i"
-                                class="btn btn-success btn-sm rounded-0 transparent-button1"
+                                class="btn btn-sm rounded-0 transparent-button1"
                                 data-toggle="tooltip"
                                 data-placement="top"
                                 title="Edit"
