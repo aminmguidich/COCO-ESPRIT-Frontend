@@ -28,7 +28,7 @@ import { ResetPasswordComponent } from './BackOffice/Back-Management/User/User-m
 import { ForgotPasswordComponent } from './BackOffice/Back-Management/User/User-module/forgot-password/forgot-password.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AnnouncementCarpoolingModule } from './FrontOffice/Front-Management/Carpooling/announcement-carpooling/announcement-carpooling.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -40,7 +40,6 @@ import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-
 import { PostModule } from './BackOffice/Back-Management/ForumManagement/post/post.module';
 import { PostFrontModule } from './FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module';
 import { HealthManagementModule } from './FrontOffice/Front-Management/health-management/health-management.module';
-
 
 @NgModule({
   declarations: [
@@ -61,7 +60,9 @@ import { HealthManagementModule } from './FrontOffice/Front-Management/health-ma
     SidebarBackComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+   
+    
 
    
     
@@ -88,8 +89,9 @@ import { HealthManagementModule } from './FrontOffice/Front-Management/health-ma
     PostFrontModule,
     BrowserAnimationsModule,
     HealthManagementModule,
+    
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

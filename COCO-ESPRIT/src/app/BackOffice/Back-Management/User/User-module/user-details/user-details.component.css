@@ -1,0 +1,72 @@
+/* Modal Content */
+.modal-content {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.modal-header h5 {
+    margin: 0;
+    font-weight: bold;
+    color: #333333;
+}
+
+/* Close Button */
+.close {
+    color: #000000;
+    opacity: 0.5;
+}
+
+.close:hover {
+    color: #000000;
+    opacity: 0.75;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+}
+
+/* User Image */
+.modal-body img {
+    border-radius: 50%;
+}
+
+/* User Details */
+.modal-body p {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333333;
+}
+
+/* Row in modal body */
+.modal-body .row {
+    margin-bottom: 20px;
+}
+
+/* Column in modal body */
+.modal-body .col-4,
+.modal-body .col-8 {
+    padding: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-body .row {
+        display: block;
+    }
+    .modal-body .col-4,
+    .modal-body .col-8 {
+        width: 100%;
+    }
+    .modal-body img {
+        margin-bottom: 15px;
+    }
+}

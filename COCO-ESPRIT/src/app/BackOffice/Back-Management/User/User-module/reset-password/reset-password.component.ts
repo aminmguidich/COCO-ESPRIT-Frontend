@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/BackOffice/Back-Core/Services/User/_service
 export class ResetPasswordComponent implements OnInit {
   token!: string;
   password!: string;
+  confirmPassword: string = '';
   message: string = '';
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
@@ -19,7 +20,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   resetPassword(): void {
-    if (this.token && this.password) {
+    if (this.token && this.password && this.password === this.confirmPassword) {
       this.message = 'Please wait, it may take a few seconds...'; // Show the "Please wait" message
 
       this.authService.resetPassword(this.token, this.password).subscribe(
@@ -40,6 +41,8 @@ export class ResetPasswordComponent implements OnInit {
           }
         }
       );
+    } else {
+      this.message = 'Passwords do not match. Please make sure both passwords match.';
     }
   }
 }

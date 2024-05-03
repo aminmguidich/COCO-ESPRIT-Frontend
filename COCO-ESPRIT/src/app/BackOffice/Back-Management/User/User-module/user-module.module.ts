@@ -4,13 +4,19 @@ import { CommonModule } from '@angular/common';
 import { UserModuleRoutingModule } from './user-module-routing.module';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
+
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { ProfileComponent } from './profile/profile.component';
-import { BoardUserComponent } from './board-user/board-user.component';
-import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
+
 import { NotAutorizedComponent } from './not-autorized/not-autorized.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
+import { VerifyAccountComponent } from './verify-account/verify-account.component';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { AllUsersComponent } from './all-users/all-users.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { ProfileComponent } from './profile/profile.component';
+
+
 
 
 
@@ -18,13 +24,14 @@ import { NotAutorizedComponent } from './not-autorized/not-autorized.component';
 @NgModule({
   declarations: [
   
-    BoardAdminComponent,
+  
        LoginComponent,
-       HomeComponent,
-       ProfileComponent,
-       BoardUserComponent,
-       BoardModeratorComponent,
        NotAutorizedComponent,
+       UpdateUserComponent,
+       VerifyAccountComponent,
+       AllUsersComponent,
+       EditUserComponent,
+       ProfileComponent,
        
   ],
   imports: [
@@ -33,6 +40,10 @@ import { NotAutorizedComponent } from './not-autorized/not-autorized.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgOtpInputModule,
+    NgxPaginationModule
+    
+
     
     
   ]

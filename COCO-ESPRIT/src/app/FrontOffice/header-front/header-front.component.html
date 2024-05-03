@@ -17,6 +17,29 @@
         </ul>
       </div>
     </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" (click)="toggleDropdown($event)">{{ username }} <b class="caret"></b></a>
+              <ul class="dropdown-menu" [ngClass]="{ 'show': dropdownOpen }">
+                <li align="center" class="well">
+                  <div>
+                      <img class="img-responsive rounded-circle mb-2" style="padding:2%; width: 100px; height: 100px;" src="{{ userImage }}" />
+                  </div>
+                  <div>
+                      <a class="change" href="/updateUser">Edit Profile</a>
+                  </div>
+                  <div>
+                      <a href="#" class="btn btn-sm btn-default" (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                  </div>
+              </li>
+              
+              </ul>
+          </li>
+      </ul>
+  </div>
+  
+  
   </nav>
 
   

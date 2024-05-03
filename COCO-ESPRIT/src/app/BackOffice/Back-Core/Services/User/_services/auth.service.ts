@@ -58,5 +58,15 @@ export class AuthService {
       httpOptions
     );
   }
+  verificationCode(verificationCode: string): Observable<any> {
+    return this.http.post(
+      AUTH_API + 'verify' ,
+      {
+        verificationCode
+      },
+      httpOptions
+    );
+  }
+  
   
 }

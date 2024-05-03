@@ -1,0 +1,141 @@
+<!-- all-users.component.html -->
+
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Dashboard</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+                                        <div class="container bootstrap snippets bootdey">
+                                            <div class="row">
+                                                <p>Gender Distribution:</p>
+                                                <div class="col-lg-5">
+                                                    <canvas #pieChart width="200" height="200"></canvas>
+                                                  </div>
+                                                <div class="col-lg-2 col-sm-6">
+                                                    <div class="circle-tile">
+                                                        <a href="#"><div class="circle-tile-heading dark-blue"><i class="fa fa-users fa-fw fa-3x"></i></div></a>
+                                                        <div class="circle-tile-content dark-blue">
+                                                            <div class="circle-tile-description text-faded"> Users</div>
+                                                            <div class="circle-tile-number text-faded">{{userCount}}</div>
+                                                            <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-sm-6">
+                                                    <div class="circle-tile">
+                                                        <a href="#"><div class="circle-tile-heading yellow"><i class="fa fa-users fa-fw fa-3x"></i></div></a>
+                                                        <div class="circle-tile-content yellow">
+                                                            <div class="circle-tile-description text-faded"> Users With Cars </div>
+                                                            <div class="circle-tile-number text-faded">{{usersWithCarsCount}}</div>
+                                                            <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-sm-6">
+                                                    <div class="circle-tile">
+                                                        <a href="#"><div class="circle-tile-heading red "><i class="fa fa-female fa-fw fa-3x"></i></div></a>
+                                                        <div class="circle-tile-content red">
+                                                            <div class="circle-tile-description text-faded"> Female Users </div>
+                                                            <div class="circle-tile-number text-faded">{{femaleUsersCount}}</div>
+                                                            <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div> 
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Users</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <input type="text" class="form-control mb-3" [(ngModel)]="searchQuery" (input)="filterUsers()" placeholder="Search by username">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Avatar</th>
+                                                    <th scope="col">Username</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Identifier</th>
+                                                    <th scope="col">Class</th>
+                                                    <th scope="col">Fullname</th>
+                                                    <th scope="col">Phone</th>
+                                                    <th class="action text-right">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let user of filteredUsers;let i= index " (click)="showUserDetails(user)">
+                                                    <td>
+                                                        <img class="rounded" [src]="user.imageUrl" alt="no image" width="50" height="50">
+                                                    </td>
+                                                    <td>{{ user.username }}</td>
+                                                    <td>{{ user.email }}</td>
+                                                    <td>{{ user.espritId }}</td>
+                                                    <td>{{ user.niv }}</td>
+                                                    <td>{{ user.fullname }}</td>
+                                                    <td>{{ user.phone }}</td>
+                                                    <td>
+                                                        <button
+                              type="button"
+                              data-bs-toggle="modal"
+                              [attr.data-bs-target]="'#exampleModalEdit' + i"
+                              class="btn btn-sm rounded-0 transparent-button1"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="Edit"
+                            >
+                              <i class="fa fa-edit text-success"></i>
+                            </button>
+
+                            <!-- Modal -->
+                            <div
+                              class="modal fade"
+                              [id]="'exampleModalEdit' + i"
+                              role="dialog"
+                              tabindex="-1"
+                              aria-labelledby="exampleModalLabel"
+                              aria-hidden="true"
+                            >
+                            <app-edit-user [userInput]="user"></app-edit-user>
+
+                            </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                       <!--<app-user-details *ngIf="selectedUser" [user]="selectedUser" (close)="closeUserDetails()"></app-user-details>-->
+                                        <div class="pagination">
+                                            <button class="btn btn-sm btn-info" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">
+                                              <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                            <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                                            <button class="btn btn-sm btn-info" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">
+                                              <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                          </div>
+                                          
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

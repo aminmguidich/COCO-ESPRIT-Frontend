@@ -25,6 +25,10 @@ import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front
 import { HomeFrontComponent } from './FrontOffice/home-front/home-front.component';
 import { PircingFrontComponent } from './FrontOffice/pircing-front/pircing-front.component';
 import { ServicesFrontComponent } from './FrontOffice/services-front/services-front.component';
+import { UpdateUserComponent } from './BackOffice/Back-Management/User/User-module/update-user/update-user.component';
+import { VerifyAccountComponent } from './BackOffice/Back-Management/User/User-module/verify-account/verify-account.component';
+import { AllUsersComponent } from './BackOffice/Back-Management/User/User-module/all-users/all-users.component';
+import { ProfileComponent } from './BackOffice/Back-Management/User/User-module/profile/profile.component';
 
 const routes: Routes = [
 
@@ -33,6 +37,10 @@ const routes: Routes = [
   {path:"login",component:LoginComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'verify', component: VerifyAccountComponent },
+  { path: 'profile', component: ProfileComponent },
+
+
   
   {
     path :"",
@@ -58,6 +66,10 @@ const routes: Routes = [
       {
         path:"cars",
         component:CarsFrontComponent
+      },
+      {
+        path:"updateUser",
+        component:UpdateUserComponent
       },
      /* {
         path:"blog",
@@ -116,7 +128,15 @@ const routes: Routes = [
         path: "ListPost",
         loadChildren: () => import('./BackOffice/Back-Management/ForumManagement/post/post.module').then(m => m.PostModule),
     },
-    
+    {
+      path: "Users",
+      loadChildren: () => import('./BackOffice/Back-Management/User/User-module/user-module.module').then(m => m.UserModuleModule),
+  },
+  {
+    path:"",
+    component:AllUsersComponent
+  },
+
     
     
 

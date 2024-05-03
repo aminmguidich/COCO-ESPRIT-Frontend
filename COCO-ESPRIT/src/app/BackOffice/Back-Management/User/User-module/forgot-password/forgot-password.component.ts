@@ -29,7 +29,7 @@ export class ForgotPasswordComponent {
           this.message = 'Password reset email sent successfully!';
         } else {
           console.error('Failed to send password reset email:', error);
-          this.message = 'An error occurred while sending the password reset email. Please try again later.';
+          this.message = 'Failed to send password reset email';
         }
       }
     );

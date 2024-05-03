@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoardModeratorComponent } from './board-moderator.component';
+import { VerifyAccountComponent } from './verify-account.component';
 
-describe('BoardModeratorComponent', () => {
-  let component: BoardModeratorComponent;
-  let fixture: ComponentFixture<BoardModeratorComponent>;
+describe('VerifyAccountComponent', () => {
+  let component: VerifyAccountComponent;
+  let fixture: ComponentFixture<VerifyAccountComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BoardModeratorComponent ]
+      declarations: [ VerifyAccountComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BoardModeratorComponent);
+    fixture = TestBed.createComponent(VerifyAccountComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,155 @@
+<body>    
+<div class="container-xl px-4 mt-3" >
+    <!-- Account page navigation-->
+    <nav class="nav nav-borders">
+        <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
+        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page" target="__blank">Billing</a>
+        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-security-page" target="__blank">Security</a>
+        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"  target="__blank">Notifications</a>
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" [src]="userImageUrl" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">chose an image with any size you want</div>
+                    <!-- file-upload.component.html -->
+                    <input id="user-file-upload" type="file" (change)="onFileSelected($event)">
+                    <label for="user-file-upload" class="btn btn-primary">
+                        Upload new image
+                    </label>
+                
+                </div>
+            </div>
+             <!-- UserCar picture card-->
+             <div *ngIf="hadCar" class="card mb-4 mb-xl-0">
+                <div class="card-header">Your Car Picture</div>
+                <div class="card-body text-center">
+                    <!-- Car picture image-->
+                    <img class="img-account-profile  mb-2" [src]="carImageUrl" alt="">
+                    <!-- Car picture help block-->
+                    <div class="small font-italic text-muted mb-4">chose an image with any size you want</div>
+                     <!-- car-file-upload.component.html -->
+                    <input id="car-file-upload" type="file" (change)="onCarFileSelected($event)">
+                    <label for="car-file-upload" class="btn btn-primary">
+                        Upload new image
+                    </label>
+                
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8" >
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form [formGroup]="validateForm">
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (username)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputUsername">Username (how your name will appear to others)</label>
+                                <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username"  formControlName="username" >
+                            </div>
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Full name</label>
+                                <input class="form-control" id="inputFullName" type="text" placeholder="Enter your full name"  formControlName="fullname">
+                            </div>
+                      
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputEspritId">Esprit Identifier</label>
+                                <input class="form-control" id="inputEspritId" type="text" placeholder="Enter your Identifier" formControlName="espritId" >
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputNiv">Class</label>
+                                <input class="form-control" id="inputNiv" type="text" placeholder="Enter your Class" formControlName="niv" >
+                            </div>
+                        </div>
+                      
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Phone number</label>
+                                <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" formControlName="phone" >
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBirthday">Birthday</label>
+                                <input class="form-control" id="inputBirthday" type="date" name="birthday" placeholder="Enter your birthday" formControlName="birthDate">
+                            </div>
+                        </div>
+                         <!-- Form Group (car)-->
+                         <div class="mb-3">
+                            
+                            <div class="form-check form-switch" style="margin-left: 30px;">
+                                <input class="form-check-input" type="checkbox" id="inputCar"  (change)="updateHadCar($event)">
+                                <label class="form-check-label" for="inputCar">I have a car</label>
+                            </div>
+                        </div>
+                        <!-- Form Group (Places)-->
+                        <div *ngIf="hadCar" class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputPlaces">Number of Places</label>
+                            <input class="form-control" id="inputPlaces" type="number" placeholder="Enter number of places" formControlName="places">
+                        </div>
+                     </div>
+                        
+                         <!-- Form Row-->
+                         <div *ngIf="hadCar" class="row gx-3 mb-3">
+                            <!-- Form Group (Registration Number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Registration Number</label>
+                                <input class="form-control" id="inputRegistrationNumber" type="text" placeholder="Enter your car registration number"  formControlName="registrationNumber">
+                            </div>
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputModel">Model</label>
+                                <input class="form-control" id="inputModel" type="text" placeholder="Enter your car model"  formControlName="model">
+                            </div>
+                        </div>
+                        <div *ngIf="hadCar" class="row gx-3 mb-3">
+                            <!-- Form Group (Smoking)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputSmoking">Smoking Allowed?</label>
+                                <input style="margin-left: 20px;" class="form-check-input" id="inputSmoking" type="checkbox" formControlName="smoking">
+                            </div>
+                            <!-- Form Group (Air Conditioned)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputAirConditioned">Air Conditioned?</label>
+                                <input style="margin-left: 20px;" class="form-check-input" id="inputAirConditioned" type="checkbox" formControlName="airConditioned">
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        <div *ngIf="updateSuccess" class="alert alert-success">
+                          Changes saved successfully!
+                        </div>
+                        <div *ngIf="errorMessage" class="alert alert-danger">
+                          {{ errorMessage }}
+                        </div>
+                        
+                        
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="button" (click)="updateUser()">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
