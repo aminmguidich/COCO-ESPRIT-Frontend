@@ -163,7 +163,7 @@ export class ListAnnouncementComponent implements OnInit {
 
   ngOnInit() {
     let platform = new H.service.Platform({
-      apikey: 'HNhs9aUe13svIiECACHKjsyUyj7dx-XM3pi7t114eR0',
+      apikey: 'G5HgkNnhGYiUWeofOLfu4DvpgpOkkPza_5ReS-YEsqw',
     });
     this.user.id = this.storageService.getUser()['id'];
 
