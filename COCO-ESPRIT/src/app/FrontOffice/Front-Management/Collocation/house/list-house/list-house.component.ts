@@ -11,6 +11,7 @@ import { UserService } from 'src/app/BackOffice/Back-Core/Services/User/_service
   styleUrls: ['./list-house.component.css']
 })
 export class ListHouseComponent {
+
   showMoreInfo(_t7: any) {
     this.openmodaldetails = true;
     this.description = _t7.description;
@@ -30,15 +31,15 @@ export class ListHouseComponent {
   description!: any;
   location!: any;
   nbrofBedromms!: any;
-  price!:any;
+  price!: any;
   p: number = 1;
   itemsPerPage: number = 3
   userId: any;
   @ViewChild('addHouseModal') addHouseModal!: ElementRef;
 
-  houseSelected:any
+  houseSelected: any
 
-  houseIdSelectedToEdit:any
+  houseIdSelectedToEdit: any
 
   openHouseToEdit = false
 
@@ -48,7 +49,7 @@ export class ListHouseComponent {
     private houseService: HouseService,
     private http: HttpClient, // Injecter le HttpClient pour faire des requêtes HTTP,
     private contratService: ContractService,
-    private userService:UserService
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -59,9 +60,9 @@ export class ListHouseComponent {
     });
   }
 
-  selectHouseToEdit(id:any){
+  selectHouseToEdit(id: any) {
 
-    localStorage.setItem("houseUp",id+"")
+    localStorage.setItem("houseUp", id + "")
 
   }
 
@@ -102,7 +103,7 @@ export class ListHouseComponent {
   generatePdf(contrat: any) {
 
     // Définir le type de la réponse comme 'blob' pour obtenir un objet Blob (binaire)
-    this.http.post(`http://localhost:9092/api/House/pdf`,contrat,{responseType:'blob'}).subscribe((res: any) => {
+    this.http.post(`http://localhost:9092/api/House/pdf`, contrat, { responseType: 'blob' }).subscribe((res: any) => {
       // Créer un objet URL pour le blob
       console.log(res)
       const blobURL = URL.createObjectURL(res);
@@ -131,11 +132,18 @@ export class ListHouseComponent {
     });
   }
 
+
+  selectHouse(house: any) {
+
+    this.houseSelected = house
+
+  }
+
   addContrat() {
 
 
-    
-    this.userService.getById(this.userId).subscribe((res:any)=>{
+
+    this.userService.getById(this.userId).subscribe((res: any) => {
 
       const today = new Date()
 
@@ -144,28 +152,31 @@ export class ListHouseComponent {
       const year = today.getFullYear();
 
       const request = {
-  
+
         description: this.houseSelected.description,
         nombre_de_places: this.houseSelected.nbrofBedrooms,
         houseType: this.houseSelected.houseType,
         location: this.houseSelected.location,
         owner: this.houseSelected.username,
         uname: res.username,
-        date:day+"-"+month+"-"+year,
-        houseId:this.houseSelected.idHouse,
-        userId:res.id
-  
+        date: day + "-" + month + "-" + year,
+        houseId: this.houseSelected.idHouse,
+        userId: res.id
+
       }
 
-      console.log("request ==> : ",request)
       this.contratService.addContract(request).subscribe((r: any) => {
-
         this.generatePdf(r)
-  
+
+        this.houseService.updateHouseDetails(this.houseSelected.idHouse, { contracted: true }).subscribe((res: any) => {
+          alert("contract added successfully")
+
+        })
+
       })
 
     })
-    
+
 
 
 

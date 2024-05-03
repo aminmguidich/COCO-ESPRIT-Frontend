@@ -13,7 +13,7 @@ export class SidebarBackComponent    {
   managementDropdownVisible: boolean = false;
   carpoolingDropdownVisible: boolean = false;
   userDropdownVisible: boolean = false;
-
+  collocationropdownVisible: boolean = false;
 
   toggleManagementDropdown(event: MouseEvent) {
     this.managementDropdownVisible = !this.managementDropdownVisible;
@@ -27,6 +27,12 @@ export class SidebarBackComponent    {
     event.stopPropagation(); // Prevent event from propagating to parent elements
 
   }
+  toggleCollocationDropdown(event: MouseEvent) {
+    this.collocationropdownVisible = !this.collocationropdownVisible;
+    event.stopPropagation(); // Prevent event from propagating to parent elements
+
+  }
+
 
   toggleUserDropdown(event: MouseEvent) {
     this.userDropdownVisible = !this.userDropdownVisible;

@@ -49,7 +49,7 @@ export class AnnoucementCollocationService {
 
   sendForm(data: any): Observable<any> {
     // Envoi de l'e-mail à l'URL spécifiée
-    return this.http.get(`http://localhost:9092/House/api/sendQuizByEmail/${data.id}/${data.recipientEmaiL}`);
+    return this.http.get(`http://localhost:9092/api/Quiz/sendQuizByEmail/${data.id}/${data.recipientEmaiL}`);
   }
 
 
@@ -63,9 +63,12 @@ export class AnnoucementCollocationService {
     return this.http.put(`http://localhost:9092/users/update/${id}`,data);
   }
   
-  updatePostRating( idCollocationAnnouncement: any, nb_etoil: number): Observable<any> {
-
-    return this.http.put(`http://localhost:9092/Collocation_Announcement/updateAnnoucementColRating/${idCollocationAnnouncement}/${nb_etoil}`, null);
+  updatePostRating( idCollocationAnnouncement: any, data: any,rateNbr:any) {
+    if(rateNbr > data.nb_etoil){
+      data.nb_etoil = rateNbr
+    }
+    console.log(data)
+    return this.http.put(`http://localhost:9092/api/Collocation_Announcement/updateAnnouncementCollocation/${idCollocationAnnouncement}`, data);
 
   }  
 

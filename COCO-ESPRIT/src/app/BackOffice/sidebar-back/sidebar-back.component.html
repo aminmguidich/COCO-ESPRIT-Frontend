@@ -60,10 +60,37 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="mainFoyer/listFoyer">
-                                <span>Collocation</span>
+                        <li class="nav-item" (click)="toggleCollocationDropdown($event)">
+                            <a class="nav-link dropdown-toggle">
+                                <span><i class="bi bi-house-heart"></i>Collocation</span>
                             </a>
+                            <ul class="nav-dropdown" [style.display]="collocationropdownVisible ? 'block' : 'none'" style="width: 250px;">
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="collocation/requirement">
+                                        <span>Requirement</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="collocation/announcement">
+                                        <span>Announcement</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="collocation/house">
+                                        <span>House</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="collocation/rating">
+                                        <span>Rating</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="collocation/react">
+                                        <span>React</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" routerLink="ListPost">

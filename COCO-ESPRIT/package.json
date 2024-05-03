@@ -43,9 +43,6 @@
     "@types/sockjs-client": "^1.5.4",
     "ngx-toastr": "^15.0.0",
     "sockjs-client": "^1.6.1",
-
-
-
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },

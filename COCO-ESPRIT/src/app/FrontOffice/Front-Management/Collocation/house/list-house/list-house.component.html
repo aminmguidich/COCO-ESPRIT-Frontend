@@ -20,7 +20,7 @@
           <li class="list-group-item" *ngFor="let house of houses | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
             <div class="row">
               <div class="col-md-3">
-                <img [src]="'data:'+house.image?.type+';base64,' + house.image?.data" alt="House Image" class="img-fluid">
+                <img [src]="house.imageUrl" alt="House Image" class="img-fluid">
               </div>
               <div class="col-md-6">
                 <p class="mb-1">Poster: {{ house.username }}</p>
@@ -28,20 +28,13 @@
                 <h5 class="mb-1">HouseType: {{ house.houseType }}</h5>
                 <p class="mb-1">Places: {{ house.places }}</p>
                 <!-- Ajout du rate sous forme d'étoiles -->
-                <p class="mb-0 rated">
-                  <span>Rated:</span>
-                  <span class="ion-ios-star"></span>
-                  <span class="ion-ios-star"></span>
-                  <span class="ion-ios-star"></span>
-                  <span class="ion-ios-star"></span>
-                  <span class="ion-ios-star"></span>
-                </p>
+           
               </div>
               <div class="col-md-3">
                 <!-- Bouton "SHOW MORE" pour afficher des informations supplémentaires -->
                 <button type="button" class="btn btn-info" (click)="showMoreInfo(house)">SHOW MORE</button>
                 <!-- Bouton "VIEW CONTRACT" pour générer le PDF -->
-                <button type="button" class="btn btn-success" *ngIf="house.userId != userId && house.contracted===false" (click)="houseSelected = house"  data-bs-toggle="modal" data-bs-target="#addContract"   >ADD CONTRACT</button>
+                <button type="button" class="btn btn-success" *ngIf="house.userId != userId && house.contracted===false" (click)="selectHouse(house)"  data-bs-toggle="modal" data-bs-target="#addContract"   >ADD CONTRACT</button>
                 <br>
                 <button type="button" class="btn btn-info" *ngIf="house.userId === userId" (click)="selectHouseToEdit(house.idHouse);openHouseToEdit = true"  data-bs-toggle="modal" data-bs-target="#editHouseModal"   >UPDATE</button>
                 <br>

@@ -15,6 +15,8 @@ export class ListAnnoucementComponent {
   selectedAnnouncement: any;
   budgetPart: number | undefined; // Déclaration de la propriété budgetPart
   score: number | undefined; // Déclaration de la propriété score
+  p: number = 1;
+  itemsPerPage: number = 3;
 
 
   @ViewChild('editAnnouncementModal') editAnnouncementModal!: ElementRef; // Référence au modal

@@ -20,9 +20,6 @@ const routes: Routes = [
   },
   {
     path: "Piechart", component: PieChartComponentComponent,
-  },
-  {
-    path: "quiz/:id", component: QuizComponent,
   }, 
 
 ];

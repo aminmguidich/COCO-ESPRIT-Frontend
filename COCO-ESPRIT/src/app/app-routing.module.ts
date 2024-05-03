@@ -25,6 +25,7 @@ import { ContactFrontComponent } from './FrontOffice/contact-front/contact-front
 import { HomeFrontComponent } from './FrontOffice/home-front/home-front.component';
 import { PircingFrontComponent } from './FrontOffice/pircing-front/pircing-front.component';
 import { ServicesFrontComponent } from './FrontOffice/services-front/services-front.component';
+import { QuizComponent } from './BackOffice/Back-Management/Collocation/annoucement-collocation/quiz/quiz.component';
 
 const routes: Routes = [
 
@@ -33,7 +34,9 @@ const routes: Routes = [
   {path:"login",component:LoginComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  
+  {
+    path: "quiz/:id", component: QuizComponent,
+  },
   {
     path :"",
     component :AllTemplateFrontComponent,

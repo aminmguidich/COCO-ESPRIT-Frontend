@@ -50,9 +50,9 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let house of houses">
+                          <tr *ngFor="let house of houses  | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                             <th scope="row">{{ house.idHouse }}</th>
-                            <td><img src="../../../../../../assets/FrontOffice/images/{{house.image}}" alt="House Image" style="width: 100px; height: auto;"></td>
+                            <td><img [src]="house.imageUrl" alt="House Image" style="width: 100px; height: auto;"></td>
                             <td>{{ house.houseType }}</td>
                             <td>{{ house.places }}</td>
                             <td>{{ house.location }}</td>
@@ -152,6 +152,9 @@
         </div>
       </div>
     </div>
+    <div class="mt-8 py-5 d-flex justify-content-center align-items-center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
   </div>
 
   <!-- Bootstrap JS (optional) -->

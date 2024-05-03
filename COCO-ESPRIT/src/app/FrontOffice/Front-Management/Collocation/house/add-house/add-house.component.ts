@@ -4,6 +4,9 @@ import { House } from 'src/app/BackOffice/Back-Core/Models/Collocation/house';
 import { HouseService } from 'src/app/BackOffice/Back-Core/Services/Collocation/house.service';
 import { Router } from "@angular/router";
 import { UserService } from 'src/app/BackOffice/Back-Core/Services/User/_services/user.service';
+import { AnnoucementCollocationService } from 'src/app/BackOffice/Back-Core/Services/Collocation/annoucement-collocation.service';
+import { HttpClient } from '@angular/common/http';
+import { ReactcollService } from 'src/app/BackOffice/Back-Core/Services/Collocation/reactcoll.service';
 
 @Component({
   selector: 'app-add-house',
@@ -26,7 +29,7 @@ export class AddHouseComponent implements OnInit {
   imageUrls: string[] = [];
   test: string = "test";
   userId: any;
-  constructor(private fb: FormBuilder, private houseService: HouseService, router: Router, private userService: UserService) { }
+  constructor(private http:HttpClient, private reactService:ReactcollService,private fb: FormBuilder, private houseService: HouseService, router: Router, private userService: UserService) { }
 
   ngOnInit() {
     this.userId = parseInt(localStorage.getItem("idUser") + "");
@@ -37,7 +40,8 @@ export class AddHouseComponent implements OnInit {
       description: [null, [Validators.required]], // Champ manquant ajouté
       nbrofBedrooms: [null, [Validators.required]], // Champ manquant ajouté
       price: [null, [Validators.required]],
-      title: [null, [Validators.required]]
+      title: [null, [Validators.required]],
+      budgetPart: [null, [Validators.required]]
     });
   }
 
@@ -65,6 +69,9 @@ export class AddHouseComponent implements OnInit {
   get price() {
     return this.validateForm.get('price');
   }
+  get budgetPart() {
+    return this.validateForm.get('budgetPart');
+  }
 
 
 
@@ -86,11 +93,32 @@ export class AddHouseComponent implements OnInit {
         formData.append('house', JSON.stringify(this.validateForm.value));
         formData.append('userId', r.id);
         formData.append('username', r.username);
+        console.log(formData.get("house"))
 
         this.houseService.addHouse(formData).subscribe({
-          next: data => {
+          next: (data:any) => {
             this.validateForm.reset()
             this.photo = []
+
+            this.http.get("http://localhost:9092/api/user/all").subscribe((r:any)=>{
+
+              for (let i = 0; i < r.length; i++) {
+                
+                this.reactService.postReactCol({
+                  idUser:r[i].id,
+                  idAnn:data.idCollocationAnnouncement,
+                  likes:false,
+                  dislikes:false
+                }).subscribe((res:any)=>{
+
+                  console.log("all users are added",res)
+
+                })
+                
+              }
+
+            })
+            
           },
           error: err => {
 

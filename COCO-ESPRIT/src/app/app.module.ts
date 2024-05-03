@@ -37,6 +37,8 @@ import { ListDragAndDropComponent } from './FrontOffice/list-drag-and-drop/list-
 import { MapComponent } from './FrontOffice/map/map.component';
 import { MapPositionComponent } from './FrontOffice/map-position/map-position.component';
 import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
+import { QuizComponent } from './BackOffice/Back-Management/Collocation/annoucement-collocation/quiz/quiz.component';
+import { UpdateHouseComponent } from './BackOffice/Back-Management/Collocation/House/update-house/update-house.component';
 
 
 @NgModule({
@@ -58,9 +60,8 @@ import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-
     SidebarBackComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
-
-   
+    ResetPasswordComponent,
+    QuizComponent,
     
     
 

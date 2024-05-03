@@ -1,294 +1,306 @@
+<section class="hero-wrap hero-wrap-2 js-fullheight"
+    style="background-image: url('/assets/FrontOffice/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start"
+            style="height: 490px;">
+            <div class="col-md-9 ftco-animate pb-5 fadeInUp ftco-animated">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
+                                class="ion-ios-arrow-forward"></i></a></span> <span>Announcement <i
+                            class="ion-ios-arrow-forward"></i></span></p>
+                <h1 class="mb-3 bread">Our Announcement</h1>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <section class="hero-wrap hero-wrap-2 js-fullheight"
-        style="background-image: url('/assets/FrontOffice/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start"
-                style="height: 490px;">
-                <div class="col-md-9 ftco-animate pb-5 fadeInUp ftco-animated">
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
-                                    class="ion-ios-arrow-forward"></i></a></span> <span>Announcement <i
-                                class="ion-ios-arrow-forward"></i></span></p>
-                    <h1 class="mb-3 bread">Our Announcement</h1>
+<div class="container">
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
+            <span class="subheading">Announcement</span>
+            <h2 class="mb-3">Announcement</h2>
+        </div>
+    </div>
+
+    <!-- Ajout de l'agenda dans la marge à gauche -->
+    <div class="agenda-wrapper">
+
+    </div>
+
+    <!-- Recherche d'annonces -->
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" style="width: 200px;" placeholder="Search by description"
+                    [(ngModel)]="description" (keyup)="filterAnnouncements()">
+                <input type="number" class="form-control" style="width: 100px;" placeholder="Budget Part"
+                    [(ngModel)]="budgetPart" (keyup)="filterAnnouncements()">
+                <input type="number" class="form-control" style="width: 100px;" placeholder="Score" [(ngModel)]="score"
+                    (keyup)="filterAnnouncements()">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="filterAnnouncements()">Search</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-        <div class="container">
-            <div class="row justify-content-center mb-5">
-                <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
-                    <span class="subheading">Announcement</span>
-                    <h2 class="mb-3">Announcement</h2>
-                </div>
-            </div>
+    <!-- Liste des annonces -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div
+                    *ngFor="let announcement of annoucementscol  | paginate: { itemsPerPage: itemsPerPage, currentPage: p };let index=index"
+                    class="card">
+                    <img class="card-img-top"
+                        [src]="announcement.imageUrl" alt="Annoncement Image"
+                        class="img-fluid">
 
-            <!-- Ajout de l'agenda dans la marge à gauche -->
-            <div class="agenda-wrapper">
-                
-            </div>
+                    <div class="card-body">
+                        
 
-            <!-- Recherche d'annonces -->
-            <div class="row justify-content-center mb-3">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control" style="width: 200px;"
-                            placeholder="Search by description" [(ngModel)]="description"
-                            (keyup)="filterAnnouncements()">
-                        <input type="number" class="form-control" style="width: 100px;" placeholder="Budget Part"
-                            [(ngModel)]="budgetPart" (keyup)="filterAnnouncements()">
-                        <input type="number" class="form-control" style="width: 100px;" placeholder="Score"
-                            [(ngModel)]="score" (keyup)="filterAnnouncements()">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button"
-                                (click)="filterAnnouncements()">Search</button>
+                        <p class="card-text"><strong>Poster:</strong> {{announcement.username}}</p>
+                        <p class="card-text"><strong>Title:</strong> {{announcement.title}}</p>
+                        <p class="card-text"><strong>BudgetPart:</strong> {{announcement.budgetPart}}</p>
+
+                        <p class="card-text">
+                            <span *ngIf="totalReactAnn.length > 0">
+                                {{totalReactAnn[index].likes}} <strong>likes</strong> |
+                                {{totalReactAnn[index].dislikes}}
+                                <strong>dislikes</strong>
+                            </span>
+                        </p>
+
+                        <!-- Bouton de like avec icône -->
+                        <!-- <app-raiting (click)="handleRating(announcement.idCollocationAnnouncement)"></app-raiting> -->
+                        <div class="custom-rating">
+
+                            <div class="star" (click)="rate(1,index,announcement.idCollocationAnnouncement)">
+                                <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 1"></i>
+                                <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 1"></i>
+                            </div>
+                            <div class="star" (click)="rate(2,index,announcement.idCollocationAnnouncement)">
+                                <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 2"></i>
+                                <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 2"></i>
+                            </div>
+                            <div class="star" (click)="rate(3,index,announcement.idCollocationAnnouncement)">
+                                <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 3"></i>
+                                <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 3"></i>
+                            </div>
+                            <div class="star" (click)="rate(4,index,announcement.idCollocationAnnouncement)">
+                                <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 4"></i>
+                                <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 4"></i>
+                            </div>
+                            <div class="star" (click)="rate(5,index,announcement.idCollocationAnnouncement)">
+                                <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 5"></i>
+                                <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 5"></i>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Liste des annonces -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card-deck">
-                        <div (load)="SelectedStar = announcement.nb_etoil "
-                            *ngFor="let announcement of annoucementscol  | paginate: { itemsPerPage: itemsPerPage, currentPage: p };let index=index"
-                            class="card">
-                            <img class="card-img-top" [src]="'data:'+announcement.image?.type+';base64,' + announcement.image?.data" alt="House Image" class="img-fluid">
 
-                            <div class="card-body">
+                        <div class="custom-react" *ngFor="let userReact of userReacts">
 
-                                <p class="card-text"><strong>Poster:</strong> {{announcement.username}}</p>
-                                <p class="card-text"><strong>Title:</strong> {{announcement.title}}</p>
-                                <p class="card-text"><strong>Score:</strong> {{announcement.score}}</p>
-                                <p class="card-text"><strong>BudgetPart:</strong> {{announcement.budgetPart}}</p>
+                            <!-- likes test -->
 
-                                <p class="card-text">{{announcement.likes}} <strong>likes</strong> | {{announcement.dislikes}} <strong>dislikes</strong></p>
 
-                                <!-- Bouton de like avec icône -->
-                                <!-- <app-raiting (click)="handleRating(announcement.idCollocationAnnouncement)"></app-raiting> -->
-                                <div class="custom-rating">
-                                    
-                                    <div class="star" (click)="rate(1,index,announcement.idCollocationAnnouncement)">
-                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 1"></i>
-                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 1"></i>
-                                    </div>
-                                    <div class="star" (click)="rate(2,index,announcement.idCollocationAnnouncement)">
-                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 2"></i>
-                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 2"></i>
-                                    </div>
-                                    <div class="star" (click)="rate(3,index,announcement.idCollocationAnnouncement)">
-                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 3"></i>
-                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 3"></i>
-                                    </div>
-                                    <div class="star" (click)="rate(4,index,announcement.idCollocationAnnouncement)">
-                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 4"></i>
-                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 4"></i>
-                                    </div>
-                                    <div class="star" (click)="rate(5,index,announcement.idCollocationAnnouncement)">
-                                        <i class="fa-solid fa-star" *ngIf="announcement.nb_etoil >= 5"></i>
-                                        <i class="fa-regular fa-star" *ngIf="announcement.nb_etoil < 5"></i>
-                                    </div>
-                                </div>
-                                <div class="custom-react" *ngFor="let userReact of userReacts">
-                                    
-    
-                                    <div class="custom-btn" *ngIf="userReact.idAnn === announcement.idCollocationAnnouncement && userReact.idUser === userId">
-                                        <i class="fa-solid fa-thumbs-up" *ngIf="userReact.like"
-                                            (click)="react('no_like',announcement.likes,announcement.dislikes,index,announcement.idCollocationAnnouncement)"></i>
-                                        <i class="fa-regular fa-thumbs-up" *ngIf="!userReact.like"
-                                            (click)="react('like',announcement.likes,announcement.dislikes,index,announcement.idCollocationAnnouncement)"></i>
-                                    </div>
-                                    <div class="custom-btn" *ngIf="userReact.idAnn === announcement.idCollocationAnnouncement && userReact.idUser === userId">
-                                        <i class="fa-solid fa-thumbs-down" *ngIf="userReact.dislike"
-                                            (click)="react('no_dislike',announcement.likes,announcement.dislikes,index,announcement.idCollocationAnnouncement)"></i>
-                                        <i class="fa-regular fa-thumbs-down" *ngIf="!userReact.dislike"
-                                            (click)="react('dislike',announcement.likes,announcement.dislikes,index,announcement.idCollocationAnnouncement)"></i>
-    
-                                    </div>
-    
-                                </div>
+                            <div class="custom-btn" *ngIf="userReact.idAnn === announcement.idCollocationAnnouncement">
+                                <!-- if user liked -->
+                                <i class="fa-solid fa-thumbs-up" *ngIf="userReact.likes && userReact.idUser === userId"
+                                    (click)="react('no_like',announcement.likes,announcement.dislikes,index,announcement.idCollocationAnnouncement)"></i>
+                                <!-- if user not liked -->
+                                <i class="fa-regular fa-thumbs-up"
+                                    *ngIf="!userReact.likes && userReact.idUser === userId"
+                                    (click)="react('like',announcement.likes,announcement.dislikes,index,announcement.idCollocationAnnouncement)"></i>
                             </div>
 
-                            
+
+
+
+
+                            <!-- dislikes test -->
+
+                            <div class="custom-btn" *ngIf="userReact.idAnn === announcement.idCollocationAnnouncement">
+                                <!-- if user disliked -->
+                                <i class="fa-solid fa-thumbs-down"
+                                    *ngIf="userReact.dislikes && userReact.idUser === userId"
+                                    (click)="react('no_dislike',announcement.likes,announcement.dislikes,index,announcement.idCollocationAnnouncement)"></i>
+                                <!-- if user not disliked -->
+                                <i class="fa-regular fa-thumbs-down"
+                                    *ngIf="!userReact.dislikes && userReact.idUser === userId"
+                                    (click)="react('dislike',announcement.likes,announcement.dislikes,index,announcement.idCollocationAnnouncement)"></i>
+                            </div>
+
+
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
 
-
-        <div class="mt-8 py-5 d-flex justify-content-center align-items-center">
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-        </div>
-    <hr>
-
-    <!-- Ajout de commentaires -->
-    <div class="row justify-content-center mb-3">
-        <div class="col-md-6">
-            <div class="input-group">
-                <textarea class="form-control" rows="3" [(ngModel)]="comment" placeholder="Add Comment"></textarea>
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" (click)="submitComment()">
-                        <i class="fa fa-paper-plane" aria-hidden="true"></i> <!-- Icône de soumission -->
-                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
-    <!-- Section pour modifier un commentaire -->
-    <div class="row justify-content-center mb-3" *ngIf="editingCommentIndex !== null">
-        <div class="col-md-6">
-            <div class="input-group">
-                <textarea class="form-control" rows="3" [(ngModel)]="editedComment"
-                    placeholder="Edit Comment"></textarea>
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" (click)="saveEditedComment()">
-                        <i class="fa fa-check" aria-hidden="true"></i> <!-- Icône de validation -->
+
+<div class="mt-8 py-5 d-flex justify-content-center align-items-center">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+<hr>
+
+<!-- Ajout de commentaires -->
+<div class="row justify-content-center mb-3">
+    <div class="col-md-6">
+        <div class="input-group">
+            <textarea class="form-control" rows="3" #commentAddInput placeholder="Add Comment"></textarea>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" (click)="submitComment(commentAddInput)">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i> <!-- Icône de soumission -->
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row justify-content-center mb-3">
+    <div class="col-md-6">
+        <div *ngIf="comments.length > 0">
+            <h5>Comments:</h5>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let comment of comments; let i = index">
+                    <strong>{{ comment.username }}</strong>
+                    <p>{{ comment.comment }}</p>
+                    <!-- Bouton de suppression du commentaire -->
+                    <button class="btn btn-link btn-delete" (click)="deleteComment(comment.idComment)">
+                        <i class="fa fa-trash" aria-hidden="true"></i> delete
                     </button>
-                    <button class="btn btn-danger" type="button" (click)="cancelEditComment()">
-                        <i class="fa fa-times" aria-hidden="true"></i> <!-- Icône d'annulation -->
+                    <!-- Bouton de modification du commentaire -->
+                    <button class="btn btn-link btn-edit" data-bs-toggle="modal"
+                    data-bs-target="#editCommentModal" (click)="commentSelectedToUpdate = comment;commentToUpdatevalue = comment.comment" >
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                     </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Modal pour visualiser le coût des annonces -->
+<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="announcementCostModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editComment">Edit Comment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Comment</label>
+                <input type="text" [value]="commentToUpdatevalue" #inputCommentEdit class="form-control" id="comment">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="saveEditedComment(inputCommentEdit);inputCommentEdit.value = ''">save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+</div>
+        <div *ngIf="comments.length === 0">
+            <p>No comments yet .</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-3">
+    <div class="col-md-6">
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#searchRoomatesModal">Search for Roommates</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#announcementCostModal">Visualize Announcement</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#addAnnouncementModal">Add Announcement</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="searchRoomatesModal" tabindex="-1" aria-labelledby="searchRoomatesModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchRoomatesModalLabel">Search for Roommates</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- new select -->
+
+            <!-- new select -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email">Enter your email:</label>
+                    <input type="email" (input)="filterUserToEmail($event)" class="form-control" id="email">
                 </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row justify-content-center mb-3">
-        <div class="col-md-6">
-            <div *ngIf="comments.length > 0">
-                <h5>Comments:</h5>
-                <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let comment of comments; let i = index">
-                        {{ comment.text }}
-                        <!-- Bouton de suppression du commentaire -->
-                        <button class="btn btn-link btn-delete" (click)="deleteComment(i)">
-                            <i class="fa fa-trash" aria-hidden="true"></i> delete
-                        </button>
-                        <!-- Bouton de modification du commentaire -->
-                        <button class="btn btn-link btn-edit" (click)="editComment(i,newText)">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                        </button>
-
-                        <button class="btn btn-link btn-reply" (click)="toggleReplyForm(i)">
-                            <i class="fa fa-reply" aria-hidden="true"></i> Reply <!-- Bouton de réponse -->
-                        </button>
-                        <!-- Condition pour afficher le formulaire de réponse -->
-                        <div *ngIf="showReplyField !== null && showReplyField === i">
-                            <textarea class="form-control mt-2" rows="2" [(ngModel)]="newReply"></textarea>
-                            <button class="btn btn-primary btn-sm mt-2"
-                                (click)="submitReply(comment, i)">Envoyer</button> <!-- Bouton d'envoi de réponse -->
-                        </div>
-
-                        <!-- Afficher les réponses -->
-                        <ul class="list-group mt-2">
-                            <li class="list-group-item" *ngFor="let reply of comment.replies">
-                                {{ reply.text }}
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div *ngIf="comments.length === 0">
-                <p>No comments yet .</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-center mb-3">
-        <div class="col-md-6">
-            <div class="d-flex justify-content-between">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#searchRoomatesModal">Search for Roommates</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#announcementCostModal">Visualize Announcement</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#addAnnouncementModal">Add Announcement</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="searchRoomatesModal" tabindex="-1" aria-labelledby="searchRoomatesModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="searchRoomatesModalLabel">Search for Roommates</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="email">Enter your email:</label>
-                        <input type="email" class="form-control" id="email" [(ngModel)]="roommateEmail">
+                <div class="users-filtered" *ngFor="let user of findedUsersForEmail" (click)="sendEmail(user)">
+                    <div class="user">
+                        <Strong>{{user.username}}</Strong>
+                        <p>{{user.email}}</p>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="sendEmail()">Submit</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modal pour visualiser le coût des annonces -->
-    <div class="modal fade" id="announcementCostModal" tabindex="-1" aria-labelledby="announcementCostModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="announcementCostModalLabel">Announcement Cost
-                        Visualization</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<!-- Modal pour visualiser le coût des annonces -->
+<div class="modal fade" id="announcementCostModal" tabindex="-1" aria-labelledby="announcementCostModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="announcementCostModalLabel">Announcement Cost
+                    Visualization</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="custom-modal-content">
+                    <app-pie-chart-component></app-pie-chart-component>
                 </div>
-                <div class="modal-body">
-                    <div class="custom-modal-content">
-                        <app-pie-chart-component></app-pie-chart-component>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modal pour ajouter une annonce -->
-    <div class="modal fade" id="addAnnouncementModal" tabindex="-1" aria-labelledby="addAnnouncementModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addAnnouncementModalLabel">Add Announcement</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+<!-- Modal pour ajouter une annonce -->
+<div class="modal fade" id="addAnnouncementModal" tabindex="-1" aria-labelledby="addAnnouncementModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAnnouncementModalLabel">Add Announcement</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="custom-modal-content">
+                    <app-addanoucecol></app-addanoucecol>
                 </div>
-                <div class="modal-body">
-                    <div class="custom-modal-content">
-                        <app-addanoucecol></app-addanoucecol>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="closeModal()">Close</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    onclick="closeModal()">Close</button>
 
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
-
-    
-    <script>
-        function closeModal() {
-            $('#searchRoomatesModal').modal('hide');
-            // Ajoutez des lignes similaires pour les autres modals si nécessaire
-        }
-    </script>
-
+</div>

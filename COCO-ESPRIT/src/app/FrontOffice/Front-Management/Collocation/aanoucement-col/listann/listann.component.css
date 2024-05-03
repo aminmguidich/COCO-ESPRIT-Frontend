@@ -1,4 +1,4 @@
-.custom-react{
+.custom-react {
 
     width: 100%;
     display: flex;
@@ -9,17 +9,17 @@
 
 }
 
-.custom-react .custom-btn{
+.custom-react .custom-btn {
 
     margin-right: 1%;
     cursor: pointer;
-    
+
 
 
 }
 
 
-.custom-rating{
+.custom-rating {
 
     width: 100%;
     display: flex;
@@ -30,7 +30,7 @@
 
 }
 
-.custom-rating .star{
+.custom-rating .star {
 
     cursor: pointer;
 
@@ -227,4 +227,80 @@ textarea.form-control {
     /* Ajoute un espacement à droite pour séparer l'agenda du reste du contenu */
 }
 
+
+.selectpicker option {
+    border: none;
+    background-color: white;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: #14B1B2;
+    font-weight: bold;
+    font-size: 30px;
+    margin: 0;
+    padding-left: 0;
+    margin-top: -20px;
+    background: none;
+}
+
+select.selectpicker {
+    border: none;
+    background-color: white;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: #14B1B2;
+    font-weight: bold;
+    font-size: 30px;
+    margin: 0;
+    padding-left: 0;
+    margin-top: -20px;
+    background: none;
+}
+
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+
+
+
+.users-filtered{
+
+    width: 100%;
+    cursor: pointer;
+    color: black !important;
+    border-radius: 0.4vw;
+
+}
+
+.users-filtered strong{
+
+    padding: 2%;
+    padding-top: 4%;
+    padding-bottom: 0;
+    font-size: 1vw;
+
+}
+
+
+.users-filtered p{
+
+    font-size: 1.2vw;
+    padding: 2%;
+
+}
+
+.users-filtered:hover{
+
+    background-color: #dee2e6;
+
+}
 

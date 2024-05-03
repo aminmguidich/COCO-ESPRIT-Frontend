@@ -38,40 +38,40 @@ export class RaitingComponent implements OnInit {
      }*/
   Raiting(index: number) {
 
-    var rateNbr = index+1
+    // var rateNbr = index+1
 
-    if (rateNbr > this.SelectedStar) {
-      this.SelectedStar = rateNbr;
-      var annId: any
+    // if (rateNbr > this.SelectedStar) {
+    //   this.SelectedStar = rateNbr;
+    //   var annId: any
 
 
-      setTimeout(() => {
-        if (annId !== null) {
-          annId = localStorage.getItem("annId")
-        }
+    //   setTimeout(() => {
+    //     if (annId !== null) {
+    //       annId = localStorage.getItem("annId")
+    //     }
 
-        this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
-          next: () => {
-            alert("rated")
-          }
-        });
-      }, 4000);
-    } else {
-      this.SelectedStar = rateNbr;
-      var annId: any
+    //     this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
+    //       next: () => {
+    //         alert("rated")
+    //       }
+    //     });
+    //   }, 4000);
+    // } else {
+    //   this.SelectedStar = rateNbr;
+    //   var annId: any
 
-      setTimeout(() => {
-        if (annId !== null) {
-          annId = localStorage.getItem("annId")
-        }
+    //   setTimeout(() => {
+    //     if (annId !== null) {
+    //       annId = localStorage.getItem("annId")
+    //     }
 
-        this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
-          next: () => {
-            alert("rated")
-          }
-        });
-      }, 4000);
-    }
+    //     this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
+    //       next: () => {
+    //         alert("rated")
+    //       }
+    //     });
+    //   }, 4000);
+    // }
 
     
 

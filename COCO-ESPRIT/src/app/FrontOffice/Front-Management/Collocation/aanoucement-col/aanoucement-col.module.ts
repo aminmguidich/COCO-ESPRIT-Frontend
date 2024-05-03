@@ -11,7 +11,9 @@ import { AddanoucecolComponent } from './addanoucecol/addanoucecol.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RaitingComponent } from './raiting/raiting.component';
 
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,11 @@ import { RaitingComponent } from './raiting/raiting.component';
     
     ReactiveFormsModule,
     NgxPaginationModule,
+
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
    
    
    

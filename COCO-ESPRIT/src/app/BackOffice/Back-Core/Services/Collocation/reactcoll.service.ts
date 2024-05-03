@@ -27,5 +27,10 @@ export class ReactcollService {
   updateReact(id: number, data:any){
     return this.http.put(`${this.apiURL}update/${id}`, data);
   }
+
+  getAllReacts(){
+    return this.http.get(`${this.apiURL}all`);
+
+  }
   
   }

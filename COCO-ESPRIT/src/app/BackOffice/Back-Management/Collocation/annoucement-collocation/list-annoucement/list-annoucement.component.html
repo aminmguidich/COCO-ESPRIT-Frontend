@@ -49,21 +49,20 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">Id</th>
+                            
                             <th scope="col">Date</th>
                             <th scope="col">Description</th>
                             <th scope="col">Budget Part</th>
-                            <th scope="col">Score</th>
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let announcement of annoucementscol ">
-                            <th scope="row">{{announcement.idCollocationAnnouncement}}</th>
+                          <tr *ngFor="let announcement of annoucementscol | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                           
                             <td>{{announcement.dateCollocationAnnouncement | date: 'dd/MM/yyyy'}}</td>
                             <td>{{announcement.description}}</td>
                             <td>{{announcement.budgetPart}}</td>
-                            <td>{{announcement.score}}</td>
+                            
                             <td>
                               <button type="button" class="btn btn-danger btn-sm rounded-0" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteAnnoucementCollocation(announcement.idCollocationAnnouncement)">
                                 <i class="fas fa-trash"></i>
@@ -160,6 +159,9 @@
         </div>
       </div>
     </div>
+    <div class="mt-8 py-5 d-flex justify-content-center align-items-center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
 
     
   </div>

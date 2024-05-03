@@ -8,6 +8,7 @@ import { UpdateAnnoucementComponent } from './update-annoucement/update-annoucem
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PieChartComponentComponent } from './pie-chart-component/pie-chart-component.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -18,14 +19,14 @@ import { QuizComponent } from './quiz/quiz.component';
     AddAnnoucementComponent,
     ListAnnoucementComponent,
     UpdateAnnoucementComponent,
-    PieChartComponentComponent,
-    QuizComponent
+    PieChartComponentComponent
   ],
   imports: [
     CommonModule,
     AnnoucementCollocationRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    NgxPaginationModule,
    
 
     

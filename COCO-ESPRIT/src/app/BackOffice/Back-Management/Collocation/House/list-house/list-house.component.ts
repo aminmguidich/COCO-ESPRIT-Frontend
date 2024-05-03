@@ -12,6 +12,11 @@ export class ListHouseComponent  {
   searchText: string = '';
   selectedHouse: any;
   imageUrl:any;
+  p: number = 1;
+  itemsPerPage: number = 3;
+  openHouseToEdit = false
+
+
 
   @ViewChild('addHouseModal') addHouseModal!: ElementRef; 
 
@@ -22,6 +27,7 @@ export class ListHouseComponent  {
 
   ngOnInit() {
     this.getAllHouses();
+    console.log("house component")
   }
 
   getAllHouses() {
@@ -34,6 +40,7 @@ export class ListHouseComponent  {
   deleteHouse(id: number) {
     this.houseService.deleteHouse(id).subscribe(
       () => {
+        this.getAllHouses()
         console.log('Maison supprimée avec succès');
         // Mettre à jour la liste des maisons après la suppression si nécessaire
       },
@@ -83,4 +90,7 @@ export class ListHouseComponent  {
       console.error('Erreur lors de la génération du PDF :', error);
     });
   }
+
+
+  
 }

@@ -19,8 +19,8 @@ export class AddAnnoucementComponent implements OnInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       description: [null, [Validators.required]],
-      budgetPart: [null, [Validators.required]],
-      score: [null, [Validators.required]],
+      budgetPart: [null, [Validators.required,Validators.maxLength(6)]],
+      score: [null, [Validators.required,Validators.maxLength(6)]],
       dateCollocationAnnouncement: [null, [Validators.required]],
 
     });

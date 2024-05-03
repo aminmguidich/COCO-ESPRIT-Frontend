@@ -12,10 +12,10 @@ import { UpdateHouseComponent } from 'src/app/BackOffice/Back-Management/Colloca
 
 @NgModule({
   declarations: [
-    
+    UpdateHouseComponent,
     ListHouseComponent,
          AddHouseComponent,
-         UpdateHouseComponent
+        
   ],
   imports: [
     CommonModule,

@@ -1,10 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { PaginationInstance } from 'ngx-pagination';
+import { map, startWith } from 'rxjs';
 import { TypeReact } from 'src/app/BackOffice/Back-Core/Enum/type-react';
 import { AnnouncementCollocation } from 'src/app/BackOffice/Back-Core/Models/Collocation/annoucement-collocation';
 import { Reactcol } from 'src/app/BackOffice/Back-Core/Models/Collocation/reactcol';
 import { AnnoucementCollocationService } from 'src/app/BackOffice/Back-Core/Services/Collocation/annoucement-collocation.service';
+import { CommentcollService } from 'src/app/BackOffice/Back-Core/Services/Collocation/commentcoll.service';
 import { ReactcollService } from 'src/app/BackOffice/Back-Core/Services/Collocation/reactcoll.service';
+import { UserService } from 'src/app/BackOffice/Back-Core/Services/User/_services/user.service';
 
 @Component({
   selector: 'app-listann',
@@ -20,7 +25,7 @@ export class ListannComponent implements OnInit {
   score: number | undefined;
   roommateEmail: string = '';
   comment: string = '';
-  comments: { text: string, replies: { text: string }[] }[] = [];
+  comments:any = [];
   showReplyField: number | null = null;
   newReply: string = '';
   newText: string = '';
@@ -44,25 +49,25 @@ export class ListannComponent implements OnInit {
   userReacts: any = []
   userId: any;
 
+  totalReactAnn: any = []
+
+  myControl = new FormControl('');
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: any
+
   constructor(
     private Annoucementservice: AnnoucementCollocationService,
-    private reactCollService: ReactcollService
+    private reactCollService: ReactcollService,
+    private userService: UserService,
+    private http:HttpClient,
+    private commentService:CommentcollService
   ) { }
 
 
-  getAllReactsForUserConnected() {
-
-    this.reactCollService.retrieveAllReactsByUserId().subscribe((res: any) => {
-
-      this.userReacts = res
-
-    })
-
-  }
-
   retrieveAllAnnouncements() {
+    this.annoucementscol = []
     this.Annoucementservice.retrieveAllAnnouncements().subscribe((res: any[]) => {
-      console.log(res);
+      console.log("annoncement =========>",res);
       this.annoucementscol = res;
     });
   }
@@ -94,7 +99,7 @@ export class ListannComponent implements OnInit {
     }
   }
 
-  sendEmail() {
+  sendEmail(user:any) {
 
     // this.Annoucementservice.getUsers().subscribe((res:any)=>{
 
@@ -108,33 +113,58 @@ export class ListannComponent implements OnInit {
 
     // })
 
-    if (this.roommateEmail.trim() !== '') {
-
-      const request = {
-        id: 1,
-        recipientEmaiL: this.roommateEmail
-      }
-
-      this.Annoucementservice.sendForm(request).subscribe(
-        (response) => {
-          console.log('Email sent successfully:', response);
-        },
-        (error) => {
-          console.error('Error sending email:', error);
-        }
-      );
-    } else {
-      console.error('Email is required.');
+    const request = {
+      id: user.id,
+      recipientEmaiL: user.email
     }
+
+    this.Annoucementservice.sendForm(request).subscribe(
+      (response) => {
+        alert("email sended")
+        console.log('Email sent successfully:', response);
+      },
+      (error) => {
+        alert("email sended")
+        console.error('Error sending email:', error);
+      }
+    );
   }
 
-  submitComment() {
-    if (this.comment.trim() !== '') {
-      this.comments.push({ text: this.comment, replies: [] });
-      localStorage.setItem('comments', JSON.stringify(this.comments));
-      this.comment = '';
+  getAllComments(){
+    this.comments = []
+    this.commentService.getAll().subscribe((res:any)=>{
+
+      this.comments = res
+
+      console.log("comments",this.comments)
+
+    })
+
+  }
+
+  submitComment(commentAddInput:any) {
+    if (commentAddInput.value !== '') {
+
+      this.http.get("http://localhost:9092/api/user/retrieve/"+this.userId).subscribe((res:any)=>{
+
+        const request = {
+          idUser:this.userId,
+          username:res.username,
+          comment:commentAddInput.value
+        }
+
+        this.commentService.create(request).subscribe((res:any)=>{
+
+          console.log(res)
+
+          this.getAllComments()
+
+        })
+
+
+      })
     } else {
-      console.error('Please enter a comment.');
+      alert('Please enter a comment.');
     }
   }
 
@@ -158,8 +188,11 @@ export class ListannComponent implements OnInit {
   }
 
   deleteComment(index: number): void {
-    this.comments.splice(index, 1);
-    localStorage.setItem('comments', JSON.stringify(this.comments));
+    this.commentService.delete(index).subscribe((res:any)=>{
+
+      this.getAllComments()
+
+    })
   }
 
   editComment(index: number, newText: string): void {
@@ -167,14 +200,16 @@ export class ListannComponent implements OnInit {
     this.editedComment = this.comments[index].text;
   }
 
-  saveEditedComment(): void {
-    if (this.editedComment.trim() !== '') {
-      if (this.editingCommentIndex !== null) {
-        this.comments[this.editingCommentIndex].text = this.editedComment;
-        this.editingCommentIndex = null;
-        this.editedComment = '';
-        localStorage.setItem('comments', JSON.stringify(this.comments));
-      }
+  commentSelectedToUpdate:any
+  commentToUpdatevalue = ""
+  saveEditedComment(commentInput:any): void {
+    if (commentInput.value !== '') {
+      this.commentService.update(this.commentSelectedToUpdate.idComment,{comment:commentInput.value}).subscribe((res:any)=>{
+
+        console.log(res)
+        this.getAllComments()
+
+      })
     } else {
       console.error('Please enter a valid comment.');
     }
@@ -225,57 +260,35 @@ export class ListannComponent implements OnInit {
   maxRaitingAryy: any = [];
   SelectedStar = 0;
 
+  findedUsersForEmail:any = []
 
-  Raiting(index: number) {
+  filterUserToEmail(emailInput:any){
 
-    var rateNbr = index + 1
+    var usersFinded:any = []
 
-    if (rateNbr > this.SelectedStar) {
-      this.SelectedStar = rateNbr;
-      var annId: any
+    for (let i = 0; i < this.users.length; i++) {
+      
+      const emailIpt = emailInput.target.value.toLowerCase()
 
-
-      setTimeout(() => {
-        if (annId !== null) {
-          annId = localStorage.getItem("annId")
-        }
-
-        this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
-          next: () => {
-            alert("rated")
-          }
-        });
-      }, 4000);
-    } else {
-      this.SelectedStar = rateNbr;
-      var annId: any
-
-      setTimeout(() => {
-        if (annId !== null) {
-          annId = localStorage.getItem("annId")
-        }
-
-        this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
-          next: () => {
-            alert("rated")
-          }
-        });
-      }, 4000);
+      if(this.users[i].email.includes(emailIpt)){
+        usersFinded.push(this.users[i])
+      }
+      
     }
 
-
+    this.findedUsersForEmail = usersFinded
 
   }
-
 
 
   rate(rateNbr: any, itemIndex: any, annId: any) {
 
 
-
-    this.Annoucementservice.updatePostRating(parseInt(annId), rateNbr).subscribe({
-      next: () => {
+    this.Annoucementservice.updatePostRating(parseInt(annId), this.annoucementscol[itemIndex],rateNbr).subscribe({
+      next: (res:any) => {
         this.annoucementscol[itemIndex].nb_etoil = rateNbr
+ 
+        console.log(res)
       }
     });
 
@@ -284,108 +297,192 @@ export class ListannComponent implements OnInit {
   react(action: string, likes: any, dislikes: any, index: any, annId: any) {
     // this.posts[index].like = status
 
-    var request = {
-      likes: likes,
-      dislikes: dislikes
-    }
+    // var request = {
+    //   likes: false,
+    //   dislikes: false
+    // }
+
+    // if (action === "like") {
+    //   request.likes = true
+    // } else if (action === "no_like") {
+    //   request.likes = false
+    // } else if (action === "dislike") {
+    //   request.dislikes = true
+    // } else if (action === "no_dislike") {
+    //   request.dislikes = false
+    // }
 
     if (action === "like") {
-      request.likes++
+      this.sendUserReact(this.userId, annId, true, null)
     } else if (action === "no_like") {
-      request.likes = request.likes > 0 ? request.likes-- : request.likes
+      this.sendUserReact(this.userId, annId, false, null)
     } else if (action === "dislike") {
-      request.dislikes++
+      this.sendUserReact(this.userId, annId, null, true)
     } else if (action === "no_dislike") {
-      request.dislikes = request.dislikes > 0 ? request.dislikes-- : request.dislikes
+      this.sendUserReact(this.userId, annId, null, false)
     }
 
+    // console.log()
 
-    this.annoucementscol[index].likes = request.likes
-    this.annoucementscol[index].dislikes = request.dislikes
+    // this.Annoucementservice.updateAnnouncementCollocationg(annId, this.annoucementscol[index]).subscribe({
 
-    console.log(this.annoucementscol[index])
+    //   next: (res: any) => {
 
-    this.Annoucementservice.updateAnnouncementCollocationg(annId, this.annoucementscol[index]).subscribe({
+    //     console.log(res)
 
-      next: (res:any) => {
 
-        console.log(res)
-        
-        // if (action === "like") {
-        //   this.sendUserReact(this.userId,annId,true,null)
-        // } else if (action === "no_like") {
-        //   this.sendUserReact(this.userId,annId,false,null)
-        // } else if (action === "dislike") {
-        //   this.sendUserReact(this.userId,annId,null,true)
-        // } else if (action === "no_dislike") {
-        //   this.sendUserReact(this.userId,annId,null,false)
-        // }
 
-      }
-    })
+    //   }
+    // })
   }
 
-  sendUserReact(idUser:any,idAnn:any,likes:any,dislikes:any){
+  getAllReacts() {
 
-    var trouv = false
+    this.totalReactAnn = []
 
-    var index = 0
+    console.log(this.totalReactAnn)
 
-    for (let i = 0; i < this.userReacts.length; i++) {
+    this.reactCollService.getAllReacts().subscribe((res: any) => {
 
+      this.userReacts = res
 
-      if (this.userReacts[i].idAnn === idAnn && this.userReacts[i].idUser === idUser) {
+      // calcul likes & dislikes / ann
 
-        trouv = true
+      for (let i = 0; i < this.annoucementscol.length; i++) {
 
-        index = i
+        var likes = 0
+
+        var dislikes = 0
+
+        for (let j = 0; j < res.length; j++) {
+
+          if (res[j].idAnn === this.annoucementscol[i].idCollocationAnnouncement) {
+            console.log(res[j])
+            if (res[j].likes) {
+              likes++
+            }
+
+            if (res[j].dislikes) {
+              dislikes++
+            }
+          }
+
+        }
+
+        this.totalReactAnn.push({
+          likes: likes,
+          dislikes: dislikes
+        })
 
       }
 
+      console.log(this.totalReactAnn)
 
-    }
+    })
 
-    if (trouv) {
-      this.reactCollService.updateReact(this.userReacts[index].idReact, {
-        idAnn: this.userReacts[index].idAnn,
-        idUser: this.userReacts[index].idUser,
-        likes: likes,
-        dislikes: dislikes
-      }).subscribe((res: any) => {
+  }
 
-        this.userReacts[index].likes = likes != null ? likes : this.userReacts[index].likes
-        this.userReacts[index].dislikes = dislikes != null ? dislikes : this.userReacts[index].dislikes
+  sendUserReact(idUser: any, idAnn: any, likes: any, dislikes: any) {
+
+    this.reactCollService.getAllReacts().subscribe((res: any) => {
+
+      var trouv = false
+
+      var index = 0
+
+      this.userReacts = res
+
+      for (let i = 0; i < this.userReacts.length; i++) {
 
 
-      })
+        if (this.userReacts[i].idAnn === idAnn && this.userReacts[i].idUser === idUser) {
 
-    } else {
-      this.reactCollService.postReactCol({
-        idAnn: 8,
-        idUser: parseInt(localStorage.getItem("idUser") + ""),
-        likes: likes,
-        dislikes: dislikes
-      }).subscribe((res: any) => {
+          trouv = true
 
-        this.userReacts[index].likes = likes != null ? likes : this.userReacts[index].likes
-        this.userReacts[index].dislikes = dislikes != null ? dislikes : this.userReacts[index].dislikes
+          index = i
 
-      })
-    }
+        }
+
+
+      }
+
+      if (trouv) {
+        this.reactCollService.updateReact(this.userReacts[index].idReact, {
+          idAnn: this.userReacts[index].idAnn,
+          idUser: this.userReacts[index].idUser,
+          likes: likes != null ? likes : false,
+          dislikes: dislikes != null ? dislikes : false
+        }).subscribe((res: any) => {
+
+          this.userReacts[index].likes = likes != null ? likes : this.userReacts[index].likes
+          this.userReacts[index].dislikes = dislikes != null ? dislikes : this.userReacts[index].dislikes
+
+          this.getAllReacts()
+
+        })
+
+      } else {
+        this.reactCollService.postReactCol({
+          idAnn: 8,
+          idUser: parseInt(localStorage.getItem("idUser") + ""),
+          likes: likes != null ? likes : false,
+          dislikes: dislikes != null ? dislikes : false
+        }).subscribe((res: any) => {
+
+          this.userReacts[index].likes = likes != null ? likes : this.userReacts[index].likes
+          this.userReacts[index].dislikes = dislikes != null ? dislikes : this.userReacts[index].dislikes
+
+          this.getAllReacts()
+        })
+      }
+
+    })
+
+
+
+  }
+
+
+  allUsers: any = []
+
+  users:any = []
+
+  _filter(name: string) {
+    const filterValue = name.toLowerCase();
+
+    return this.options.filter((option:any) => option.username.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  getAllUsers() {
+
+    this.http.get("http://localhost:9092/api/user/all").subscribe((res:any)=>{
+      console.log(res)
+      this.users = res
+      this.allUsers = res
+      this.allUsers = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map((value:any) => typeof value === 'string' ? value : value.username),
+        map(name => name ? this._filter(name) : this.options.slice())
+      );
+
+    })
+
+
 
   }
 
   ngOnInit() {
-    this.retrieveAllAnnouncements();
-    this.loadComments();
-    this.maxRaitingAryy = Array(5).fill(0);
 
     this.userId = parseInt(localStorage.getItem("idUser") + "")
 
-    this.getAllReactsForUserConnected()
+    this.getAllReacts()
 
+    this.getAllUsers()
 
+    this.getAllComments()
 
+    this.retrieveAllAnnouncements();
 
 
   }

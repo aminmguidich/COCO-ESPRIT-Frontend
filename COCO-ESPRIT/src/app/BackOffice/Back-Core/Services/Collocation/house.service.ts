@@ -25,11 +25,15 @@ export class HouseService {
   }
 
   deleteHouse(id: number): Observable<any> {
-    return this.http.get(`${this.apiURL}house/delete/${id}`);
+    return this.http.delete(`${this.apiURL}delete/${id}`);
   }
 
   updateHouse(id: number, updatedHouse: any): Observable<any> {
     return this.http.put(`${this.apiURL}house/update/${id}`, updatedHouse);
+  }
+
+  updateHouseDetails(id: number, updatedHouse: any): Observable<any> {
+    return this.http.put(`${this.apiURL}house/updateDetails/${id}`, updatedHouse);
   }
 
   findHouseById(id: number): Observable<House> {

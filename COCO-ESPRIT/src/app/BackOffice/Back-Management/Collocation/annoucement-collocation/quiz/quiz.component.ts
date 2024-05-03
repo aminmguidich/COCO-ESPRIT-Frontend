@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnnoucementCollocationService } from 'src/app/BackOffice/Back-Core/Services/Collocation/annoucement-collocation.service';
@@ -30,11 +31,11 @@ export class QuizComponent implements OnInit {
       responses: [
         {
           title: "oui",
-          status: true,
+          status: false,
         },
         {
           title: "non",
-          status: false,
+          status: true,
         }
       ]
     },
@@ -54,7 +55,7 @@ export class QuizComponent implements OnInit {
     },
 
     {
-      key: 3,
+      key: 4,
       question: "Préférez-vous partager les tâches ménagères de manière équitable ?",
       responses: [
         {
@@ -70,7 +71,7 @@ export class QuizComponent implements OnInit {
 
 
     {
-      key: 3,
+      key: 5,
       question: "Êtes-vous à l'aise avec l'idée de partager des biens communs comme la nourriture ou les produits de nettoyage ?",
       responses: [
         {
@@ -94,10 +95,15 @@ export class QuizComponent implements OnInit {
 
   userId = ""
 
+  matchsUsersByScore: any = []
+
+  openMatchesUsers = false
+
   constructor(
     private Annoucementservice: AnnoucementCollocationService,
-    private route:ActivatedRoute
-) { }
+    private route: ActivatedRoute,
+    private http: HttpClient
+  ) { }
 
   selectAnswer(text: any, key: any) {
 
@@ -107,34 +113,86 @@ export class QuizComponent implements OnInit {
 
       const resp = quiz[0].responses[i]
 
-      if (resp.title === text.target.value && resp.status === true) {
+
+      if (resp.title.toLowerCase() == text.toLowerCase() && resp.status === true) {
+
 
         this.score++
 
       }
     }
 
+    console.log("score", this.score)
+
+  }
+
+
+  generateUsersMatchsScore(score: any) {
+
+    const difference = 2
+
+    this.http.get("http://localhost:9092/api/user/all").subscribe((res: any) => {
+
+      const matchs = []
+      const notMatchs = []
+
+      for (let i = 0; i < res.length; i++) {
+        if (res[i].id != this.userId) {
+          if (score - res[i].score <= difference && score - res[i].score > 0) {
+            matchs.push(res[i])
+          } else {
+            notMatchs.push(res[i])
+          }
+        }
+      }
+
+      for (let i = 0; i < matchs.length; i++) {
+
+        this.matchsUsersByScore.push(matchs[i])
+
+      }
+
+      for (let i = 0; i < notMatchs.length; i++) {
+
+        this.matchsUsersByScore.push(notMatchs[i])
+
+      }
+
+      this.openMatchesUsers = true
+
+    })
+
   }
 
   submit() {
 
     const request = {
-      score:this.score
+      score: this.score
     }
 
-    this.Annoucementservice.updateUsers(request,this.userId).subscribe((res:any)=>{
+    this.http.put("http://localhost:9092/api/user/updateUserDetails/" + this.userId, request).subscribe({
+      next:(res:any)=>{
 
-      console.log(res)
-
+        this.matchsUsersByScore.push(res)
+        alert(this.score + "/" + this.quiz.length)
+  
+        this.generateUsersMatchsScore(this.score)
+  
+      },
+      error(err) {
+          console.log(err)
+      },
     })
 
-    alert(this.score)
 
   }
 
   ngOnInit(): void {
 
+    this.score = 0
+
     this.userId = this.route.snapshot.params["id"]
+
 
   }
 
