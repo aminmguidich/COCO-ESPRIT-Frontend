@@ -33,9 +33,9 @@ import { AnnouncementCarpoolingModule } from './FrontOffice/Front-Management/Car
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatNativeDateModule} from '@angular/material/core';
-import { ListDragAndDropComponent } from './FrontOffice/list-drag-and-drop/list-drag-and-drop.component';
-import { MapComponent } from './FrontOffice/map/map.component';
-import { MapPositionComponent } from './FrontOffice/map-position/map-position.component';
+import { ListDragAndDropComponent } from './shared/list-drag-and-drop/list-drag-and-drop.component';
+import { MapComponent } from './shared/map/map.component';
+import { MapPositionComponent } from './shared/map-position/map-position.component';
 import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-template-front.component';
 import { PostModule } from './BackOffice/Back-Management/ForumManagement/post/post.module';
 import { PostFrontModule } from './FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module';

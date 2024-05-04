@@ -1,0 +1,17 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Announcement</h5>
+          <button  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+          
+         <app-map-container (OnChangeLocation)="OnChangeLocation($event)" [location]='location' [location_setter]="true" [readonly]="false"  ></app-map-container>
+         
+       </div>
+       <div class="modal-footer">
+        <button type="submit" (click)="OnSave()" class="btn btn-primary"data-bs-dismiss="modal">Save</button>
+    </div>
+    </div>
+
+</div>

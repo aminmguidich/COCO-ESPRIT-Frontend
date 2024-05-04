@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReactCarpooling } from '../../Models/Carpooling/react-carpooling';
+import { User } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/user';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,9 @@ export class ReactCarpoolingService {
 
   getall(){
     return this.http.get<ReactCarpooling[]>(this.URL+"/getAllReactCarpooling");
+  }
+  getAllUsers(){
+    return this.http.get<User[]>("http://localhost:9092/api/CarpoolingAnnouncement/getAllUsers");
   }
 }
 

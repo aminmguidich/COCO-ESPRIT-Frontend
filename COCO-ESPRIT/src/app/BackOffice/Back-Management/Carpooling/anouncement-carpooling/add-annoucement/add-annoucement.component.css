@@ -1,0 +1,20 @@
+/* Add some basic styling to the dropdown */
+.select-container {
+    margin-bottom: 20px;
+  }
+  
+  .select-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .selected-user {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  

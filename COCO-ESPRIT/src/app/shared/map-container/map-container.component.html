@@ -1,0 +1,17 @@
+<app-map [zoom]="zoom"
+[lat]="lat"
+[lng]="lng"
+[markers]="markers"
+(notify)="handleMapChange($event)"
+(OnAddMarker)="handleAddMarker($event)"
+(OnRouteIsInconvenient)="OnRouteIsInconvenient.emit()"
+[adresses]="adresses"
+[readonly]="readonly"
+[location_setter]="location_setter"
+[location]="location"
+(OnChangeLocation)="OnChangeLocation.emit($event)"
+></app-map>
+<!--
+<app-map-position      (notify)="handleInputChange($event)"/> 
+-->
+

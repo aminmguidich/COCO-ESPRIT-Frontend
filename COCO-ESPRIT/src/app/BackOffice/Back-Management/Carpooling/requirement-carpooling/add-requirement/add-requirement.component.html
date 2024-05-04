@@ -1,21 +1,10 @@
-<body>
-    <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-
-                    <div class="main-body">
-                        <div class="page-wrapper">
-                            <!-- [ Main Content ] start -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5> Add Requirement</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5></h5>
-                                            <hr>
+<div class="modal-dialog">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Announcement</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
                                             <form #addForm='ngForm' (ngSubmit)="add(addForm)" >
                                                 <div class="form-group">
                                                     <label for="date">Date:</label>
@@ -32,20 +21,8 @@
                                                 
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </form>
-                                            
-                                        </div>
-                                    </div>
-                                    <!-- Input group -->
-                                </div>
-                            </div>
-                            <!-- [ Main Content ] end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       </div>
     </div>
+</div>
 
-
-
-</body>
+                                            

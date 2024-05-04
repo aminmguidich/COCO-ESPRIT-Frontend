@@ -1,0 +1,12 @@
+/* component.css */
+
+.transparent-button {
+    background-color: transparent;
+    border: none; /* Remove the border */
+}
+.transparent-button:hover {
+    background-color: transparent; /* Reset background color on hover */
+}
+.black-icon {
+    color: red;
+}

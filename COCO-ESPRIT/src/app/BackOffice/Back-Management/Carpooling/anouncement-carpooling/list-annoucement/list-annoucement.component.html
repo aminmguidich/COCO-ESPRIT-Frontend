@@ -1,90 +1,188 @@
 <body>
-    <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-
-                    <div class="main-body">
-                        <div class="page-wrapper">
-                            <!-- [ Main Content ] start -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5> Announcements</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5></h5>
-                                            <hr>
-                                            <table class="table">
-                                                <thead>
-                                                  <tr>
-                                                    <th scope="col">Id</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Description</th>
-                                                    <th scope="col">score</th>
-                                                    <th scope="col">Actions</th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                  <tr *ngFor="let item of data; let i = index">
-                                                    <th scope="row">{{item.idCarpoolingAnnouncement}}</th>
-                                                    <td>{{item.dateCarpoolingAnnouncement}}</td>
-                                                    <td>{{item.description}}</td>
-                                                    <td>{{item.score}}</td>
-                                                    <td>
-                                                      <li class="list-inline-item">
-                                                        <button type="button" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModalupdate'+i"
-                                                                class="btn btn-success btn-sm rounded-0"
-                                                                data-toggle="tooltip" data-placement="top"
-                                                                title="Edit"
-                                                                >
-                                                            <i class="fa fa-edit"></i> 
-                                                        </button>
-                                                          <!-- Modal -->
-  <div class="modal fade" [id]="'exampleModalupdate'+i" role='dialog' tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <app-update-announcement [Id]="item.idCarpoolingAnnouncement"></app-update-announcement>
-</div>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                      <button type="button"
-                                                      class="btn btn-danger btn-sm rounded-0"
-                                                      data-toggle="tooltip" data-placement="top"
-                                                      title="Delete"
-                                                      (click)="deleteAnnCarpooling(item.idCarpoolingAnnouncement)">
-                                                  <i class="fas fa-trash"></i> 
-                                              </button>
-                                                    </li>
-                                                    </td>
-
-                                                  </tr>
-                                                  
-                                                </tbody>
-                                              </table>
-                                              <hr>
-                                              <button id="addButton" type="button" class="btn btn-primary" title="" data-toggle="tooltip" data-original-title="btn btn-primary" routerLink="addAnn">Add</button>
-                                                <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-Add Announcement  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <app-add-annoucement></app-add-annoucement>
-  </div>
-                                              
-
-
-                                        </div>
-                                    </div>
-                                    <!-- Input group -->
-                                </div>
-                            </div>
-                            <!-- [ Main Content ] end -->
-                        </div>
+  <div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+      <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+          <div class="main-body">
+            <div class="page-wrapper">
+              <!-- [ Main Content ] start -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Announcements</h5>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+                    <app-table-announcement-carpooling />
+                    <div class="card-body">
+                      <h5></h5>
+                      <hr />
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of data; let i = index">
+                            <th scope="row">
+                              {{ item.idCarpoolingAnnouncement }}
+                            </th>
+                            <td>
+                              {{
+                                item.dateCarpoolingAnnouncement
+                                  .toString()
+                                  .replaceAll(",", "/")
+                              }}
+                            </td>
+                            <td>{{ item.description }}</td>
+                            <td>
+                              <li class="list-inline-item">
+                                <button
+                                  type="button"
+                                  data-bs-toggle="modal"
+                                  [attr.data-bs-target]="
+                                    '#exampleModalupdate' + i
+                                  "
+                                  class="btn btn-success btn-sm rounded-0 transparent-button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Edit"
+                                >
+                                  <i class="fa fa-edit text-success"></i>
+                                </button>
 
+                                <!-- Modal -->
+                                <div
+                                  class="modal fade"
+                                  [id]="'exampleModalupdate' + i"
+                                  role="dialog"
+                                  tabindex="-1"
+                                  aria-labelledby="exampleModalLabel"
+                                  aria-hidden="true"
+                                >
+                                  <app-update-announcement
+                                    [adresses]="
+                                      this.data[i]?.routeAnnCarpooling
+                                        ?.adressesRoute
+                                    "
+                                    [announcement]="item"
+                                  ></app-update-announcement>
+                                </div>
+                              </li>
+                              <li class="list-inline-item">
+                                <button
+                                  type="button"
+                                  class="btn btn-danger btn-sm rounded-0 transparent-button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Delete"
+                                  data-bs-toggle="modal"
+                                  [attr.data-bs-target]="
+                                    '#exampleModalConfirm' + i
+                                  "
+                                >
+                                  <i class="fas fa-trash black-icon"></i>
+                                </button>
+
+                                <!-- Button trigger modal -->
+
+                                <!-- Modal -->
+                                <div
+                                  class="modal fade"
+                                  [id]="'exampleModalConfirm' + i"
+                                  tabindex="-1"
+                                  role="dialog"
+                                  aria-labelledby="exampleModalLabel"
+                                  aria-hidden="true"
+                                >
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5
+                                          class="modal-title"
+                                          id="exampleModalLabel"
+                                        >
+                                          Delete Item
+                                        </h5>
+                                        <button
+                                          type="button"
+                                          class="close"
+                                          data-bs-dismiss="modal"
+                                          aria-label="Close"
+                                        >
+                                          <span aria-hidden="true"
+                                            >&times;</span
+                                          >
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure you want to delete this
+                                        item? This action cannot be undone.
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button
+                                          type="button"
+                                          class="btn btn-secondary"
+                                          data-bs-dismiss="modal"
+                                        >
+                                          Close
+                                        </button>
+                                        <button
+                                          type="button"
+                                          class="btn btn-primary"
+                                          (click)="
+                                            deleteAnnCarpooling(
+                                              item.idCarpoolingAnnouncement
+                                            )
+                                          "
+                                          data-bs-dismiss="modal"
+                                        >
+                                          Confirm
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <hr />
+                      <!--<button id="addButton" type="button" class="btn btn-primary" title="" data-toggle="tooltip" data-original-title="btn btn-primary" routerLink="addAnn">Add</button>-->
+                      <!-- Button trigger modal -->
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      >
+                        Add Announcement
+                      </button>
+
+                      <!-- Modal -->
+                      <div
+                        class="modal fade"
+                        id="exampleModal"
+                        tabindex="-1"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <app-add-annoucement></app-add-annoucement>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Input group -->
+                </div>
+              </div>
+              <!-- [ Main Content ] end -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

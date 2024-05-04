@@ -14,7 +14,7 @@ import { RouteService } from 'src/app/FrontOffice/Front-Core/Services/Carpooling
   templateUrl: './add-announcement.component.html',
   styleUrls: ['./add-announcement.component.css']
 })
-export class AddAnnouncementComponent implements OnInit{
+export class AddAnnouncementComponent implements OnInit {
 onMoveItem($event: { previousIndex: number; currentIndex: number; }) {
   console.log($event)
   /*
@@ -129,7 +129,9 @@ onAddMarker($event:H.map.Marker) {
       routeAnnCarpooling: newRoute,
       ridePrice: form.value.price,
       places: form.value.places,
-      reactCarpoolingsAnnCarpooling: []
+      reactCarpoolingsAnnCarpooling: [],
+      show: true,
+      distance: 0
     };
 
     this.annCarpoolingService.AddAnnCarpooling(annCarpooling).subscribe(

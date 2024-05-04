@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RequirementCarpooling } from '../../Models/Carpooling/requirement-carpooling';
 import { catchError, throwError } from 'rxjs';
+import { User } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/user';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +45,9 @@ export class RequirementCarpoolingService {
   deleteReqCarpooling(id: number) {
     let URL2 = this.URL + "/deleteReqCarpooling/" + id;
     return this.http.delete<RequirementCarpooling>(URL2,this.httpOtions)
+  }
+
+  getAllUsers(){
+    return this.http.get<User[]>("http://localhost:9092/api/CarpoolingAnnouncement/getAllUsers");
   }
 }

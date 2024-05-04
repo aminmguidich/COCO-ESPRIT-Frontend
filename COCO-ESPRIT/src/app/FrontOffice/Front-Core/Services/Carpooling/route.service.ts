@@ -17,4 +17,8 @@ export class RouteService {
   addRoute( route: Route) {
     return this.http.post<Route>(this.URL+"/addRoute", route,this.httpOtions)
   }
+  updateRoute(route : Route){
+    //let id = foyer.id;
+    return this.http.put<Route>(this.URL +"/updateRoute", route,this.httpOtions);
+  }
 }

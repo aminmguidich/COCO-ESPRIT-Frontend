@@ -3,11 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListRequirementComponent } from './list-requirement/list-requirement.component';
 import { AddRequirementComponent } from './add-requirement/add-requirement.component';
 import { UpdateRequirementComponent } from './update-requirement/update-requirement.component';
+import { TableRequirementComponent } from './table-requirement/table-requirement.component';
 
 const routes: Routes = [
   {
     path:"",
-    component:ListRequirementComponent
+    component:TableRequirementComponent
   },
   {
     path:"addReq",
