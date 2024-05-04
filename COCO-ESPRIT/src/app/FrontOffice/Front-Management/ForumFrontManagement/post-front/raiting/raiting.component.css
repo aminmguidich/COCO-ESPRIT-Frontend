@@ -1,6 +1,28 @@
-.checked{
-    color:orange;
-}
-mat-icon{
-    cursor:pointer;
-}
+/* Couleur par défaut des étoiles */
+mat-icon {
+    font-size: 24px; /* Taille de l'icône */
+    color: grey; /* Couleur par défaut des étoiles */
+    cursor: pointer; /* Curseur de souris pour indiquer qu'elles sont cliquables */
+  }
+  
+  /* Couleur des étoiles sélectionnées */
+  .checked {
+    color: gold; /* Couleur des étoiles sélectionnées */
+  }
+  
+  /* Couleur des étoiles colorées en fonction du pourcentage */
+  .colored {
+    color: orange; /* Couleur des étoiles colorées */
+  }
+  
+  /* Effet de survol */
+  mat-icon:hover {
+    color: yellow; /* Couleur des étoiles lorsqu'elles sont survolées */
+  }
+  
+  /* Couleur des étoiles sélectionnées par la souris */
+  /*.mouseSelected {
+    color: green; 
+  }*/
+  
+  

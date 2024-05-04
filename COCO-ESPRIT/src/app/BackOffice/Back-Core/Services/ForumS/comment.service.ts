@@ -41,6 +41,8 @@ export class CommentService {
     return this.http.get<CommentPost[]>(`http://localhost:9092/api/Post/getReplies/${commentId}`);
   }
 
-  
+  findUserCommentPostByIdCommentPost(idCommentPost: number): Observable<string> {
+    return this.http.get<string>(`http://localhost:9092/api/Post/findUserCommentPostByIdCommentPost/${idCommentPost}`);
+  }
 
 }

@@ -14,30 +14,33 @@ export class RaitingComponent implements OnInit {
   @Output() 
   onRaiting:EventEmitter<number>= new EventEmitter<number>();
 
+  @Input() percentage: number; // Input property for percentage
+
+
   HandelMouseEnter(index:number){
 this.SelectedStar=index+1;
   }
   
-  /*HandelMouseLeave(){
+  HandelMouseLeave(){
   if(this.previousSelection!==0){
     this.SelectedStar = this.previousSelection;
   }
   else{
     this.SelectedStar=0;
   }
-  }*/
-  HandelMouseLeave(){
+  }
+  /*HandelMouseLeave(){
     if (this.SelectedStar !== 0) {
         this.SelectedStar = 0; // Reset SelectedStar to 0 on mouse leave
       }
-    }
+    }*/
   Raiting(index: number) {
     this.SelectedStar = index + 1;
     this.previousSelection = this.SelectedStar;
     this.onRaiting.emit(this.SelectedStar);
     
     // Reset the SelectedStar after emitting the rating
-    alert('Rating submitted successfully!');
+    //alert('Rating submitted successfully!');
     this.SelectedStar = 0;
 
 }

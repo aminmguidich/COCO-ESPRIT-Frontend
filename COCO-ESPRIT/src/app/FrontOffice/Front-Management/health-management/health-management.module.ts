@@ -14,12 +14,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { CarDetailsComponent } from './car-details/car-details.component';
+import { BalanceSheetComponent } from './balance-sheet/balance-sheet.component';
 
 @NgModule({
   declarations: [
     AddCarComponent,
     ListCarComponent,
-    CarDetailsComponent
+    CarDetailsComponent,
+    BalanceSheetComponent
   ],
   imports: [
     CommonModule,

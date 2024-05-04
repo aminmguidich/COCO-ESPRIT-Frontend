@@ -13,6 +13,7 @@ import { TypeReactPost } from 'src/app/BackOffice/Back-Core/Models/Forum/TypeRea
 import { ReactPost } from 'src/app/BackOffice/Back-Core/Models/Forum/ReactPost';
 import { ChatComponent } from '../chat/chat.component';
 import { MeilleurPostComponent } from '../meilleur-post/meilleur-post.component';
+import { StorageService } from 'src/app/BackOffice/Back-Core/Services/User/_services/storage.service';
 
 @Component({
   selector: 'app-post-f',
@@ -20,6 +21,7 @@ import { MeilleurPostComponent } from '../meilleur-post/meilleur-post.component'
   styleUrls: ['./post-f.component.css']
 })
 export class PostFComponent implements OnInit {
+  
   posts: Observable<Post[]>;
 
   postId: number;
@@ -33,6 +35,9 @@ export class PostFComponent implements OnInit {
     currentCommentIdWithVisibleComments: number | null = null;
     commentReplayCounts: { [commentId: number]: Observable<number> } = {};
 
+    userName: { [postId: number]: string } = {}; // Object to store usernames based on postId
+
+
 // New properties to store reaction counts
 reactionCounts: { [postId: number]: { LIKE: number; DISLIKE: number; LOVE: number; ANGRY: number; } } = {};
 
@@ -42,20 +47,24 @@ reactionCounts: { [postId: number]: { LIKE: number; DISLIKE: number; LOVE: numbe
     private commentService:CommentService,
     private reactService:ReactService,
     private _dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private storageService: StorageService
     ) { }
 
   ngOnInit(): void {
     this.reloadData();
+    // Listen to the postAdded event emitted by AddPostFComponent
+    this.handlePostAdded();
  
 }
-handleRating(postId: number, rating: number) {
+
+/*handleRating(postId: number, rating: number) {
   this.postService.getPost(postId).subscribe({
     next: (postToUpdate) => {
       if (postToUpdate) {
-        const newRating = postToUpdate.nb_etoil + rating;
+        //const newRating = postToUpdate.nb_etoil + rating;
         
-        this.postService.updatePostRating(postId, newRating).subscribe({
+        this.postService.addRaitingPost(postId,rating).subscribe({
           next: () => {
             console.log(postToUpdate.nb_etoil);
             console.log(rating);
@@ -64,12 +73,95 @@ handleRating(postId: number, rating: number) {
       } 
     }
   });
+}*/
+handleRating(postId: number, rating: number) {
+  // Check if the user has already rated the post
+  this.postService.hasUserRatedPost(postId).subscribe({
+    next: (hasRated) => {
+      if (hasRated) {
+        console.log("User has already rated this post.");
+        // You can handle this case, maybe display a message to the user
+      } else {
+        // If the user hasn't rated the post, proceed with rating
+        this.postService.getPost(postId).subscribe({
+          next: (postToUpdate) => {
+            if (postToUpdate) {
+              this.postService.addRaitingPost(postId, rating).subscribe({
+                next: () => {
+                  console.log("Rating added successfully.");
+                  this.reloadData() ;
+                }
+              });
+            } 
+          }
+        });
+      }
+    },
+    error: (error) => {
+      console.error("An error occurred while checking if user has rated the post:", error);
+    }
+  });
 }
 
 
 
-
 reloadData() {
+  // Récupérer la liste des publications
+  this.postService.getPostList().subscribe(posts => {
+    // Trier les publications dans l'ordre décroissant en fonction de leur date de création
+    posts.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+    this.pageSize = Math.ceil(posts.length / this.postsPerPage);
+    const startIndex = (this.currentPage - 1) * this.postsPerPage;
+    this.posts = of(posts.slice(startIndex, startIndex + this.postsPerPage));
+
+    // Réinitialiser les compteurs de commentaires
+    this.commentCounts = {};
+
+    // Réinitialiser les compteurs de réactions
+    this.reactionCounts = {};
+
+    // Réinitialiser les noms d'utilisateur
+    this.userName = {};
+
+    // Fetch reactions and comments for each post
+    posts.forEach(post => {
+      // Fetch reactions for the post
+      this.reactService.getReactsForPost(post.idPost).subscribe(reactions => {
+        const counts = { LIKE: 0, DISLIKE: 0, LOVE: 0, ANGRY: 0 };
+        reactions.forEach(reaction => {
+          counts[reaction.typeReact]++;
+        });
+        this.reactionCounts[post.idPost] = counts;
+      });
+
+      // Fetch comments for the post
+      this.commentService.getCommentsForPost(post.idPost).subscribe(comments => {
+        this.commentCounts[post.idPost] = of(comments.length);
+      });
+
+      // Fetch username for the post
+      this.postService.findUserNameAndLastNameByPostId(post.idPost).subscribe(
+        username => {
+          this.userName[post.idPost] = username;
+        },
+        error => {
+          console.error('Error occurred while fetching username:', error);
+        }
+      );
+
+    //  this.updatePostRate(post.idPost);
+    });
+  });
+}
+
+updatePostRate(postId: number): void {
+  this.postService.updatePostRate(postId)
+    .subscribe();
+}
+
+/*reloadData() {
   // Récupérer la liste des publications
   this.postService.getPostList().subscribe(posts => {
     // Trier les publications dans l'ordre décroissant en fonction de leur date de création
@@ -99,7 +191,7 @@ reloadData() {
       });
     });
   });
-}
+}*/
 
   
 
@@ -124,9 +216,20 @@ openBestPostForm() {
   const dialogRef = this._dialog.open(MeilleurPostComponent);
 }
 
-openChat() {
-  this.router.navigate(['/chat/1']);
+username: string;
+
+
+getCurrentUser() {
+  return this.storageService.getUser();
 }
+
+openChat() {
+  this.username = this.getCurrentUser().username;
+
+  this.router.navigate(['/chat', this.username]); // Navigate to '/chat/{username}'
+}
+
+
 
 get pageSizeArray(): number[] {
   return Array.from({ length: this.pageSize }, (_, i) => i + 1);
@@ -173,6 +276,138 @@ showComments(postId: number): void {
     });
   }
 
+ /*addReacttoPost(postId: number, reactionType: number): void {
+    // Create a ReactPost object with the appropriate reaction type
+    const react: ReactPost = { typeReact: reactionType } as ReactPost;
+
+    this.reactService.addReacttoPost(postId, react).subscribe(() => {
+        // Update the reaction counts
+        this.updateReactionCounts(postId);
+    });
+}*/
+mapNumberToTypeReactPost(value: number): TypeReactPost {
+  switch(value) {
+    case 0: return TypeReactPost.LIKE;
+    case 1: return TypeReactPost.DISLIKE;
+    case 2: return TypeReactPost.LOVE;
+    case 3: return TypeReactPost.ANGRY;
+    default: throw new Error('Invalid reaction type');
+  }
+}
+
+
+/*addReacttoPost(postId: number, reactionType: TypeReactPost): void {
+  const typeReactPost = this.mapNumberToTypeReactPost(reactionType);
+
+  this.reactService.checkExistingReaction(postId, typeReactPost).subscribe(existingReaction => {
+      if (existingReaction) {
+      
+          console.log('User has reacted before:', existingReaction);
+          
+              existingReaction.typeReact = reactionType;
+              this.reactService.removeReactPost(existingReaction.idReactPost).subscribe(() => {
+                  this.updateReactionCounts(postId);
+              });
+          
+      } else {
+          const react: ReactPost = { typeReact: reactionType } as ReactPost;
+          console.log('User has not reacted before');
+          this.reactService.addReacttoPost(postId, react).subscribe(() => {
+              this.updateReactionCounts(postId);
+          });
+      }
+  });
+}*/
+
+currentReaction: { [postId: number]: number } = {};
+
+getCurrentReactionType(postId: number): number | null {
+  // Retrieve the selected reaction type for the specified post ID
+  return this.currentReaction[postId] || null;
+}
+
+
+addReacttoPost(postId: number, reactionType: number): void {
+  // First, check if the user has already reacted to the post
+  this.reactService.countByUserReactPost(postId).subscribe(hasReacted => {
+    if (!hasReacted) {
+      //this.currentReaction[postId] = reactionType;
+     // console.log(this.currentReaction);
+      // User has already reacted, so check if the selected reaction type is the same
+    //  const currentReactionType = this.getCurrentReactionType(postId);
+     // console.log(this.currentReaction);
+     // console.log(currentReactionType);
+     // if ( currentReactionType === reactionType) {
+        // User has selected the same reaction type twice, so remove the reaction
+      //  this.removeReact(postId);
+      //  this.updateReactionCounts(postId);
+
+      //} else {
+        // User has selected a different reaction type, so update the existing reaction
+        const react: ReactPost = { typeReact: reactionType } as ReactPost;
+        this.reactService.updateReact(postId, react).subscribe(() => {
+          // Update the reaction counts
+          this.updateReactionCounts(postId);
+        });
+    //  }
+    } else {
+      // User hasn't reacted before, so add a new reaction
+      const react: ReactPost = { typeReact: reactionType } as ReactPost;
+      this.reactService.addReacttoPost(postId, react).subscribe(() => {
+        // Update the reaction counts
+        this.updateReactionCounts(postId);
+      });
+    }
+  });
+}
+
+hasReacted(idPost: number): Observable<boolean> {
+  return this.reactService.countByUserReactPost(idPost).pipe(
+    map(hasReacted => hasReacted)
+  );
+}
+
+
+
+
+removeReact(postId: number): void {
+  // Implement a method to remove the reaction of the user for the post
+  // You can call your existing removeReactPost method from the reactService
+  this.reactService.removeReactPost(postId).subscribe(() => {
+    // Update the reaction counts
+    this.updateReactionCounts(postId);
+  });
+}
+
+/*addReacttoPost(postId: number, reactionType: number): void {
+  // First, check if the user has already reacted to the post
+  this.reactService.countByUserReactPost(postId).subscribe(hasReacted => {
+      if (hasReacted) {
+          // User has already reacted, so update the existing reaction
+          const react: ReactPost = { typeReact: reactionType } as ReactPost;
+          this.reactService.updateReact(postId, react).subscribe(() => {
+              // Update the reaction counts
+              this.updateReactionCounts(postId);
+          });
+      } else {
+          // User hasn't reacted before, so add a new reaction
+          const react: ReactPost = { typeReact: reactionType } as ReactPost;
+          this.reactService.addReacttoPost(postId, react).subscribe(() => {
+              // Update the reaction counts
+              this.updateReactionCounts(postId);
+          });
+      }
+  });
+}*/
+
+
+
+
+
+
+
+
+
 // Méthode pour mettre à jour le nombre de réactions après l'ajout de la réaction
 updateReactionCounts(postId: number): void {
   this.reactService.getReactsForPost(postId).subscribe(reactions => {
@@ -199,5 +434,7 @@ reportPost(postId: number): void {
     }
   });
 }
+
+
 
 }

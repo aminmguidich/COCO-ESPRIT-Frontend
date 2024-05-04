@@ -5,6 +5,7 @@ import * as SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Chat } from 'src/app/BackOffice/Back-Core/Models/Forum/Chat';
+import { StorageService } from 'src/app/BackOffice/Back-Core/Services/User/_services/storage.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -13,18 +14,24 @@ import { Chat } from 'src/app/BackOffice/Back-Core/Models/Forum/Chat';
 export class ChatComponent  implements OnInit {
 
   messageInput: string = '';
-  userId: string="";
+  username: number;
   messageList: any[] = [];
-
+  Sender:string='';
   constructor(private chatService: ChatService,
     private route: ActivatedRoute,
-    private router:Router
+    private router:Router,
+    private storageService: StorageService
     ){
 
   }
 
+  getCurrentUser() {
+    return this.storageService.getUser();
+  }
+
   ngOnInit(): void {
-    this.userId = this.route.snapshot.params["userId"];
+    this.username = this.getCurrentUser().userId;
+    this.Sender= this.getCurrentUser().username;
     this.chatService.joinRoom("ABC");
     this.listenMessage();
   }
@@ -32,11 +39,14 @@ export class ChatComponent  implements OnInit {
   sendMessage() {
     const chatMessage = {
       message: this.messageInput,
-      user: this.userId,
+      sender: this.Sender,
+      user: this.username,
       type: MessageType.CHAT // Assuming regular chat messages here
 
     }as Chat
-    this.chatService.sendMessage("ABC", chatMessage);
+    this.chatService.sendMessage( "ABC",chatMessage);
+    console.log("user",chatMessage);
+
     this.messageInput = '';
   }
 
@@ -44,7 +54,7 @@ export class ChatComponent  implements OnInit {
     this.chatService.getMessageSubject().subscribe((messages: Chat[]) => {
       this.messageList = messages.map((item: Chat) => ({
         ...item,
-        message_side: item.user === this.userId ? 'sender' : 'receiver'
+        message_side: item.sender === this.Sender ? 'sender' : 'receiver'
       }));
 
       // Handling messages based on MessageType
@@ -55,22 +65,27 @@ export class ChatComponent  implements OnInit {
           this.handleLeaveMessage(message.user);
         }
       });
+  
+
+
     });
   }
 
-  handleJoinMessage(userId: string) {
+ handleJoinMessage(userId: number) {
     const joinMessage: Chat = {
       message: `${userId} has joined the chat.`,
       user: userId,
+      sender:this.Sender,
       type: MessageType.JOIN
     };
     this.messageList.push(joinMessage);
   }
 
-  handleLeaveMessage(userId: string) {
+  handleLeaveMessage(userId: number) {
     const leaveMessage: Chat = {
       message: `${userId} has left the chat.`,
       user: userId,
+      sender:this.Sender,
       type: MessageType.LEAVE
     };
     this.messageList.push(leaveMessage);

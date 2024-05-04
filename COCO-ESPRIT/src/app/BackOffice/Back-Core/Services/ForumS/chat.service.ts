@@ -21,7 +21,7 @@ export class ChatService {
     }
   
     initConnenctionSocket() {
-      const url = 'http://localhost:9092/ws'; // Adjust this URL according to your server configuration
+      const url = 'http://localhost:9092/api/ws'; // Adjust this URL according to your server configuration
       const socket = new SockJS(url);
       this.stompClient = Stomp.over(socket)
     }

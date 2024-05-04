@@ -26,6 +26,8 @@ export class ListcommentfComponent  implements OnInit {
     commentReplayCounts: { [commentId: number]: Observable<number> } = {};
 // New properties to store reaction counts
 reactionCounts: { [postId: number]: { LIKE: number; DISLIKE: number; LOVE: number; ANGRY: number; } } = {};
+userName: { [idCommentPost: number]: string } = {}; // Object to store usernames based on postId
+userNameReplies: { [idCommentReply: number]: string } = {}; // Object to store usernames based on postId
 
   constructor(
     private route: ActivatedRoute, 
@@ -40,6 +42,8 @@ reactionCounts: { [postId: number]: { LIKE: number; DISLIKE: number; LOVE: numbe
       this.commentService.getCommentsForPost(this.idPost).subscribe(comments => {
         this.commentList = comments;
 
+   
+
         // Réinitialiser les compteurs de commentaires
     this.commentReplayCounts = {};
         comments.forEach(comment => {
@@ -52,7 +56,19 @@ reactionCounts: { [postId: number]: { LIKE: number; DISLIKE: number; LOVE: numbe
              // Obtenir le nombre de replies pour chaque commentaire
         this.commentService.getReplies(comment.idCommentPost).subscribe(comments => {
           this.commentReplayCounts[comment.idCommentPost] = of(comments.length);
-        });   
+          
+
+        });  
+        
+              // Fetch username for the comment
+      this.commentService.findUserCommentPostByIdCommentPost(comment.idCommentPost).subscribe(
+        username => {
+          this.userName[comment.idCommentPost] = username;
+        },
+        error => {
+          console.error('Error occurred while fetching username:', error);
+        }
+      );
           });
         }); // Close the forEach loop here
       });
@@ -75,20 +91,28 @@ hasComments(postId: number): Observable<boolean> {
 }
   // Méthode pour basculer l'état d'affichage des réponses pour un commentaire donné
   showReplies(commentId: number): void {
-    this.hasReplies(commentId).subscribe(hasReplies =>{
-      if(hasReplies){
-  this.currentCommentIdWithVisibleComments = commentId;
-  this.commentReplies[commentId] = this.commentService.getReplies(commentId);
-  this.commentReplayCounts[commentId] = this.commentService.getReplies(commentId).pipe(
-    map(comments => comments.length)
-  );
-      }else{
+    this.hasReplies(commentId).subscribe(hasReplies => {
+      if (hasReplies) {
+        this.currentCommentIdWithVisibleComments = commentId;
+        this.commentReplies[commentId] = this.commentService.getReplies(commentId);
+        this.commentReplayCounts[commentId] = this.commentService.getReplies(commentId).pipe(
+          map(comments => comments.length)
+        );
+  
+        // Fetch username for the comment replay
+        this.commentService.findUserCommentPostByIdCommentPost(commentId).subscribe(
+          userNameReplies => {
+            this.userNameReplies[commentId] = userNameReplies;
+          }
+        );
+
+      } else {
         this.currentCommentIdWithVisibleComments = null;
         this.commentReplayCounts[commentId] = of(0);
       }
-    })
+    });
   }
-
+  
 
   //pagination
       // Propriétés pour la pagination

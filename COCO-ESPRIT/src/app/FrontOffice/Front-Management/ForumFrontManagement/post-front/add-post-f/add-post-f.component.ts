@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Post } from 'src/app/BackOffice/Back-Core/Models/Forum/Post';
 import { PhotosService } from 'src/app/BackOffice/Back-Core/Services/ForumS/photos.service';
 import { PostService } from 'src/app/BackOffice/Back-Core/Services/ForumS/post.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-post-f',
@@ -16,6 +17,7 @@ export class AddPostFComponent {
   posts: Post = new Post(); 
   imgUrl: string | ArrayBuffer = 'assets/upload.png';
   file: File | null = null;
+  @Output() postAdded: EventEmitter<void> = new EventEmitter<void>();
   //idUser: number =2;
 
 
@@ -24,7 +26,8 @@ export class AddPostFComponent {
     private s: PostService,
     private photoService :PhotosService,
     private router: Router,
-    private _dialogRef: MatDialogRef<AddPostFComponent>
+    private _dialogRef: MatDialogRef<AddPostFComponent>,
+    private http: HttpClient
     ) { 
     
   }
@@ -44,7 +47,7 @@ export class AddPostFComponent {
     return this.myForm.get('body')
   }
 
-onSubmit() {
+/*onSubmit() {
   let p = new Post();
 p.postTitle=this.postTitle.value;
 p.body=this.body.value;
@@ -58,7 +61,27 @@ if (this.file) {
   this.addPost(p);
 }
 
+}*/
+onSubmit() {
+  if (this.extractedText && this.checkForBadWords(this.extractedText)) {
+    alert('The extracted text contains bad words. Please remove them and try again.');
+  } else {
+    let p = new Post();
+    p.postTitle = this.postTitle.value;
+    p.body = this.body.value;
+    p.createdAt = new Date(); // Set current system date
+    p.image = this.file; // Assign the image file to the 'image' attribute
+
+    if (this.file) {
+      this.savePhoto(this.file, p);
+    } else {
+      this.addPost(p);
+    }
+
+  }
 }
+
+
 addPost(post: Post): void {
   console.log(post);
   this.s.AddWithoutBadWord(post).subscribe({
@@ -94,6 +117,8 @@ onFileInput(files: FileList | null): void {
       fileReader.onload = (event) => {
         if (fileReader.result) {
           this.imgUrl = fileReader.result;
+          this.extractTextFromImage();//to extract data from pic
+
         }
       };
     }
@@ -114,6 +139,38 @@ savePhoto(file: File, post: Post): void {
         }
       });
   }
+}
+
+
+extractTextFromImage(): void {
+  const formData = new FormData();
+  formData.append('image', this.file);
+
+  // Update the URL to point to your Flask server
+  this.http.post<any>('http://localhost:5000/upload', formData).subscribe({
+    next: (data) => {
+      if (data.detected_text) {
+        this.extractedText = data.detected_text;
+        console.log('Bad word extracted:', this.extractedText);
+
+      }
+    },
+    error: (error) => {
+      console.error('Error extracting text from image:', error);
+    }
+  });
+}
+
+
+extractedText: string = '';
+badWords: string[] = [
+  "Fuck", "Shit", "Asshole", "Bitch", "Bastard", "Cunt", "Dick", "Pussy",
+  "Motherfucker", "Cock", "Twat", "Wanker", "Slut", "Whore", "Arsehole",
+  "Douchebag", "Faggot", "Nigger", "Prick", "Dumbass"
+];
+
+checkForBadWords(text: string): boolean {
+  return this.badWords.some(word => text.toLowerCase().includes(word.toLowerCase()));
 }
 
 

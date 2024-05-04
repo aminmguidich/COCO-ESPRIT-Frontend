@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO2 Emission Prediction</title>
+</head>
+<body>
+    <h1>CO2 Emission Prediction</h1>
+    <label for="engine_size">Engine Size:</label>
+    <input type="range" id="engine_size" name="engine_size" min="1.0" max="6.8" step="0.1" value="3.5"><br><br>
+    <label for="cylinder_num">Cylinder Number:</label>
+    <input type="range" id="cylinder_num" name="cylinder_num" min="4" max="12" step="2" value="8"><br><br>
+    <label for="fuel_consumption_city">Fuel Consumption in City:</label>
+    <input type="range" id="fuel_consumption_city" name="fuel_consumption_city" min="5.3" max="30.2" step="0.1" value="15.8"><br><br>
+    <label for="fuel_consumption_hwy">Fuel Consumption in Highway:</label>
+    <input type="range" id="fuel_consumption_hwy" name="fuel_consumption_hwy" min="5.1" max="20.5" step="0.1" value="12.5"><br><br>
+    <table id="prediction_table">
+        <tr>
+            <th>Predicted CO2 Emission (in PPM)</th>
+        </tr>
+        <tr>
+            <td id="prediction_value"></td>
+        </tr>
+    </table>
+
+    <script>
+        // Fonction pour mettre à jour les prédictions de CO2
+        function updatePrediction() {
+            // Récupérer les valeurs des curseurs
+            var engineSize = document.getElementById('engine_size').value;
+            var cylinderNum = document.getElementById('cylinder_num').value;
+            var fuelConsumptionCity = document.getElementById('fuel_consumption_city').value;
+            var fuelConsumptionHwy = document.getElementById('fuel_consumption_hwy').value;
+
+            // Envoyer les valeurs au serveur Flask
+            fetch('/CO2', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    engine_size: engineSize,
+                    cylinder_num: cylinderNum,
+                    fuel_consumption_city: fuelConsumptionCity,
+                    fuel_consumption_hwy: fuelConsumptionHwy
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mettre à jour la table avec la prédiction
+                document.getElementById('prediction_value').textContent = data.prediction;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Appeler la fonction pour mettre à jour les prédictions lorsqu'une valeur de curseur est modifiée
+        document.getElementById('engine_size').addEventListener('input', updatePrediction);
+        document.getElementById('cylinder_num').addEventListener('input', updatePrediction);
+        document.getElementById('fuel_consumption_city').addEventListener('input', updatePrediction);
+        document.getElementById('fuel_consumption_hwy').addEventListener('input', updatePrediction);
+    </script>
+</body>
+</html>

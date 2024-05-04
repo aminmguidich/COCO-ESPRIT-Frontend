@@ -1,7 +1,9 @@
 <mat-icon *ngFor="let icon of maxRaitingAryy; let index=index"
-(mouseenter)="HandelMouseEnter(index)"
-(mouseleave)="HandelMouseLeave()"
-(click)="Raiting(index)"
-[ngClass]="{checked:SelectedStar>index}"
->star
-</mat-icon>
+          (mouseenter)="HandelMouseEnter(index)"
+          (mouseleave)="HandelMouseLeave()"
+          (click)="Raiting(index)"
+          [ngClass]="{
+            checked: SelectedStar > index,
+            colored: index + 1 <= (percentage / 100) * maxRaiting,
+            mouseSelected: SelectedStar === index + 1
+          }">star</mat-icon>
