@@ -1,0 +1,17 @@
+ngb-rating {
+    font-size: 90px;
+}
+
+.mat-icon {
+    color: #FFC107; /* Couleur initiale */
+    cursor: pointer; /* Afficher le curseur pointer au survol */
+}
+
+.mat-icon.checked {
+    color: #FFC107; /* Couleur des étoiles sélectionnées */
+}
+
+.mat-icon.hovered {
+    color: #FFC107; /* Couleur des étoiles survolées */
+    opacity: 0.7; /* Opacité pour indiquer le survol */
+}
