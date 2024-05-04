@@ -13,42 +13,42 @@ export class QuizComponent implements OnInit {
   quiz: any = [
     {
       key: 1,
-      question: "Quelle est votre tolérance au bruit pendant la nuit ?",
+      question_1: "What is your tolerance for noise during the night?",
       responses: [
         {
-          title: "je ne tolére pas",
+          title: "I do not tolerate",
           status: true,
         },
         {
-          title: "Pas de Probléme",
+          title: "No problem",
           status: false,
         }
       ]
     },
     {
       key: 2,
-      question: "Êtes-vous fumeur ou non?",
+      question_2: "Are you a smoker or not?",
       responses: [
         {
-          title: "oui",
+          title: "Yes",
           status: false,
         },
         {
-          title: "non",
+          title: "No",
           status: true,
         }
       ]
     },
     {
       key: 3,
-      question: "Avez-vous des animaux de compagnie ?",
+      question_3: "Do you have pets??",
       responses: [
         {
-          title: "non",
+          title: "No",
           status: true,
         },
         {
-          title: "oui",
+          title: "Yes",
           status: false,
         }
       ]
@@ -56,14 +56,14 @@ export class QuizComponent implements OnInit {
 
     {
       key: 4,
-      question: "Préférez-vous partager les tâches ménagères de manière équitable ?",
+      question_4: "Do you prefer to share household chores equally?",
       responses: [
         {
-          title: "oui",
+          title: "Yes",
           status: true,
         },
         {
-          title: "Non",
+          title: "No",
           status: false,
         }
       ]
@@ -72,14 +72,47 @@ export class QuizComponent implements OnInit {
 
     {
       key: 5,
-      question: "Êtes-vous à l'aise avec l'idée de partager des biens communs comme la nourriture ou les produits de nettoyage ?",
+      question_5: "Are you comfortable with the idea of sharing common goods like food or cleaning products ?",
       responses: [
         {
-          title: "oui",
+          title: "Yes",
           status: true,
         },
         {
-          title: "non",
+          title: "No",
+          status: false,
+        }
+      ]
+    },
+
+
+    
+    {
+      key: 6,
+      question_6: "How do you feel about guests or visitors in the living space during late hours?",
+      responses: [
+        {
+          title: "I prefer limited or no guests late at night",
+          status: true,
+        },
+        {
+          title: "I'm comfortable with guests at any hour",
+          status: false,
+        }
+      ]
+    },
+
+
+    {
+      key: 7,
+      question_7: "How do you usually solve problems or arguments with roommates about shared living?",
+      responses: [
+        {
+          title: "I like to talk about problems and find solutions",
+          status: true,
+        },
+        {
+          title: "I usually try to avoid problems",
           status: false,
         }
       ]
