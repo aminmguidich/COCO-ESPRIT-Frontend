@@ -94,10 +94,7 @@ import { AnnoucementCollocationModule } from './BackOffice/Back-Management/Collo
     PostFrontModule,
     BrowserAnimationsModule,
     HealthManagementModule,
-    ContractModule,
-    HouseModule,
-    AannoucementCollModule,
-    AnnoucementCollocationModule
+
     
     
   ],
