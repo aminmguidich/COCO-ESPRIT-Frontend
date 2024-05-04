@@ -1,21 +1,23 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReactCarpooling } from 'src/app/BackOffice/Back-Core/Models/Carpooling/react-carpooling';
-import { ReactCarpoolingService } from 'src/app/BackOffice/Back-Core/Services/Carpooling/react-carpooling.service';
+import { RequirementCarpooling } from 'src/app/BackOffice/Back-Core/Models/Carpooling/requirement-carpooling';
+import { RequirementCarpoolingService } from 'src/app/BackOffice/Back-Core/Services/Carpooling/requirement-carpooling.service';
 
 @Component({
-  selector: 'app-list-react',
-  templateUrl: './list-react.component.html',
-  styleUrls: ['./list-react.component.css']
+  selector: 'app-table-requirement',
+  templateUrl: './table-requirement.component.html',
+  styleUrls: ['./table-requirement.component.css']
 })
-export class ListReactComponent implements AfterViewInit {
+export class TableRequirementComponent implements AfterViewInit {
   displayedColumns: string[] = [
     'id',
     'user',
+    'date',
+    'description',
   ];
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -28,25 +30,32 @@ export class ListReactComponent implements AfterViewInit {
       const isAsc = $event.direction === 'asc';
       if ($event.direction.length == 0) {
         return this.compare(
-          a.idReactCarpooling,
-          b.idReactCarpooling,
+          a.idCarRequirement,
+          b.idCarRequirement,
           !isAsc
         );
       }
       switch ($event.active) {
         case 'id':
           return this.compare(
-            a.idReactCarpooling,
-            b.idReactCarpooling,
+            a.idCarRequirement,
+            b.idCarRequirement,
             isAsc
           );
         case 'user':
           return this.compare(
-            a.userReact.username,
-            b.userReact.username,
+            a.usersRequirementCarpooling.username,
+            b.usersRequirementCarpooling.username,
             isAsc
           );
-
+        case 'date':
+          return this.compare(
+            a.dateCarpoolingRequirement.toString(),
+            b.dateCarpoolingRequirement.toString(),
+            isAsc
+          );
+        case 'description':
+          return this.compare(a.description, b.description, isAsc);
 
         default:
           return 0;
@@ -58,13 +67,13 @@ export class ListReactComponent implements AfterViewInit {
   OnViewProfile(arg0: any) {
     throw new Error('Method not implemented.');
   }
-  data: ReactCarpooling[] = [];
-  sortedData: ReactCarpooling[] = [];
+  data: RequirementCarpooling[] = [];
+  sortedData: RequirementCarpooling[] = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private formB: FormBuilder,
-    private reactCarpoolingService: ReactCarpoolingService
+    private reqCarpoolingService: RequirementCarpoolingService
   ) {
     /*this.reqCarpoolingService.listen().subscribe((m: any) => {
       this.loadData();
@@ -75,29 +84,36 @@ export class ListReactComponent implements AfterViewInit {
     this.loadData();
   }
 
+  deleteReqCarpooling(id: number) {
+    this.reqCarpoolingService.deleteReqCarpooling(id).subscribe((response) => {
+      alert(' Requirement deleted Successfully!');
 
+      // this.router.navigate(['admin/carpooling/announcement/addAnn']);
+      this.loadData();
+    });
+  }
   loadData() {
-    this.reactCarpoolingService
+    this.reqCarpoolingService
       .getall()
-      .subscribe((data: ReactCarpooling[]) => {
-        this.reactCarpoolingService
+      .subscribe((data: RequirementCarpooling[]) => {
+        this.reqCarpoolingService
           .getAllUsers()
           .subscribe(async (users: any[]) => {
             this.data = data.map((value, index, array) => {
-              if (!value.userReact.id) {
+              if (!value.usersRequirementCarpooling.id) {
                 for (let index = 0; index < users.length; index++) {
                   const element = users[index];
                   if (
-                    element.id.toString() == value.userReact.toString()
+                    element.id.toString() == value.usersRequirementCarpooling.toString()
                   ) {
-                    value.userReact = element;
+                    value.usersRequirementCarpooling = element;
                     break;
                   }
                 }
               }
               return value;
             });
-            this.totalReacts = data.length;
+            this.totalRequirements = data.length;
             this.dataSource = new MatTableDataSource(this.data);
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;
@@ -108,9 +124,9 @@ export class ListReactComponent implements AfterViewInit {
       };
   }
 
-  totalReacts!: number;
+  totalRequirements!: number;
 
-  dataSource: MatTableDataSource<ReactCarpooling>;
+  dataSource: MatTableDataSource<RequirementCarpooling>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

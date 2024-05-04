@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RequirementCarpooling } from 'src/app/BackOffice/Back-Core/Models/Carpooling/requirement-carpooling';
 import { RequirementCarpoolingService } from 'src/app/BackOffice/Back-Core/Services/Carpooling/requirement-carpooling.service';
+import { User } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/user';
 
 @Component({
   selector: 'app-add-requirement',
@@ -24,7 +25,8 @@ export class AddRequirementComponent implements OnInit {
       const annCarpooling: RequirementCarpooling = {
         idCarRequirement: 0,
         description: form.value.description,
-        dateCarpoolingRequirement: date
+        dateCarpoolingRequirement: date,
+        usersRequirementCarpooling: new User
       };
   
       this.reqCarpoolingService.AddReqCarpooling(annCarpooling).subscribe(
