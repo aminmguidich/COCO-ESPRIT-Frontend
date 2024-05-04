@@ -92,7 +92,16 @@ const routes: Routes = [
     {
       path: "ListCarsFront",
       loadChildren: () => import('./FrontOffice/Front-Management/health-management/health-management.module').then(m => m.HealthManagementModule),
-  }
+  },
+  {
+    path :"Annoucement",
+    loadChildren: () => import('./FrontOffice/Front-Management/Collocation/aanoucement-col/aanoucement-col.module').then(m => m.AannoucementCollModule),
+  },
+
+  {
+    path:"House",
+    loadChildren: () => import('./FrontOffice/Front-Management/Collocation/house/house.module').then(m => m.HouseModule),
+  },
 
     ]
   },
@@ -135,6 +144,18 @@ const routes: Routes = [
   {
     path:"",
     component:AllUsersComponent
+  },
+  { 
+    path:"collocation/announcement",
+    loadChildren: () => import('./BackOffice/Back-Management/Collocation/annoucement-collocation/annoucement-collocation.module').then(m => m.AnnoucementCollocationModule),
+  },
+
+  
+
+ 
+  { 
+    path:"collocation/house",
+    loadChildren: () => import('./BackOffice/Back-Management/Collocation/House/house.module').then(m => m.HouseModule),
   },
 
     

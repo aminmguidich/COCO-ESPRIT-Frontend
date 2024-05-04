@@ -1,3 +1,4 @@
+import { HouseModule } from './FrontOffice/Front-Management/Collocation/house/house.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,6 +41,10 @@ import { AllTemplateFrontComponent } from './FrontOffice/all-template-front/all-
 import { PostModule } from './BackOffice/Back-Management/ForumManagement/post/post.module';
 import { PostFrontModule } from './FrontOffice/Front-Management/ForumFrontManagement/post-front/post-front.module';
 import { HealthManagementModule } from './FrontOffice/Front-Management/health-management/health-management.module';
+import { ContractModule } from './BackOffice/Back-Management/Collocation/contract/contract.module';
+import { AnnouncementCollocation } from './BackOffice/Back-Core/Models/Collocation/annoucement-collocation';
+import { AannoucementCollModule } from './FrontOffice/Front-Management/Collocation/aanoucement-col/aanoucement-col.module';
+import { AnnoucementCollocationModule } from './BackOffice/Back-Management/Collocation/annoucement-collocation/annoucement-collocation.module';
 
 @NgModule({
   declarations: [
@@ -89,6 +94,10 @@ import { HealthManagementModule } from './FrontOffice/Front-Management/health-ma
     PostFrontModule,
     BrowserAnimationsModule,
     HealthManagementModule,
+    ContractModule,
+    HouseModule,
+    AannoucementCollModule,
+    AnnoucementCollocationModule
     
     
   ],
