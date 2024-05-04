@@ -35,6 +35,7 @@ export class ListHouseComponent {
   p: number = 1;
   itemsPerPage: number = 3
   userId: any;
+  search="";
   @ViewChild('addHouseModal') addHouseModal!: ElementRef;
 
   houseSelected: any

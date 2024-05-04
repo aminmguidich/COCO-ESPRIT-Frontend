@@ -84,6 +84,7 @@ import { UpdateHouseComponent } from './BackOffice/Back-Management/Collocation/H
     BrowserAnimationsModule,
    
     BrowserAnimationsModule,
+    
    
   ],
   providers: [httpInterceptorProviders],

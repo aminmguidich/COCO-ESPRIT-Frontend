@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { HouseService } from 'src/app/BackOffice/Back-Core/Services/Collocation/house.service';
 
 @Component({
@@ -11,19 +12,33 @@ export class ListHouseComponent  {
   houses: any = [];
   searchText: string = '';
   selectedHouse: any;
-  imageUrl:any;
+  imageUrls:any;
   p: number = 1;
   itemsPerPage: number = 3;
+  photo: File[] = [];
   openHouseToEdit = false
-
+idhousetoUpdate:any;
 
 
   @ViewChild('addHouseModal') addHouseModal!: ElementRef; 
+nbrofBedrooms: any;
 
   constructor(
+    private fb: FormBuilder,
     private houseService: HouseService,
     private http: HttpClient // Injecter le HttpClient pour faire des requêtes HTTP
+
   ) { }
+
+  validateFormhouse = this.fb.group({
+    houseType: ["", [Validators.required]],
+    places: [0, [Validators.required]],
+    location: ["", [Validators.required]], // Champ manquant ajouté
+    description: ["", [Validators.required]], // Champ manquant ajouté
+    nbrofBedrooms: [0, [Validators.required]], // Champ manquant ajouté
+    price: [0, [Validators.required]]
+  });
+  id: any;
 
   ngOnInit() {
     this.getAllHouses();
@@ -49,7 +64,44 @@ export class ListHouseComponent  {
       }
     );
   }
-  
+  updateHouse() {
+    const formData = new FormData();
+
+
+    // Append each image to the form data
+    this.photo.forEach(file => {
+      formData.append('image', file);
+    });
+
+    formData.append('house', JSON.stringify(this.validateFormhouse.value));
+
+console.log(this.idhousetoUpdate.idHouse)
+    this.houseService.updateHouse(this.idhousetoUpdate,formData).subscribe({
+      next: data => {
+
+      },
+      error: err => {
+
+      }
+    });
+
+  }
+
+
+  onFileChange(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        const file = event.target.files[i];
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.imageUrls.push(e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+        this.photo.push(file); // Push each file into the array
+      }
+    }
+  }
 
   openEditModal(id: any) {
     this.selectedHouse = id;

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="pcoded-main-container">
     <div class="pcoded-wrapper">
@@ -60,13 +62,12 @@
 
 
                             <td>
-                              <button type="button" class="btn btn-danger btn-sm rounded-0"
-                                data-toggle="tooltip" data-placement="top" title="Delete"
-                                (click)="deleteHouse(house.idHouse)">
+                              <button type="button" class="btn btn-danger btn-sm rounded-0" data-toggle="tooltip"
+                                data-placement="top" title="Delete" (click)="deleteHouse(house.idHouse)">
                                 <i class="fas fa-trash"></i>
                               </button>
-                              <button type="button" class="btn btn-success btn-sm rounded-0"
-                                data-bs-toggle="modal" data-bs-target="#editHouseModal" (click)="openEditModal(house.idHouse)">
+                              <button type="button" class="btn btn-success btn-sm rounded-0" data-bs-toggle="modal"
+                                data-bs-target="#editHouseModal" (click)="idhousetoUpdate =house.idHouse">
                                 <i class="fa fa-edit"></i>
                               </button>
                             </td>
@@ -75,21 +76,24 @@
                       </table>
                       <hr>
                       <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addHouseModal">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#addHouseModal">
                         Add House
                       </button>
 
                       <!-- Add House Modal -->
-                      <div class="modal fade" id="addHouseModal" tabindex="-1" aria-labelledby="addHouseModalLabel" aria-hidden="true">
+                      <div class="modal fade" id="addHouseModal" tabindex="-1" aria-labelledby="addHouseModalLabel"
+                        aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="addHouseModalLabel">Add House</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                               <div class="custom-modal-content">
-                              <app-add-house></app-add-house>
+                                <app-add-house></app-add-house>
                               </div>
                             </div>
                             <div class="modal-footer">
@@ -101,34 +105,59 @@
                       </div>
 
                       <!-- Edit House Modal -->
-                      <div class="modal fade" id="editHouseModal" tabindex="-1" aria-labelledby="editHouseModalLabel" aria-hidden="true">
+                      <!-- Edit Announcement Modal -->
+                      <div class="modal fade" id="editHouseModal" tabindex="-1"
+                        aria-labelledby="editAnnouncementModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="editHouseModalLabel">Edit House</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              <h5 class="modal-title" id="editAnnouncementModalLabel">Edit House</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                               <div class="custom-modal-content">
-                                <!-- Form for updating a house -->
-                                <form id="updateHouseForm">
+
+                                <form [formGroup]="validateFormhouse" (ngSubmit)="updateHouse()">
                                   <div class="form-group">
-                                    <label for="editHouseDescription">Description</label>
-                                    <input type="text" class="form-control" id="editHouseDescription">
+                                    <label for="image">Image:</label>
+                                    <input type="file" class="form-control" accept="image/*"
+                                      (change)="onFileChange($event)" id="image" />
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="houseType">House Type:</label>
+                                    <input type="text" class="form-control" formControlName="houseType"
+                                      id="houseType" />
                                   </div>
                                   <div class="form-group">
-                                    <label for="editHouseImageURL">Image URL</label>
-                                    <input type="text" class="form-control" id="editHouseImageURL">
+                                    <label for="places">Places:</label>
+                                    <input type="number" class="form-control" formControlName="places" id="places" />
+                                  </div>
+                                  <!-- Ajouter les champs manquants ici -->
+                                  <div class="form-group">
+                                    <label for="location">Location:</label>
+                                    <input type="text" class="form-control" formControlName="location" id="location" />
                                   </div>
                                   <div class="form-group">
-                                    <label for="editHouseType">Type</label>
-                                    <input type="text" class="form-control" id="editHouseType">
+                                    <label for="description">Description:</label>
+                                    <input type="text" class="form-control" formControlName="description"
+                                      id="description" />
                                   </div>
                                   <div class="form-group">
-                                    <label for="editHousePlaces">Places</label>
-                                    <input type="number" class="form-control" id="editHousePlaces">
+                                    <label for="nbrofBedrooms">Number of Bedrooms:</label>
+                                    <input type="number" class="form-control" formControlName="nbrofBedrooms"
+                                      [value]="nbrofBedrooms" id="nbrofBedrooms" />
                                   </div>
+                                  <div class="form-group">
+                                    <label for="price">Price:</label>
+                                    <input type="number" class="form-control" formControlName="price" id="price" />
+                                  </div>
+                                  <!-- Fin des champs manquants -->
+                                  <button type="submit" class="btn btn-primary">Add</button>
                                 </form>
+
+
                               </div>
                             </div>
                             <div class="modal-footer">
@@ -154,7 +183,7 @@
     </div>
     <div class="mt-8 py-5 d-flex justify-content-center align-items-center">
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  </div>
+    </div>
   </div>
 
   <!-- Bootstrap JS (optional) -->
@@ -165,4 +194,5 @@
   <!-- Ajoutez vos scripts JavaScript personnalisés ici -->
 
 </body>
+
 </html>

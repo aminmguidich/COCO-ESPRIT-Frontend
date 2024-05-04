@@ -8,6 +8,7 @@ import { AddHouseComponent } from './add-house/add-house.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateHouseComponent } from 'src/app/BackOffice/Back-Management/Collocation/House/update-house/update-house.component';
+import { UpdateHComponent } from './update-h/update-h.component';
 
 
 @NgModule({
@@ -16,12 +17,15 @@ import { UpdateHouseComponent } from 'src/app/BackOffice/Back-Management/Colloca
     ListHouseComponent,
          AddHouseComponent,
         
+        
   ],
   imports: [
+   
     CommonModule,
     HouseRoutingModule,
     NgxPaginationModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+   
   ]
 })
 export class HouseModule { }
