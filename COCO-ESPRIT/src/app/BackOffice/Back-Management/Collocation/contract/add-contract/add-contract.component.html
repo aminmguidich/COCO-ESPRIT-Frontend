@@ -1,0 +1,9 @@
+<form [formGroup]="validateForm" (ngSubmit)="addContract()">
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" class="form-control" formControlName="description" id="description" />
+    </div>
+    <!-- Ajoutez d'autres champs si nécessaire -->
+    <button type="submit" class="btn btn-primary">Add Contract</button>
+  </form>
+  

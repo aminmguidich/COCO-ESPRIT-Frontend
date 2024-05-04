@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcements</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    /* Ajoutez vos styles CSS personnalisés ici */
+    .custom-modal-content {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+      <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+          <div class="main-body">
+            <div class="page-wrapper">
+              <!-- [ Main Content ] start -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Announcements</h5>
+                      <div class="input-group mb-3">
+                        <!-- Champ de recherche par description -->
+                        <input type="text" class="form-control" placeholder="Search by description" [(ngModel)]="description" (keyup)="filterAnnouncements()">
+                        
+                        <!-- Champ de recherche par budgetPart -->
+                        <input type="number" class="form-control" placeholder="Search by budget part" [(ngModel)]="budgetPart" (keyup)="filterAnnouncements()">
+                        
+                        <!-- Champ de recherche par score -->
+                        <input type="number" class="form-control" placeholder="Search by score" [(ngModel)]="score" (keyup)="filterAnnouncements()">
+                        
+                        <!-- Bouton de recherche -->
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" (click)="filterAnnouncements()">Search</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h5></h5>
+                      <hr>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            
+                            <th scope="col">Date</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Budget Part</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let announcement of annoucementscol | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                           
+                            <td>{{announcement.dateCollocationAnnouncement | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{announcement.description}}</td>
+                            <td>{{announcement.budgetPart}}</td>
+                            
+                            <td>
+                              <button type="button" class="btn btn-danger btn-sm rounded-0" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteAnnoucementCollocation(announcement.idCollocationAnnouncement)">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                              <button type="button" class="btn btn-success btn-sm rounded-0" (click)="openEditModal(announcement.idCollocationAnnouncement)">
+                                <i class="fa fa-edit"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      
+                      <hr>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAnnouncementModal">
+                        Add Announcement
+                      </button>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#announcementCostModal">
+                        Visualize Announcement Cost
+                      </button>
+                      
+                      <!-- Add Announcement Modal -->
+                      <div class="modal fade" id="addAnnouncementModal" tabindex="-1" aria-labelledby="addAnnouncementModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="addAnnouncementModalLabel">Add Announcement</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="custom-modal-content">
+                                <app-add-annoucement></app-add-annoucement>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Add Announcement Modal -->
+<div class="modal fade" id="announcementCostModal" tabindex="-1" aria-labelledby="announcementCostModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="announcementCostModalLabel">Announcement Cost Visualization</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="custom-modal-content">
+          <app-pie-chart-component></app-pie-chart-component>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+                      <!-- Edit Announcement Modal -->
+                      <div class="modal fade" id="editAnnouncementModal" tabindex="-1" aria-labelledby="editAnnouncementModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="editAnnouncementModalLabel">Edit Announcement</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="custom-modal-content">
+                                <app-update-annoucement></app-update-annoucement>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- [ Main Content ] end -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8 py-5 d-flex justify-content-center align-items-center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+
+    
+  </div>
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Ajoutez vos scripts JavaScript personnalisés ici -->
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des maisons</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    /* Ajoutez vos styles CSS personnalisés ici */
+    .custom-modal-content {
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+      <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+          <div class="main-body">
+            <div class="page-wrapper">
+              <!-- [ Main Content ] start -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Houses</h5>
+                      <div class="input-group mb-3">
+                        <div class="input-group-append">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h5></h5>
+                      <hr>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">HouseType</th>
+                            <th scope="col">Places</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Description</th>
+
+
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let house of houses  | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                            <th scope="row">{{ house.idHouse }}</th>
+                            <td><img [src]="house.imageUrl" alt="House Image" style="width: 100px; height: auto;"></td>
+                            <td>{{ house.houseType }}</td>
+                            <td>{{ house.places }}</td>
+                            <td>{{ house.location }}</td>
+                            <td>{{ house.description }}</td>
+
+
+                            <td>
+                              <button type="button" class="btn btn-danger btn-sm rounded-0" data-toggle="tooltip"
+                                data-placement="top" title="Delete" (click)="deleteHouse(house.idHouse)">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                              <button type="button" class="btn btn-success btn-sm rounded-0" data-bs-toggle="modal"
+                                data-bs-target="#editHouseModal" (click)="idhousetoUpdate =house.idHouse">
+                                <i class="fa fa-edit"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <hr>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#addHouseModal">
+                        Add House
+                      </button>
+
+                      <!-- Add House Modal -->
+                      <div class="modal fade" id="addHouseModal" tabindex="-1" aria-labelledby="addHouseModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="addHouseModalLabel">Add House</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="custom-modal-content">
+                                <app-add-house></app-add-house>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" id="saveHouseButton" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Edit House Modal -->
+                      <!-- Edit Announcement Modal -->
+                      <div class="modal fade" id="editHouseModal" tabindex="-1"
+                        aria-labelledby="editAnnouncementModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="editAnnouncementModalLabel">Edit House</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="custom-modal-content">
+
+                                <form [formGroup]="validateFormhouse" (ngSubmit)="updateHouse()">
+                                  <div class="form-group">
+                                    <label for="image">Image:</label>
+                                    <input type="file" class="form-control" accept="image/*"
+                                      (change)="onFileChange($event)" id="image" />
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="houseType">House Type:</label>
+                                    <input type="text" class="form-control" formControlName="houseType"
+                                      id="houseType" />
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="places">Places:</label>
+                                    <input type="number" class="form-control" formControlName="places" id="places" />
+                                  </div>
+                                  <!-- Ajouter les champs manquants ici -->
+                                  <div class="form-group">
+                                    <label for="location">Location:</label>
+                                    <input type="text" class="form-control" formControlName="location" id="location" />
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="description">Description:</label>
+                                    <input type="text" class="form-control" formControlName="description"
+                                      id="description" />
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="nbrofBedrooms">Number of Bedrooms:</label>
+                                    <input type="number" class="form-control" formControlName="nbrofBedrooms"
+                                      [value]="nbrofBedrooms" id="nbrofBedrooms" />
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="price">Price:</label>
+                                    <input type="number" class="form-control" formControlName="price" id="price" />
+                                  </div>
+                                  <!-- Fin des champs manquants -->
+                                  <button type="submit" class="btn btn-primary">Add</button>
+                                </form>
+
+
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Bouton pour générer le PDF -->
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- [ Main Content ] end -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8 py-5 d-flex justify-content-center align-items-center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Ajoutez vos scripts JavaScript personnalisés ici -->
+
+</body>
+
+</html>

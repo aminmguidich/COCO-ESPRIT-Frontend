@@ -1,0 +1,46 @@
+<body>
+  <form [formGroup]="validateForm" (ngSubmit)="handleSaveAnnouncement()">
+    <div class="form-group">
+      <label for="file">Image:</label>
+      <input type="file" id="file" accept="image/*" (change)="onFileChange($event)" class="form-control-file" />
+    </div>
+
+    <div class="form-group">
+      <label for="houseType">House Title:</label>
+      <input type="text" class="form-control" formControlName="title" id="title" />
+    </div>
+    <div class="form-group">
+      <label for="houseType">House Type:</label>
+      <input type="text" class="form-control" formControlName="houseType" id="houseType" />
+    </div>
+
+    <div class="form-group">
+      <label for="places">Places:</label>
+      <input type="number" class="form-control" formControlName="places" id="places" />
+    </div>
+
+    <div class="form-group">
+      <label for="budgetPart">budgetPart:</label>
+      <input type="number" class="form-control" formControlName="budgetPart" id="budgetPart" />
+    </div>
+    <!-- Ajouter les champs manquants ici -->
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <input type="text" class="form-control" formControlName="location" id="location" />
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" class="form-control" formControlName="description" id="description" />
+    </div>
+    <div class="form-group">
+      <label for="nbrofBedrooms">Number of Bedrooms:</label>
+      <input type="number" class="form-control" formControlName="nbrofBedrooms" id="nbrofBedrooms" />
+    </div>
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" class="form-control" formControlName="price" id="price" />
+    </div>
+    <!-- Fin des champs manquants -->
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</body>
