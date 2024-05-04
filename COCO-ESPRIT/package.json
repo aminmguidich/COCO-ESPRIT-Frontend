@@ -22,6 +22,7 @@
     "@angular/router": "^15.2.0",
     "@auth0/angular-jwt": "^5.2.0",
     "@here/maps-api-for-javascript": "^1.53.0",
+    "@popperjs/core": "^2.11.8",
     "@stomp/stompjs": "^7.0.0",
     "@types/sockjs-client": "^1.5.4",
     "angular-code-input": "^2.0.0",
