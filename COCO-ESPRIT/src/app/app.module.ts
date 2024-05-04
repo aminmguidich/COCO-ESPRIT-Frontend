@@ -90,6 +90,7 @@ import { HealthManagementModule } from './FrontOffice/Front-Management/health-ma
     BrowserAnimationsModule,
     HealthManagementModule,
     
+    
   ],
   providers: [httpInterceptorProviders,DatePipe],
   bootstrap: [AppComponent]

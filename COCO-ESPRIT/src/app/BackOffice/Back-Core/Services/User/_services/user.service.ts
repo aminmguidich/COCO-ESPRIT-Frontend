@@ -62,5 +62,9 @@ export class UserService {
   update(user: any): Observable<any> {
     return this.http.put(this.API_URL + 'user/updateSimple', user)
   }
+  getById(id:number): Observable<any> {
+    return this.http.get("http://localhost:9092/api/user/retrieve/"+id);
+  }
+
 
   }
