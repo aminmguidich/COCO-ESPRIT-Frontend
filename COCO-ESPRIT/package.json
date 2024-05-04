@@ -26,7 +26,6 @@
     "@types/sockjs-client": "^1.5.4",
     "angular-code-input": "^2.0.0",
     "angular-re-captcha": "^0.2.0",
-    "boostrap": "^2.0.0",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
     "cors": "^2.8.5",
