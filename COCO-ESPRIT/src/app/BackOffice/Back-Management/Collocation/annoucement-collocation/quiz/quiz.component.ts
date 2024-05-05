@@ -13,7 +13,7 @@ export class QuizComponent implements OnInit {
   quiz: any = [
     {
       key: 1,
-      question_1: "What is your tolerance for noise during the night?",
+      question: "What is your tolerance for noise during the night?",
       responses: [
         {
           title: "I do not tolerate",
@@ -27,7 +27,7 @@ export class QuizComponent implements OnInit {
     },
     {
       key: 2,
-      question_2: "Are you a smoker or not?",
+      question: "Are you a smoker or not?",
       responses: [
         {
           title: "Yes",
@@ -41,7 +41,7 @@ export class QuizComponent implements OnInit {
     },
     {
       key: 3,
-      question_3: "Do you have pets??",
+      question: "Do you have pets??",
       responses: [
         {
           title: "No",
@@ -56,7 +56,7 @@ export class QuizComponent implements OnInit {
 
     {
       key: 4,
-      question_4: "Do you prefer to share household chores equally?",
+      question: "Do you prefer to share household chores equally?",
       responses: [
         {
           title: "Yes",
@@ -72,7 +72,7 @@ export class QuizComponent implements OnInit {
 
     {
       key: 5,
-      question_5: "Are you comfortable with the idea of sharing common goods like food or cleaning products ?",
+      question: "Are you comfortable with the idea of sharing common goods like food or cleaning products ?",
       responses: [
         {
           title: "Yes",
@@ -89,7 +89,7 @@ export class QuizComponent implements OnInit {
     
     {
       key: 6,
-      question_6: "How do you feel about guests or visitors in the living space during late hours?",
+      question: "How do you feel about guests or visitors in the living space during late hours?",
       responses: [
         {
           title: "I prefer limited or no guests late at night",
@@ -105,7 +105,7 @@ export class QuizComponent implements OnInit {
 
     {
       key: 7,
-      question_7: "How do you usually solve problems or arguments with roommates about shared living?",
+      question: "How do you usually solve problems or arguments with roommates about shared living?",
       responses: [
         {
           title: "I like to talk about problems and find solutions",

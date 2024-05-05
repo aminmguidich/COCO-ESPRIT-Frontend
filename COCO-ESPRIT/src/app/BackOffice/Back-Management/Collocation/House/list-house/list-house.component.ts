@@ -1,70 +1,48 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ContractService } from 'src/app/BackOffice/Back-Core/Services/Collocation/contract.service';
+import { FormBuilder, Validators } from '@angular/forms';
 import { HouseService } from 'src/app/BackOffice/Back-Core/Services/Collocation/house.service';
-import { UserService } from 'src/app/BackOffice/Back-Core/Services/User/_services/user.service';
 
 @Component({
   selector: 'app-list-house',
   templateUrl: './list-house.component.html',
   styleUrls: ['./list-house.component.css']
 })
-export class ListHouseComponent {
-
-  showMoreInfo(_t7: any) {
-    this.openmodaldetails = true;
-    this.description = _t7.description;
-    this.location = _t7.location;
-    this.nbrofBedromms = _t7.nbrofBedromms;
-    this.price = _t7.price;
-
-  }
-  closemodaldetails() {
-    this.openmodaldetails = false;
-  }
-  openmodaldetails: boolean = false;
+export class ListHouseComponent  {
   houses: any = [];
   searchText: string = '';
   selectedHouse: any;
-  imageUrl: any;
-  description!: any;
-  location!: any;
-  nbrofBedromms!: any;
-  price!: any;
+  imageUrls:any;
   p: number = 1;
-  itemsPerPage: number = 3
-  userId: any;
-  search="";
-  @ViewChild('addHouseModal') addHouseModal!: ElementRef;
-
-  houseSelected: any
-
-  houseIdSelectedToEdit: any
-
+  itemsPerPage: number = 3;
+  photo: File[] = [];
   openHouseToEdit = false
+idhousetoUpdate:any;
 
-  validateForm!: FormGroup;
+
+  @ViewChild('addHouseModal') addHouseModal!: ElementRef; 
+nbrofBedrooms: any;
+
   constructor(
     private fb: FormBuilder,
     private houseService: HouseService,
-    private http: HttpClient, // Injecter le HttpClient pour faire des requêtes HTTP,
-    private contratService: ContractService,
-    private userService: UserService
+    private http: HttpClient // Injecter le HttpClient pour faire des requêtes HTTP
+
   ) { }
 
+  validateFormhouse = this.fb.group({
+    houseType: ["", [Validators.required]],
+    places: [0, [Validators.required]],
+    location: ["", [Validators.required]], // Champ manquant ajouté
+    description: ["", [Validators.required]], // Champ manquant ajouté
+    nbrofBedrooms: [0, [Validators.required]], // Champ manquant ajouté
+    price: [0, [Validators.required]]
+  });
+  id: any;
+
   ngOnInit() {
-    this.userId = parseInt(localStorage.getItem("idUser") + "");
     this.getAllHouses();
-    this.validateForm = this.fb.group({
-      description: [null, [Validators.required]],
-    });
-  }
-
-  selectHouseToEdit(id: any) {
-
-    localStorage.setItem("houseUp", id + "")
-
+    console.log("house component")
   }
 
   getAllHouses() {
@@ -77,7 +55,7 @@ export class ListHouseComponent {
   deleteHouse(id: number) {
     this.houseService.deleteHouse(id).subscribe(
       () => {
-        alert("deleted")
+        this.getAllHouses()
         console.log('Maison supprimée avec succès');
         // Mettre à jour la liste des maisons après la suppression si nécessaire
       },
@@ -86,34 +64,66 @@ export class ListHouseComponent {
       }
     );
   }
+  updateHouse() {
+    const formData = new FormData();
 
-  addHouse() {
-    if (this.validateForm.invalid) {
-      console.error('Form is invalid. Please fill in all required fields.');
-      this.validateForm.markAllAsTouched();
-      return;
-    }
+
+    // Append each image to the form data
+    this.photo.forEach(file => {
+      formData.append('image', file);
+    });
+
+    formData.append('house', JSON.stringify(this.validateFormhouse.value));
+
+console.log(this.idhousetoUpdate.idHouse)
+    this.houseService.updateHouse(this.idhousetoUpdate,formData).subscribe({
+      next: data => {
+
+      },
+      error: err => {
+
+      }
+    });
+
   }
 
+
+  onFileChange(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        const file = event.target.files[i];
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.imageUrls.push(e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+        this.photo.push(file); // Push each file into the array
+      }
+    }
+  }
 
   openEditModal(id: any) {
     this.selectedHouse = id;
     // Ouvrir le modal ici en utilisant l'ID
   }
 
-  generatePdf(contrat: any) {
+  generatePdf(houseId:number) {
+    const contractId = 1;
+   
+
+    const url = `http://localhost:9092/House/pdf?contractId=${contractId}&houseId=${houseId}`;
 
     // Définir le type de la réponse comme 'blob' pour obtenir un objet Blob (binaire)
-    this.http.post(`http://localhost:9092/api/House/pdf`, contrat, { responseType: 'blob' }).subscribe((res: any) => {
+    this.http.get(url, { responseType: 'blob' }).subscribe((resBlob: Blob) => {
       // Créer un objet URL pour le blob
-      console.log(res)
-      const blobURL = URL.createObjectURL(res);
+      const blobURL = URL.createObjectURL(resBlob);
 
       // Créer un élément <a> pour le téléchargement ou l'affichage
       const a = document.createElement('a');
       document.body.appendChild(a);
       a.style.display = 'none';
-
+      
       // Définir l'URL du lien <a> avec l'URL du blob
       a.href = blobURL;
 
@@ -134,56 +144,5 @@ export class ListHouseComponent {
   }
 
 
-  selectHouse(house: any) {
-
-    this.houseSelected = house
-
-  }
-
-  addContrat() {
-
-
-
-    this.userService.getById(this.userId).subscribe((res: any) => {
-
-      const today = new Date()
-
-      const day = today.getDate();
-      const month = today.getMonth() + 1;
-      const year = today.getFullYear();
-
-      const request = {
-
-        description: this.houseSelected.description,
-        nombre_de_places: this.houseSelected.nbrofBedrooms,
-        houseType: this.houseSelected.houseType,
-        location: this.houseSelected.location,
-        owner: this.houseSelected.username,
-        uname: res.username,
-        date: day + "-" + month + "-" + year,
-        houseId: this.houseSelected.idHouse,
-        userId: res.id
-
-      }
-
-      this.contratService.addContract(request).subscribe((r: any) => {
-        this.generatePdf(r)
-
-        this.houseService.updateHouseDetails(this.houseSelected.idHouse, { contracted: true }).subscribe((res: any) => {
-          alert("contract added successfully")
-
-        })
-
-      })
-
-    })
-
-
-
-
-  }
-
-
-
+  
 }
-

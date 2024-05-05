@@ -29,6 +29,7 @@ import { UpdateUserComponent } from './BackOffice/Back-Management/User/User-modu
 import { VerifyAccountComponent } from './BackOffice/Back-Management/User/User-module/verify-account/verify-account.component';
 import { AllUsersComponent } from './BackOffice/Back-Management/User/User-module/all-users/all-users.component';
 import { ProfileComponent } from './BackOffice/Back-Management/User/User-module/profile/profile.component';
+import { QuizComponent } from './BackOffice/Back-Management/Collocation/annoucement-collocation/quiz/quiz.component';
 
 const routes: Routes = [
 
@@ -40,6 +41,10 @@ const routes: Routes = [
   { path: 'verify', component: VerifyAccountComponent },
   { path: 'profile', component: ProfileComponent },
 
+
+  {
+    path: "quiz/:id", component: QuizComponent,
+  },
 
   
   {

@@ -45,6 +45,7 @@ import { ContractModule } from './BackOffice/Back-Management/Collocation/contrac
 import { AnnouncementCollocation } from './BackOffice/Back-Core/Models/Collocation/annoucement-collocation';
 import { AannoucementCollModule } from './FrontOffice/Front-Management/Collocation/aanoucement-col/aanoucement-col.module';
 import { AnnoucementCollocationModule } from './BackOffice/Back-Management/Collocation/annoucement-collocation/annoucement-collocation.module';
+import { QuizComponent } from './BackOffice/Back-Management/Collocation/annoucement-collocation/quiz/quiz.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { AnnoucementCollocationModule } from './BackOffice/Back-Management/Collo
     RegisterComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    QuizComponent,
    
     
 
