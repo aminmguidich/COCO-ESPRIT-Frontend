@@ -18,7 +18,6 @@ import { AnnouncementCarpoolingService } from 'src/app/BackOffice/Back-Core/Serv
 })
 export class TableAnnouncementCarpoolingComponent implements AfterViewInit {
   displayedColumns: string[] = [
-    'id',
     'user',
     'date',
     'description',
@@ -109,6 +108,15 @@ export class TableAnnouncementCarpoolingComponent implements AfterViewInit {
       this.loadData();
     });
   }
+
+  announcementToString(a: AnnouncementCarpooling) {
+    return `${a.idCarpoolingAnnouncement.toString()}${a.dateCarpoolingAnnouncement.toString()}${
+      a.description
+    }${a.userAnnCarpooling.fullname}${a.ridePrice}${a.places}${
+      a.reactCarpoolingsAnnCarpooling.length
+    }`;
+  }
+
   loadData() {
     this.annCarpoolingService
       .getall()
@@ -134,6 +142,9 @@ export class TableAnnouncementCarpoolingComponent implements AfterViewInit {
             this.dataSource = new MatTableDataSource(this.data);
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;
+            this.dataSource.filterPredicate = (data, filter) => {
+              return this.announcementToString(data).includes(filter);
+            };
           });
       }),
       (error: any) => {
@@ -153,7 +164,6 @@ export class TableAnnouncementCarpoolingComponent implements AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

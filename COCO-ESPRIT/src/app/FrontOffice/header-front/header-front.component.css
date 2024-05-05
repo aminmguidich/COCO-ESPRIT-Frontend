@@ -1,4 +1,18 @@
 .red-text {
-    color: red !important;
-  }
-  
+  color: #bf0c19 !important;
+}
+.f {
+  color: #000 !important;
+}
+/* Add this CSS to your styles.css or relevant stylesheet */
+
+/* Add this CSS to your styles.css or relevant stylesheet */
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item.active .nav-link:hover {
+  color: #bf0c19; /* Change to whatever color you prefer */
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  color: #bf0c19; /* Change to whatever color you prefer */
+}

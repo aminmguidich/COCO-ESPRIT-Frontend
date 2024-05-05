@@ -88,7 +88,7 @@ export class MapComponent {
   ngAfterViewInit(): void {
     if (!this.map && this.mapDiv) {
       this.platform = new H.service.Platform({
-        apikey: 'G5HgkNnhGYiUWeofOLfu4DvpgpOkkPza_5ReS-YEsqw',
+        apikey: '80yuA10ybq5ThFkNhczpgTHGqZwxfLSUJwnX3BkC2_Q',
       });
 
       this.service = this.platform.getSearchService();

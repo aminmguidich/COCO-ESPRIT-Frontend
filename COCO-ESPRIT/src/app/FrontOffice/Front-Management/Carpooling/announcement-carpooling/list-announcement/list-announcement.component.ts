@@ -1,5 +1,13 @@
 import { StorageService } from 'src/app/BackOffice/Back-Core/Services/User/_services/storage.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Adress } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/adress';
@@ -14,6 +22,11 @@ import { ReactCarpoolingService } from 'src/app/FrontOffice/Front-Core/Services/
 import { ReactCarpooling } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/react-carpooling';
 import { MapComponent } from 'src/app/shared/map/map.component';
 import { DeteailsAnnouncementComponent } from 'src/app/shared/deteails-announcement/deteails-announcement.component';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 @Component({
   selector: 'app-list-announcement',
   templateUrl: './list-announcement.component.html',
@@ -49,11 +62,12 @@ export class ListAnnouncementComponent implements OnInit {
     roles: [],
   };
   Require(id: number) {
+    let description = prompt('Type description here');
     const date = new Date();
 
     const reqCarpooling: RequirementCarpooling = {
       idCarRequirement: 0,
-      description: '',
+      description: description,
       dateCarpoolingRequirement: date,
       announcementCarpoolingReq: {
         idCarpoolingAnnouncement: id,
@@ -152,6 +166,7 @@ export class ListAnnouncementComponent implements OnInit {
   paginatorData: PaginatorData = new PaginatorData();
 
   constructor(
+    public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private formB: FormBuilder,
@@ -160,13 +175,12 @@ export class ListAnnouncementComponent implements OnInit {
     private reactCarpoolingService: ReactCarpoolingService,
     public storageService: StorageService
   ) {}
-
+  canAddAnnouncement = false;
   ngOnInit() {
     let platform = new H.service.Platform({
-      apikey: 'G5HgkNnhGYiUWeofOLfu4DvpgpOkkPza_5ReS-YEsqw',
+      apikey: '80yuA10ybq5ThFkNhczpgTHGqZwxfLSUJwnX3BkC2_Q',
     });
-    this.user.id = this.storageService.getUser()['id'];
-
+    this.user = this.storageService.getUser();
     this.annCarpoolingService
       .getallPlaces()
       .subscribe((data: AnnouncementCarpooling[]) => {
@@ -195,10 +209,22 @@ export class ListAnnouncementComponent implements OnInit {
                       if (distance > 0 && distance <= distanceToEsprit * 0.8) {
                         (value.show = true), (value.distance = distance);
                       }
-
+                      for (let index = 0; index < users.length; index++) {
+                        const element = users[index];
+                        if (element.id == this.user.id) {
+                          this.user = element;
+                        }
+                      }
+                      if (this.user.carUser && this.user.carUser.image) {
+                        this.canAddAnnouncement = true;
+                      }
                       if (!value.userAnnCarpooling.id) {
                         for (let index = 0; index < users.length; index++) {
                           const element = users[index];
+                          if (element.id == this.user.id) {
+                            this.user = element;
+                          }
+                          console.log('fze', this.user.carUser);
                           if (
                             element.id.toString() ==
                             value.userAnnCarpooling.toString()

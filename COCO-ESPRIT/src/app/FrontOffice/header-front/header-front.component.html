@@ -1,45 +1,79 @@
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-    <div class="container">
-      <a class="navbar-brand" routerLink="home"> <span class="red-text">CO</span>&<span>CO</span> </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span> Menu
-      </button>
+<nav
+  class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+  id="ftco-navbar"
+>
+  <div class="container">
+    <a class="navbar-brand" routerLink="home">
+      <span class="f">CO</span>&<span class="red-text">CO</span>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#ftco-nav"
+      aria-controls="ftco-nav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="oi oi-menu"></span> Menu
+    </button>
 
-      <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a routerLink="home" class="nav-link">Home</a></li>
-          <li class="nav-item"><a routerLink="about" class="nav-link">About</a></li>
-          <li class="nav-item"><a routerLink="services" class="nav-link">Services</a></li>
-          <li class="nav-item"><a routerLink="pircing" class="nav-link">Pricing</a></li>
-          <li class="nav-item"><a routerLink="ListCarsFront" class="nav-link">Cars</a></li>
-          <li class="nav-item"><a routerLink="ListPostFront" class="nav-link">Post</a></li>
-          <li class="nav-item"><a routerLink="contact" class="nav-link">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" (click)="toggleDropdown($event)">{{ username }} <b class="caret"></b></a>
-              <ul class="dropdown-menu" [ngClass]="{ 'show': dropdownOpen }">
-                <li align="center" class="well">
-                  <div>
-                      <img class="img-responsive rounded-circle mb-2" style="padding:2%; width: 100px; height: 100px;" src="{{ userImage }}" />
-                  </div>
-                  <div>
-                      <a class="change" href="/updateUser">Edit Profile</a>
-                  </div>
-                  <div>
-                      <a href="#" class="btn btn-sm btn-default" (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                  </div>
-              </li>
-              
-              </ul>
-          </li>
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav ml-auto">
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a routerLink="home" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="Annoucement" class="nav-link">Colocation</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="Frontcarpooling/announcement" class="nav-link"
+            >Carpooling</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="ListCarsFront" class="nav-link">Cars</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="ListPostFront" class="nav-link">Post</a>
+        </li>
       </ul>
+    </div>
   </div>
-  
-  
-  </nav>
-
-  
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a
+          href="#"
+          class="dropdown-toggle red-text"
+          data-toggle="dropdown"
+          (click)="toggleDropdown($event)"
+          >{{ username }} <b class="caret"></b
+        ></a>
+        <ul class="dropdown-menu" [ngClass]="{ show: dropdownOpen }">
+          <li align="center" class="well">
+            <div>
+              <img
+                class="img-responsive rounded-circle mb-2"
+                style="padding: 2%; width: 100px; height: 100px"
+                src="{{ userImage }}"
+              />
+            </div>
+            <div>
+              <a class="change" href="/updateUser">Edit Profile</a>
+            </div>
+            <div>
+              <a href="#" class="btn btn-sm btn-default" (click)="logout()"
+                ><span class="glyphicon glyphicon-log-out"></span> Logout</a
+              >
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
