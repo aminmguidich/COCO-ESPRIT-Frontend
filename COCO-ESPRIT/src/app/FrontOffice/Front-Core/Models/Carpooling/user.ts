@@ -8,8 +8,10 @@ export class User {
      email!: string;
      roles!: any[];
      fullname?: string;
+     niv?: string;
      phone?: number;
-     image?: string;
+     espritId?: string;
+     imageUrl?: string;
      birthDate?: Date;
      gender?: any;
      score?: number;

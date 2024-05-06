@@ -1,0 +1,35 @@
+.profile-card {
+    background-color: transparent;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+.profile-content {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically */
+}
+
+.profile-image {
+    flex: 0 0 auto; /* Don't grow or shrink, maintain its size */
+    margin-right: 20px; /* Add spacing between image and details */
+}
+
+.profile-image img {
+    width: 100%;
+    max-width: 150px;
+}
+
+.profile-details {
+    flex: 1; /* Take remaining space */
+    text-align: left; /* Align details to the left */
+}
+
+.profile-details h5 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.profile-details p {
+    margin-bottom: 5px;
+}

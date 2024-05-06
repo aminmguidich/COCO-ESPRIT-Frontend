@@ -7,6 +7,7 @@ import { CDK_DRAG_CONFIG, DragDropModule } from '@angular/cdk/drag-drop';
 import { MatListModule } from '@angular/material/list';
 import { MapPositionComponent } from './map-position/map-position.component';
 import { DeteailsAnnouncementComponent } from './deteails-announcement/deteails-announcement.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -21,6 +22,7 @@ const DragConfig = {
     MapComponent,
     MapPositionComponent,
     DeteailsAnnouncementComponent,
+    ProfileComponent
   ],
   exports: [
     ListDragAndDropComponent,
@@ -28,6 +30,7 @@ const DragConfig = {
     MapComponent,
     MapPositionComponent,
     DeteailsAnnouncementComponent,
+    ProfileComponent
   ],
   imports: [CommonModule, DragDropModule, MatListModule],
   providers: [{ provide: CDK_DRAG_CONFIG, useValue: DragConfig }],

@@ -14,7 +14,7 @@ export class PostService {
   constructor(private http: HttpClient) { }
 /******** Posts **********/
   addPost(post: Post) : Observable<any>{
-    return this.http.post("http://localhost:9092/COCO/addPost", post);
+    return this.http.post("http://localhost:9092/api/Post/AddWithoutBadWord", post);
   
   }
   AddWithoutBadWord(post: Post) : Observable<any>{

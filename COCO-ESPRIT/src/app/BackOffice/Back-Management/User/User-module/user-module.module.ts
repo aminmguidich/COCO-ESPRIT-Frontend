@@ -14,7 +14,8 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { EditUserComponent } from './edit-user/edit-user.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from '../../../../shared/profile/profile.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -31,7 +32,6 @@ import { ProfileComponent } from './profile/profile.component';
        VerifyAccountComponent,
        AllUsersComponent,
        EditUserComponent,
-       ProfileComponent,
        
   ],
   imports: [
@@ -41,7 +41,8 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     ReactiveFormsModule,
     NgOtpInputModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    SharedModule
     
 
     

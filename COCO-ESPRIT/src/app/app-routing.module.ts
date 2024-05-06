@@ -28,7 +28,7 @@ import { ServicesFrontComponent } from './FrontOffice/services-front/services-fr
 import { UpdateUserComponent } from './BackOffice/Back-Management/User/User-module/update-user/update-user.component';
 import { VerifyAccountComponent } from './BackOffice/Back-Management/User/User-module/verify-account/verify-account.component';
 import { AllUsersComponent } from './BackOffice/Back-Management/User/User-module/all-users/all-users.component';
-import { ProfileComponent } from './BackOffice/Back-Management/User/User-module/profile/profile.component';
+import { ProfileComponent } from './shared/profile/profile.component';
 import { QuizComponent } from './BackOffice/Back-Management/Collocation/annoucement-collocation/quiz/quiz.component';
 
 const routes: Routes = [

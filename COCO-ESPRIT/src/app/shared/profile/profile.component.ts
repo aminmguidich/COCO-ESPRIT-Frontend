@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserService } from 'src/app/BackOffice/Back-Core/Services/User/_services/user.service';
+import { User } from 'src/app/FrontOffice/Front-Core/Models/Carpooling/user';
 
 @Component({
   selector: 'app-profile',
@@ -9,14 +10,20 @@ import { UserService } from 'src/app/BackOffice/Back-Core/Services/User/_service
 export class ProfileComponent {
   
   username?: string;
-  userImage: string;;
+  userImage: string;
+  @Input() user:User;
 
   constructor(private userService:UserService){
 
   }
 
+
   ngOnInit(): void {
-    this.getUserById();
+   // this.getUserById();
+   if (this.user==null){
+    return
+   }
+     let data=this.user
   }
   
   getUserById() {

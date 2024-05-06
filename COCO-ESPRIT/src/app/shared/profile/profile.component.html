@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="profile-card">
+                <div class="profile-content">
+                    <div class="profile-image">
+                        <img src="{{ user.imageUrl }}" alt="Profile Image">
+                    </div>
+                    <div class="profile-details">
+                        <h5>{{ user.username }}</h5>
+                        <p>Id: {{ user.espritId }}</p>
+                        <p>Email: {{ user.email }}</p>
+                        <p>Fullname: {{ user.fullname }}</p>
+                        <p>Phone: {{ user.phone }}</p>
+                        <p>Class: {{ user.niv }}</p>
+                        <p>Gender: {{ user.gender }}</p>
+                         <p>Birth Date: {{ user.birthDate.toString().replaceAll(",", "/") }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
