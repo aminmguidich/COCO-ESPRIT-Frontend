@@ -176,7 +176,7 @@ export class MapComponent {
       }
     }
   }
-
+  //draw a line that passes by the array of markers
   private routing(platform: H.service.Platform, markers: Array<H.map.Marker>) {
     let waypoints = [];
     waypoints = markers.slice(1).map((value, index, array) => {
@@ -286,6 +286,7 @@ export class MapComponent {
   }
 
   //----------------------
+  //calculate distance between two points (using lat and lng)
   public static calculateDistance(
     point1: [number, number],
     point2: [number, number]
@@ -306,6 +307,7 @@ export class MapComponent {
     return d;
   }
 
+  //calculate distances between a point and an array of points ,returns the minimum distance
   public static minimumDistanceBetweenPointAndPolyline(
     polylineCoordinates: [number, number][],
     point: [number, number]
@@ -318,6 +320,8 @@ export class MapComponent {
     }
     return Math.min(...distances);
   }
+
+  //change polyline data from [lat1,lng1,alt1,lat2,lng2,alt2,...] to [[lat1,lng1],[lat2,lng2],...]
   public static decodePolyline(polylineData) {
     var polylineCoordinates = [];
     for (var i = 0; i < polylineData.length; i += 3) {
