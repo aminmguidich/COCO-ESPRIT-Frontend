@@ -41,7 +41,7 @@
                               <table class="table table-striped">
                                 <thead>
                                   <tr>
-                                    <th>ID</th>
+                                    <th>User</th>
                                     <th>Post Title</th>
                                     <th>Body</th>
                                     <th>Created At</th>
@@ -52,8 +52,8 @@
                                 </thead>
                                 <tbody>
                                   <tr *ngFor="let i of filteredPosts | async">
-                                    <td>{{ i.idPost }}</td>
-                                    <td>{{i.postTitle}}</td>
+                            <!--afficher user-->       <td>{{ userName[i.idPost] }}</td>
+                            <td>{{i.postTitle}}</td>
                                     <td>{{ truncateText(i.body) }}</td>
                                     <td>{{i.createdAt}}</td>
                                     <td>{{i.nb_etoil}}</td>

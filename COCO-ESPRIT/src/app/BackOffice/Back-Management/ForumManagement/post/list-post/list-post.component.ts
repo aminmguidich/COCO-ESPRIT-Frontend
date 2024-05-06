@@ -23,6 +23,7 @@ export class ListPostComponent {
 
   idTodelete: number = 0;
   deleteModal: any;
+  userName: { [postId: number]: string } = {}; // Object to store usernames based on postId
 
 
   constructor(private postService:PostService,private router: Router,private commentService:CommentService) {}
@@ -39,7 +40,10 @@ export class ListPostComponent {
 
   reloadData() {
     this.posts = this.postService.getPostList();
-   const startIndex = (this.currentPage - 1) * this.postsPerPage;
+    const startIndex = (this.currentPage - 1) * this.postsPerPage;
+    // Réinitialiser les noms d'utilisateur
+    this.userName = {};
+    
     // Fetch only the required number of posts based on the starting index and posts per page
     this.posts = this.postService.getPostList().pipe(
       map(posts => posts.slice(startIndex, startIndex + this.postsPerPage))
@@ -50,9 +54,24 @@ export class ListPostComponent {
       this.pageSize = Math.ceil(posts.length / this.postsPerPage);
     });
 
+    // Fetch username for each post
+    this.posts.subscribe(posts => {
+      posts.forEach(post => {
+        this.postService.findUserNameAndLastNameByPostId(post.idPost).subscribe(
+          username => {
+            this.userName[post.idPost] = username;
+          },
+          error => {
+            console.error('Error occurred while fetching username:', error);
+          }
+        );
+      });
+    });
+
     //recherch
     this.filterPosts();
-  }
+}
+
   updatePost(idPost: number){
     this.router.navigate(['update', idPost]);
   }
@@ -165,7 +184,7 @@ showComments(postId: number): void {
         return posts.filter(post => {
           // Convert numeric values to string and then check for inclusion
           const numericFields = [post.idPost, post.nb_etoil, post.nb_Signal];
-          const numericFieldsAsString = numericFields.map(value => value.toString());
+          const numericFieldsAsString = numericFields.map(value => value.toString(),post.body);
           const includesNumeric = numericFieldsAsString.some(value => value.includes(searchTerm));
   
           // Check if the post title or body contains the search term

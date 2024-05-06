@@ -43,12 +43,12 @@ st.subheader('Predicted co2 emission (in PPM)')
 st.write(prediction)
 
 actual_emissions = data_select['CO2EMISSIONS']
-st.subheader(f'Actual emission: {actual_emissions}')
+#st.subheader(f'Actual emission: {actual_emissions}')
 
 #difference = actual_emissions - prediction[0]  # Use prediction[0] to get the single prediction value
 difference = actual_emissions - prediction.squeeze()
 
-st.subheader(f'difference: {difference}')
+#st.subheader(f'difference: {difference}')
 
 # Calculate the mean absolute error (MAE) to assess the overall performance
 mae = np.mean(np.abs(difference))
