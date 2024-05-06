@@ -104,7 +104,7 @@ const routes: Routes = [
   },
 
   {
-    path:"House",
+    path:"/Users/ghorbelhsan/Documents/GitHub/COCO-ESPRIT/COCO-ESPRIT/src/assets/FrontOffice/images/LoginScreen.jpg",
     loadChildren: () => import('./FrontOffice/Front-Management/Collocation/house/house.module').then(m => m.HouseModule),
   },
 

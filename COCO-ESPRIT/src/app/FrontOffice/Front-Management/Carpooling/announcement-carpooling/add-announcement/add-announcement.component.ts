@@ -138,6 +138,8 @@ onAddMarker($event:H.map.Marker) {
       () => {
         alert('Added Successfully!');
         //this.router.navigate(['admin/carpooling/announcement/']);
+        this.annCarpoolingService.filter('RegisterClick');
+
       },
       error => {
         console.error(error);

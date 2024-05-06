@@ -174,7 +174,14 @@ export class ListAnnouncementComponent implements OnInit {
     private reqCarpoolingService: RequirementCarpoolingService,
     private reactCarpoolingService: ReactCarpoolingService,
     public storageService: StorageService
-  ) {}
+  ) {
+    this.annCarpoolingService.listen().subscribe((m:any)=>{
+      console.log(m);
+      this.ngOnInit();
+    })
+    
+    
+  }
   canAddAnnouncement = false;
   ngOnInit() {
     let platform = new H.service.Platform({

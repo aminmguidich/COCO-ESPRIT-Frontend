@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 body {
-    background-image: url('src\assets\1584148255267.jpeg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image */
+    background-image: url('src/assets/FrontOffice/images/LoginScreen.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image */
     background-size: cover; /* Cover the entire background */
     background-repeat: no-repeat; /* Do not repeat the image */
     margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
