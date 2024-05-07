@@ -305,10 +305,12 @@
               <p class="card-text">{{ item.description }}</p>
               <hr />
               <p>
-                Address:
+                Starting at:
                 {{ item.routeAnnCarpooling.adressesRoute[0].streetName }}
               </p>
               <p>Price: {{ item.ridePrice }} Dt</p>
+              <p>Walking distance: {{ item.distance?item.distance:0 }} meter</p>
+              <hr/>
               <p>
                 Places: {{ item.places
                 }}<svg

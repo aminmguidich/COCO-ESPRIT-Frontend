@@ -183,11 +183,22 @@ export class ListAnnouncementComponent implements OnInit {
     
   }
   canAddAnnouncement = false;
-  ngOnInit() {
+  async ngOnInit() {
     let platform = new H.service.Platform({
       apikey: '80yuA10ybq5ThFkNhczpgTHGqZwxfLSUJwnX3BkC2_Q',
     });
     this.user = this.storageService.getUser();
+    let users=await this.annCarpoolingService.getAllUsers().toPromise();
+    for (let index = 0; index < users.length; index++) {
+      const element = users[index];
+      if (element.id == this.user.id) {
+        this.user = element;
+      }
+    }                    
+
+    if (this.user.carUser && this.user.carUser.image) {
+      this.canAddAnnouncement = true;
+    }
     this.annCarpoolingService
       .getallPlaces()
       .subscribe((data: AnnouncementCarpooling[]) => {
@@ -213,18 +224,16 @@ export class ListAnnouncementComponent implements OnInit {
                     markers,
                     pos,
                     (distance, distanceToEsprit) => {
-                      if (distance > 0 && distance <= distanceToEsprit * 0.8) {
-                        (value.show = true), (value.distance = distance);
+                      if (distance > 0 && distance <= distanceToEsprit * 0.37) {
+                        (value.show = true), (value.distance = Math.round(distance));
                       }
                       for (let index = 0; index < users.length; index++) {
                         const element = users[index];
                         if (element.id == this.user.id) {
                           this.user = element;
                         }
-                      }
-                      if (this.user.carUser && this.user.carUser.image) {
-                        this.canAddAnnouncement = true;
-                      }
+                      }                    
+
                       if (!value.userAnnCarpooling.id) {
                         for (let index = 0; index < users.length; index++) {
                           const element = users[index];

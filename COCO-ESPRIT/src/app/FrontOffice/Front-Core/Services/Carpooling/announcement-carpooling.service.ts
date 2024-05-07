@@ -43,6 +43,7 @@ export class AnnouncementCarpoolingService {
   getAllUsers(){
     return this.http.get<User[]>(this.URL+"/getAllUsers");
   }
+  
   deleteAnnCarpooling(id: number) {
     let URL2 = this.URL + "/deleteAnnCarpooling/" + id;
     return this.http.delete<AnnouncementCarpooling>(URL2,this.httpOtions)
