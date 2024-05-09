@@ -40,7 +40,6 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">Id</th>
                             <th scope="col">Image</th>
                             <th scope="col">HouseType</th>
                             <th scope="col">Places</th>
@@ -53,7 +52,6 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let house of houses  | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-                            <th scope="row">{{ house.idHouse }}</th>
                             <td><img [src]="house.imageUrl" alt="House Image" style="width: 100px; height: auto;"></td>
                             <td>{{ house.houseType }}</td>
                             <td>{{ house.places }}</td>

@@ -19,3 +19,16 @@
 .red-icon {
   color: red;
 }
+.card-img-top{
+  width: auto; height: 250px;
+}
+.black-icon {
+  color: rgb(0, 0, 0);
+}
+.transparent-button {
+  background-color: transparent;
+  border: none; /* Remove the border */
+}
+
+
+

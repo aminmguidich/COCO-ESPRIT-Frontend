@@ -4,17 +4,17 @@
             <div class="profile-card">
                 <div class="profile-content">
                     <div class="profile-image">
-                        <img src="{{ user.imageUrl }}" alt="Profile Image">
+                        <img class="img-fluid rounded-circle" src="{{ user.imageUrl }}" alt="Profile Image">
                     </div>
                     <div class="profile-details">
-                        <h5>{{ user.username }}</h5>
-                        <p>Id: {{ user.espritId }}</p>
-                        <p>Email: {{ user.email }}</p>
-                        <p>Fullname: {{ user.fullname }}</p>
-                        <p>Phone: {{ user.phone }}</p>
-                        <p>Class: {{ user.niv }}</p>
-                        <p>Gender: {{ user.gender }}</p>
-                         <p>Birth Date: {{ user.birthDate.toString().replaceAll(",", "/") }}</p>
+                        <h5 class="text-center">{{ user.fullname }}</h5>
+                        <p><strong>Username:</strong> {{ user.username }}</p>
+                        <p><strong>ID:</strong> {{ user.espritId }}</p>
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <p><strong>Phone:</strong> {{ user.phone }}</p>
+                        <p><strong>Class:</strong> {{ user.niv }}</p>
+                        <p><strong>Gender:</strong> {{ user.gender }}</p>
+                        <p><strong>Birth Date:</strong> {{ user.birthDate.toString().replaceAll(",", "/") }}</p>
                     </div>
                 </div>
             </div>

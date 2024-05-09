@@ -64,9 +64,7 @@ export class TableRequirementComponent implements AfterViewInit {
 
     this.dataSource.data = this.data;
   }
-  OnViewProfile(arg0: any) {
-    throw new Error('Method not implemented.');
-  }
+
   data: RequirementCarpooling[] = [];
   sortedData: RequirementCarpooling[] = [];
   constructor(
